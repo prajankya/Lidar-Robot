@@ -1,0 +1,6 @@
+[submodule "ROS-Lidar-Robot-Base"]
+	path = ROS-Lidar-Robot-Base
+	url = git@github.com:prajankya/ROS-Lidar-Robot-Base.git
+[submodule "ROS-Lidar-Robot-Controller"]
+	path = ROS-Lidar-Robot-Controller
+	url = git@github.com:prajankya/ROS-Lidar-Robot-Controller.git
