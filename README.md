@@ -2,9 +2,9 @@
 ## Unmanned Mapping Vehicle Using L.O.A.M. in Real-time
  L.O.A.M. - Lidar Odometry and Mapping in Real-time
  
-6th sem, 2017 Batch<br>
-Automation and Robotics Dept.<br>
-B. V. Bhoomaraddi College of Engineering and Technology, Hubli<br>
+6th sem, 2017 Batch  
+Department of Automation and Robotics.  
+B. V. Bhoomaraddi College of Engineering and Technology, Hubli  
 
 >
 ##Team 9
