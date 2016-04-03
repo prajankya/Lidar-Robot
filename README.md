@@ -1,5 +1,14 @@
-# Lidar-Robot
+#Lidar-Robot
+Technical Project
+## Unmanned Mapping Vehicle Using L.O.A.M. in Real-time
 
-##Autonomous L.O.A.M. Omni Wheeled Robot
+6th sem, 2017 Batch<br>
+Automation and Robotics Dept.<br>
+B. V. Bhoomaraddi College of Engineering and Technology, Hubli<br>
 
-Author **[Prajankya](http://github.com/prajankya)**
+>
+##Team 9
+- [Adarsh Belvatagi](http://github.com/Belavatagi)
+- Darshan Bafna
+- Manikanta Pujar
+- [Prajankya Sonar](http://github.com/Prajankya)
