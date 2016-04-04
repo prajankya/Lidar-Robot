@@ -8,7 +8,7 @@ B. V. Bhoomaraddi College of Engineering and Technology, Hubli
 
 >
 ##Team 9
-- [Adarsh Belvatagi](http://github.com/Belavatagi)
+- [Adarsh Belavatagi](http://github.com/Belavatagi)
 - [Darshan Bafna](http://github.com/Darshabafna)
 - Manikanta Pujar
 - [Prajankya Sonar](http://github.com/Prajankya)
