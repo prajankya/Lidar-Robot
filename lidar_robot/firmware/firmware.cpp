@@ -49,7 +49,13 @@ ros::Publisher pub4("temperature", &temperature);
 ros::Publisher pub5("pressure", &pressure);
 
 Encoder r(2, 3);
-Encoder theta(10,11);
+Encoder theta(10, 11);
+
+int led1 =  22;
+int led2 =  23;
+int led3 =  24;
+int led4 =  25;
+
 
 double odom_x = 0;
 double odom_y = 0;
@@ -65,6 +71,16 @@ double azx = 0, azy = 0, azz = 0;
 bool brake = false;
 
 void setup() {
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(led3, OUTPUT);
+  pinMode(led4, OUTPUT);
+
+  digitalWrite(led1, HIGH);
+  digitalWrite(led2, LOW);
+  digitalWrite(led3, LOW);
+  digitalWrite(led4, LOW);
+  
   nh.initNode();
   nh.advertise(pub);
   nh.advertise(pub2);
@@ -115,9 +131,9 @@ void setup() {
       azz = (event2.acceleration.z + azz) / 2;
     }*/
 
-   if(!bmp_sensor.begin()){
+  if (!bmp_sensor.begin()) {
     Serial.print("Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!");
-    while(1);
+    while (1);
   }
 
   imu.orientation.x = 0.0;
@@ -154,29 +170,29 @@ void loop() {
   pub2.publish(&imu);
 
   String s2 = String(cmd.magnitude);
-  String s = "dir = " + base.getDir() + "  mag=" + s2 + " brake= " + ((brake)?"ON":"OFF");
+  String s = "dir = " + base.getDir() + "  mag=" + s2 + " brake= " + ((brake) ? "ON" : "OFF");
   char bb[50];
   s.toCharArray(bb, 50);
   str_msg.data = bb;
   pub3.publish(&str_msg);
 
   odom.header.stamp = nh.now();
-/*
-  odom.pose.pose.position.x = 0.0;
-  odom.pose.pose.position.y = 0.0;
-  odom.pose.pose.position.z = 0.0;
-  odom.pose.pose.orientation = tf::createQuaternionFromYaw(0);
+  /*
+    odom.pose.pose.position.x = 0.0;
+    odom.pose.pose.position.y = 0.0;
+    odom.pose.pose.position.z = 0.0;
+    odom.pose.pose.orientation = tf::createQuaternionFromYaw(0);
 
-  odom.twist.twist.linear.x = 0.0;
-  odom.twist.twist.linear.y = 0.0;
-  odom.twist.twist.linear.z = 0.0;
+    odom.twist.twist.linear.x = 0.0;
+    odom.twist.twist.linear.y = 0.0;
+    odom.twist.twist.linear.z = 0.0;
 
-  odom.twist.twist.angular.x = 0.0;
-  odom.twist.twist.angular.y = 0.0;
-  odom.twist.twist.angular.z = 0.0;
+    odom.twist.twist.angular.x = 0.0;
+    odom.twist.twist.angular.y = 0.0;
+    odom.twist.twist.angular.z = 0.0;
 
-  pub4.publish(&odom);
-*/
+    pub4.publish(&odom);
+  */
 
   double dAng = 0;//change in angle
   double dlen = 0;//change in length
@@ -200,10 +216,10 @@ void loop() {
 
   sensors_event_t event3;
   bmp_sensor.getEvent(&event3);
-  if (event.pressure){
-	pressure.header.stamp = nh.now();
-        pressure.fluid_pressure = event3.pressure;
-        pub5.publish(&pressure);
+  if (event.pressure) {
+    pressure.header.stamp = nh.now();
+    pressure.fluid_pressure = event3.pressure;
+    pub5.publish(&pressure);
   }
 
   nh.spinOnce();
@@ -213,7 +229,7 @@ void loop() {
     brake = true;
   }
 
-  if(brake && !cmd.brake){
+  if (brake && !cmd.brake) {
     base.brakeOff();
     brake = false;
   }
