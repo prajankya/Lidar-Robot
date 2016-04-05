@@ -212,7 +212,7 @@ uint8_t L3G4200D::fastRegister8(uint8_t reg)
 	value = Wire.read();
     #else
 	value = Wire.receive();
-    #endif;
+    #endif
     Wire.endTransmission();
 
     return value;
@@ -238,7 +238,7 @@ uint8_t L3G4200D::readRegister8(uint8_t reg)
 	value = Wire.read();
     #else
 	value = Wire.receive();
-    #endif;
+    #endif
     Wire.endTransmission();
 
     return value;
