@@ -3,12 +3,13 @@
   <arg name="port" default="/dev/ttyACM0" />
 
 <!--  <param name="robot_description" command="$(find xacro)/xacro '$(find lidar_robot)/xacro/base.rviz.xacro'" />-->
- 
+
+  <node name="masterStart" pkg="lidar_robot" ns="lidar_robot" type="masterStart" /> 
   <node name="tf_broadcaster" pkg="lidar_robot" ns="lidar_robot" type="tf_broadcaster" />
   <node name="base" pkg="lidar_robot" ns="lidar_robot" type="base" output="screen"/>
 
-  <node name="serial_node" pkg="rosserial_python" ns="lidar_robot" type="serial_node.py" args="$(arg port)"/>
-  <node name="rplidar" pkg="rplidar_ros" ns="lidar_robot" type="rplidarNode"/>
+  <node name="serial_node" pkg="rosserial_python" ns="lidar_robot" type="serial_node.py" args="$(arg port)" respawn="true"/>
+  <node name="rplidar" pkg="rplidar_ros" ns="lidar_robot" type="rplidarNode" respawn="true"/>
 
   <!-- Run the map server -->
 <!--<node name="map_server" pkg="map_server" type="map_server" args="$(find my_map_package)/my_map.pgm my_map_resolution"/>-->

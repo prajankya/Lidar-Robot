@@ -6,6 +6,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
   std_msgs
+  std_srvs
   geometry_msgs
   tf
   nav_msgs
@@ -55,5 +56,8 @@ target_link_libraries(base ${catkin_LIBRARIES})
 
 add_executable(tf_broadcaster src/tf_broadcaster.cpp)
 target_link_libraries(tf_broadcaster ${catkin_LIBRARIES})
+
+add_executable(masterStart src/masterStart.cpp)
+target_link_libraries(masterStart ${catkin_LIBRARIES})
 
 add_dependencies(base ${catkin_EXPORTED_TARGETS})
