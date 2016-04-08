@@ -10,7 +10,6 @@
 #include <nav_msgs/Odometry.h>
 #include <tf/tf.h>
 #include <tf/transform_broadcaster.h>
-#include "lidar_robot/Base_command.h"
 
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
@@ -34,7 +33,6 @@ sensor_msgs::MagneticField mag;
 sensor_msgs::Imu imu;
 sensor_msgs::Temperature temperature;
 sensor_msgs::FluidPressure pressure;
-lidar_robot::Base_command cmd;
 
 geometry_msgs::TransformStamped odom;
 tf::TransformBroadcaster odom_broadcaster;
@@ -61,11 +59,22 @@ double odom_x = 0;
 double odom_y = 0;
 double odom_angle = 0;
 
-void messageCb( const lidar_robot::Base_command& _cmd) {
-  cmd = _cmd;
+int brake_ = 0;
+int dir_ = 5;
+int mag_ = 0;
+
+void messageCb( const std_msgs::String &_cmd) {
+  String ss = ((const char * ) _cmd.data);
+  char s[ss.length()+1];
+  ss.toCharArray(s, ss.length()+1);
+
+  char *p = s;
+  dir_ = String(strtok_r(p, ",", &p)).toInt();
+  mag_ = String(strtok_r(p, ",", &p)).toInt();
+  brake_ = String(strtok_r(p, ",", &p)).toInt();
 }
 
-ros::Subscriber<lidar_robot::Base_command> base_sub("Base_command", messageCb);
+ros::Subscriber<std_msgs::String> base_sub("Base_command", messageCb);
 
 double azx = 0, azy = 0, azz = 0;
 bool brake = false;
@@ -122,14 +131,6 @@ void setup() {
     while (1);
   }
   accel_sensor.setRange(ADXL345_RANGE_2_G);
-  /*
-    for (int i = 0; i < 30; i++) {
-      sensors_event_t event2;
-      accel_sensor.getEvent(&event2);
-      azx = (event2.acceleration.x + azx) / 2;
-      azy = (event2.acceleration.y + azy) / 2;
-      azz = (event2.acceleration.z + azz) / 2;
-    }*/
 
   if (!bmp_sensor.begin()) {
     Serial.print("Ooops, no BMP085 detected ... Check your wiring or I2C ADDR!");
@@ -169,8 +170,8 @@ void loop() {
 
   pub2.publish(&imu);
 
-  String s2 = String(cmd.magnitude);
-  String s = "dir = " + base.getDir() + "  mag=" + s2 + " brake= " + ((brake) ? "ON" : "OFF");
+//  String s2 = String(cmd.magnitude);
+  String s = "dir = " + String(dir_) + "  mag=" + String(mag_) + " brake= " + String(brake_);
   char bb[50];
   s.toCharArray(bb, 50);
   str_msg.data = bb;
@@ -223,7 +224,7 @@ void loop() {
   }
 
   nh.spinOnce();
-
+/*
   if (cmd.brake && !brake) {
     base.brakeOn();
     brake = true;
@@ -236,6 +237,6 @@ void loop() {
 
   base.setDir(cmd.direction);
   base.setMag(cmd.magnitude);
-
+*/
   delay(10);
 }
