@@ -7,16 +7,18 @@ class MyMotor {
   private:
     int disablePin;
     int directionPin;
-    int tachoPin;
+    int speedPin;
+    int brakePin;
     float correctionFactor;
 
   public:
-
-    void init (int _disablePin, int _directionPin, int _tachoPin, float _correctionFactor);
+    void init (int _speedPin, int _disablePin, int _directionPin, int _brakePin, float _correctionFactor);
     void acw();
     void cw();
     void off();
-    int rpm();
+    void setMag(int _mag);
+    void brakeOn();
+    void brakeOff();
 };
 
 #endif
