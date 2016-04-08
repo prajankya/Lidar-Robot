@@ -4,7 +4,7 @@
 
 <!--  <param name="robot_description" command="$(find xacro)/xacro '$(find lidar_robot)/xacro/base.rviz.xacro'" />-->
 
-  <node name="masterStart" pkg="lidar_robot" ns="lidar_robot" type="masterStart" /> 
+<!--  <node name="masterStart" pkg="lidar_robot" ns="lidar_robot" type="masterStart" /> -->
   <node name="tf_broadcaster" pkg="lidar_robot" ns="lidar_robot" type="tf_broadcaster" />
   <node name="base" pkg="lidar_robot" ns="lidar_robot" type="base" output="screen"/>
 

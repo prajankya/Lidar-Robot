@@ -10,25 +10,12 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   tf
   nav_msgs
-  message_generation
   rosserial_arduino
   rosserial_client
 )
 
-add_message_files(
-  DIRECTORY msg
-  FILES
-  Base_command.msg
-)
-
-generate_messages(
-   DEPENDENCIES
-   std_msgs
-)
-
 catkin_package(
   CATKIN_DEPENDS 
-  message_runtime
   std_msgs
 )
 
@@ -51,7 +38,6 @@ include_directories(
 )
 
 add_executable(base src/base.cpp)
-add_dependencies(base ${${PROJECT_NAME}_EXPORTED_TARGETS})
 target_link_libraries(base ${catkin_LIBRARIES})
 
 add_executable(tf_broadcaster src/tf_broadcaster.cpp)
@@ -59,5 +45,3 @@ target_link_libraries(tf_broadcaster ${catkin_LIBRARIES})
 
 add_executable(masterStart src/masterStart.cpp)
 target_link_libraries(masterStart ${catkin_LIBRARIES})
-
-add_dependencies(base ${catkin_EXPORTED_TARGETS})
