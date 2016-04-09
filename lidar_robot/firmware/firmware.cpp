@@ -95,7 +95,7 @@ void setup() {
   base.setDir(5);
   base.setMag(0);
 
-  design.init(12, 11, 10, 9, 8, 7);//L1, L2, L3, L4, L5, L6
+  design.init(7, 8, 9, 10, 11, 12);//L1, L2, L3, L4, L5, L6
 
   mag.header.frame_id = "imu_sensor";
   imu.header.frame_id = "imu_sensor";
@@ -130,7 +130,7 @@ void setup() {
   imu.orientation.z = 0.0;
   imu.orientation.w = 1.0;
 
-  design.inOut(10);
+  design.inOut(5);
 }
 
 void loop() {

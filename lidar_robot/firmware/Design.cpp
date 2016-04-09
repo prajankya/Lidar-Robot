@@ -9,20 +9,6 @@ void Design::init(int _l1Pin, int _l2Pin, int _l3Pin, int _l4Pin, int _l5Pin, in
   l5Pin = _l5Pin;
   l6Pin = _l6Pin;
 
-  /* pinMode(l1Pin, OUTPUT);
-    pinMode(l2Pin, OUTPUT);
-    pinMode(l3Pin, OUTPUT);
-    pinMode(l4Pin, OUTPUT);
-    pinMode(l5Pin, OUTPUT);
-    pinMode(l6Pin, OUTPUT);
-
-    digitalWrite(l1Pin, LOW);
-    digitalWrite(l2Pin, LOW);
-    digitalWrite(l3Pin, LOW);
-    digitalWrite(l4Pin, LOW);
-    digitalWrite(l5Pin, LOW);
-    digitalWrite(l6Pin, LOW);*/
-
   analogWrite(l1Pin, 0);
   analogWrite(l2Pin, 0);
   analogWrite(l3Pin, 0);
@@ -32,32 +18,56 @@ void Design::init(int _l1Pin, int _l2Pin, int _l3Pin, int _l4Pin, int _l5Pin, in
 }
 
 void Design::inOut(int inDelay) {
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < 255; i += 5) {
     analogWrite(l1Pin, i);
     delay(inDelay);
   }
-  for (int i = 100; i < 255; i++) {
-    analogWrite(l1Pin, i);
-    analogWrite(l2Pin, i - 100);
-    delay(inDelay);
-  }
-  for (int i = 155; i < 255; i++) {
+  for (int i = 0; i < 255; i += 5) {
     analogWrite(l2Pin, i);
-    analogWrite(l3Pin, i - 100);
     delay(inDelay);
   }
-  for (int i = 155; i < 255; i++) {
+  for (int i = 0; i < 255; i += 5) {
     analogWrite(l3Pin, i);
-    analogWrite(l4Pin, i - 100);
     delay(inDelay);
   }
-  for (int i = 155; i < 255; i++) {
+  for (int i = 0; i < 255; i += 5) {
+    analogWrite(l4Pin, i);
+    delay(inDelay);
+  }
+  for (int i = 0; i < 255; i += 5) {
     analogWrite(l5Pin, i);
-    analogWrite(l6Pin, i - 100);
     delay(inDelay);
   }
-  for (int i = 155; i < 255; i++) {
+  for (int i = 0; i < 255; i += 5) {
     analogWrite(l6Pin, i);
+    delay(inDelay);
+  }
+
+}
+
+void Design::outIn(int inDelay) {
+  for (int i = 255; i >= 0; i -= 5) {
+    analogWrite(l6Pin, i);
+    delay(inDelay);
+  }
+  for (int i = 255; i >= 0; i -= 5) {
+    analogWrite(l5Pin, i);
+    delay(inDelay);
+  }
+  for (int i = 255; i >= 0; i -= 5) {
+    analogWrite(l4Pin, i);
+    delay(inDelay);
+  }
+  for (int i = 255; i >= 0; i -= 5) {
+    analogWrite(l3Pin, i);
+    delay(inDelay);
+  }
+  for (int i = 255; i >= 0; i -= 5) {
+    analogWrite(l2Pin, i);
+    delay(inDelay);
+  }
+  for (int i = 255; i >= 0; i -= 5) {
+    analogWrite(l1Pin, i);
     delay(inDelay);
   }
 }
