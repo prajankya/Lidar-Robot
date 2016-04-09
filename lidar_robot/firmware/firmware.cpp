@@ -20,8 +20,10 @@
 #include <Encoder.h>
 
 #include"BLDCOmni.h"
+#include "Design.h"
 
-BLDCOmni base(46, 14);//speedPin,BrakePin
+Design design;
+BLDCOmni base;
 
 Adafruit_HMC5883_Unified mag_sensor = Adafruit_HMC5883_Unified(11);
 Adafruit_ADXL345_Unified accel_sensor = Adafruit_ADXL345_Unified(22);
@@ -46,14 +48,8 @@ ros::Publisher pub3("debug_out", &str_msg);
 ros::Publisher pub4("temperature", &temperature);
 ros::Publisher pub5("pressure", &pressure);
 
-Encoder r(2, 3);
-Encoder theta(10, 11);
-
-int led1 =  22;
-int led2 =  23;
-int led3 =  24;
-int led4 =  25;
-
+Encoder r(18, 22);
+Encoder theta(19, 23);
 
 double odom_x = 0;
 double odom_y = 0;
@@ -65,8 +61,8 @@ int mag_ = 0;
 
 void messageCb( const std_msgs::String &_cmd) {
   String ss = ((const char * ) _cmd.data);
-  char s[ss.length()+1];
-  ss.toCharArray(s, ss.length()+1);
+  char s[ss.length() + 1];
+  ss.toCharArray(s, ss.length() + 1);
 
   char *p = s;
   dir_ = String(strtok_r(p, ",", &p)).toInt();
@@ -80,16 +76,6 @@ double azx = 0, azy = 0, azz = 0;
 bool brake = false;
 
 void setup() {
-  pinMode(led1, OUTPUT);
-  pinMode(led2, OUTPUT);
-  pinMode(led3, OUTPUT);
-  pinMode(led4, OUTPUT);
-
-  digitalWrite(led1, HIGH);
-  digitalWrite(led2, LOW);
-  digitalWrite(led3, LOW);
-  digitalWrite(led4, LOW);
-  
   nh.initNode();
   nh.advertise(pub);
   nh.advertise(pub2);
@@ -101,13 +87,15 @@ void setup() {
 
   nh.subscribe(base_sub);
 
-  base.setMotor1(17, 16, 2, 0.49);//disablePin,directionPin,tachoPin, speedFactor
-  base.setMotor2(34, 36, 3, 0.49);
-  base.setMotor3(38, 40, 4, 0.59);
-  base.setMotor4(42, 44, 5, 0.91);
+  base.setMotor1(46, 50, 48, 52, 1); //speedPin, disablePin, directionPin, brakePin, speedFactor
+  base.setMotor2(4, 42, 40, 44, 1);
+  base.setMotor3(3, 34, 32, 36, 1);
+  base.setMotor4(2, 26, 24, 28, 1);
 
   base.setDir(5);
   base.setMag(0);
+
+  design.init(12, 11, 10, 9, 8, 7);//L1, L2, L3, L4, L5, L6
 
   mag.header.frame_id = "imu_sensor";
   imu.header.frame_id = "imu_sensor";
@@ -141,6 +129,8 @@ void setup() {
   imu.orientation.y = 0.0;
   imu.orientation.z = 0.0;
   imu.orientation.w = 1.0;
+
+  design.inOut(10);
 }
 
 void loop() {
@@ -170,7 +160,7 @@ void loop() {
 
   pub2.publish(&imu);
 
-//  String s2 = String(cmd.magnitude);
+  //  String s2 = String(cmd.magnitude);
   String s = "dir = " + String(dir_) + "  mag=" + String(mag_) + " brake= " + String(brake_);
   char bb[50];
   s.toCharArray(bb, 50);
@@ -191,8 +181,6 @@ void loop() {
     odom.twist.twist.angular.x = 0.0;
     odom.twist.twist.angular.y = 0.0;
     odom.twist.twist.angular.z = 0.0;
-
-    pub4.publish(&odom);
   */
 
   double dAng = 0;//change in angle
@@ -224,19 +212,19 @@ void loop() {
   }
 
   nh.spinOnce();
-/*
-  if (cmd.brake && !brake) {
-    base.brakeOn();
-    brake = true;
-  }
+  /*
+    if (cmd.brake && !brake) {
+      base.brakeOn();
+      brake = true;
+    }
 
-  if (brake && !cmd.brake) {
-    base.brakeOff();
-    brake = false;
-  }
+    if (brake && !cmd.brake) {
+      base.brakeOff();
+      brake = false;
+    }
 
-  base.setDir(cmd.direction);
-  base.setMag(cmd.magnitude);
-*/
+    base.setDir(cmd.direction);
+    base.setMag(cmd.magnitude);
+  */
   delay(10);
 }
