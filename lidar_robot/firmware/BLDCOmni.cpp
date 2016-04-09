@@ -2,51 +2,49 @@
 #include"BLDCOmni.h"
 #include"MyMotor.h"
 
-BLDCOmni::BLDCOmni(int _speedPin, int _brakePin) {
-  speedPin = _speedPin;
-  brakePin = _brakePin;
-  pinMode(brakePin, OUTPUT);
-}
-
-void BLDCOmni::init(){
-  digitalWrite(brakePin, HIGH);
-  analogWrite(speedPin, 0);
-}
-
 void BLDCOmni::setMag(int mag) {
-  analogWrite(speedPin, constrain(mag, 0, 30));
+  m1.setMag(mag);
+  m1.setMag(mag);
+  m1.setMag(mag);
+  m1.setMag(mag);
 }
 
 void BLDCOmni::brakeOn() {
-  digitalWrite(brakePin, HIGH);
+  m1.brakeOn();
+  m2.brakeOn();
+  m3.brakeOn();
+  m4.brakeOn();
 }
 
-void BLDCOmni::brakeOff(){
-  digitalWrite(brakePin, LOW);
+void BLDCOmni::brakeOff() {
+  m1.brakeOff();
+  m2.brakeOff();
+  m3.brakeOff();
+  m4.brakeOff();
 }
 
-String BLDCOmni::getDir(){
- return curDir;
+String BLDCOmni::getDir() {
+  return curDir;
 }
 
 void BLDCOmni::setDir(byte dir) {
   switch (dir) {
     case 8:
-      curDir="UP";
+      curDir = "UP";
       m1.cw();
       m2.off();
       m3.acw();
       m4.off();
       break;
     case 2:
-      curDir="Down";
+      curDir = "Down";
       m1.acw();
       m2.off();
       m3.cw();
       m4.off();
       break;
     case 4:
-      curDir= "Left";
+      curDir = "Left";
       m1.off();
       m2.cw();
       m3.off();
@@ -94,55 +92,36 @@ void BLDCOmni::setDir(byte dir) {
       m3.off();
       m4.off();
       break;
-/*    case '+':
-      m1.cw();
-      m2.cw();
-      m3.cw();
-      m4.cw();
-      break;
-    case '-':
-      m1.acw();
-      m2.acw();
-      m3.acw();
-      m4.acw();
-      break;
-*/    default:
+    /*    case '+':
+          m1.cw();
+          m2.cw();
+          m3.cw();
+          m4.cw();
+          break;
+        case '-':
+          m1.acw();
+          m2.acw();
+          m3.acw();
+          m4.acw();
+          break;
+  */    default:
       setDir(5);
       break;
   }
 }
 
-int BLDCOmni::getRPM(int motor) {
-  switch (motor) {
-    case 1:
-      return m1.rpm();
-      break;
-    case 2:
-      return m2.rpm();
-      break;
-    case 3:
-      return m3.rpm();
-      break;
-    case 4:
-      return m4.rpm();
-      break;
-    default:
-      return 0;
-  }
+void BLDCOmni::setMotor1(int _speedPin, int _disablePin, int _directionPin, int _brakePin, float _correctionFactor) {
+  m1.init(_speedPin, _disablePin, _directionPin, _brakePin, _correctionFactor);
 }
 
-void BLDCOmni::setMotor1(int _disablePin, int _directionPin, int _tachoPin, float _correctionFactor) {
-  m1.init(_disablePin, _directionPin, _tachoPin, _correctionFactor);
+void BLDCOmni::setMotor2(int _speedPin, int _disablePin, int _directionPin, int _brakePin, float _correctionFactor) {
+  m2.init(_speedPin, _disablePin, _directionPin, _brakePin, _correctionFactor);
 }
 
-void BLDCOmni::setMotor2(int _disablePin, int _directionPin, int _tachoPin, float _correctionFactor) {
-  m2.init(_disablePin, _directionPin, _tachoPin, _correctionFactor);
+void BLDCOmni::setMotor3(int _speedPin, int _disablePin, int _directionPin, int _brakePin, float _correctionFactor) {
+  m3.init(_speedPin, _disablePin, _directionPin, _brakePin, _correctionFactor);
 }
 
-void BLDCOmni::setMotor3(int _disablePin, int _directionPin, int _tachoPin, float _correctionFactor) {
-  m3.init(_disablePin, _directionPin, _tachoPin, _correctionFactor);
-}
-
-void BLDCOmni::setMotor4(int _disablePin, int _directionPin, int _tachoPin, float _correctionFactor) {
-  m4.init(_disablePin, _directionPin, _tachoPin, _correctionFactor);
+void BLDCOmni::setMotor4(int _speedPin, int _disablePin, int _directionPin, int _brakePin, float _correctionFactor) {
+  m4.init(_speedPin, _disablePin, _directionPin, _brakePin, _correctionFactor);
 }
