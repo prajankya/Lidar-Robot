@@ -1,15 +1,16 @@
 #include<Arduino.h>
 #include"MyMotor.h"
 
-void MyMotor::init(int _disablePin, int _directionPin, int _tachoPin, float _correctionFactor) {
+void MyMotor::init(int _speedPin, int _disablePin, int _directionPin, int _brakePin, float _correctionFactor) {
+  speedPin = _speedPin;
   disablePin = _disablePin;
   directionPin = _directionPin;
-  tachoPin = _tachoPin;
+  brakePin = _brakePin;
   correctionFactor = _correctionFactor;
 
   pinMode(disablePin, OUTPUT);
   pinMode(directionPin, OUTPUT);
-  pinMode(tachoPin, INPUT);
+  pinMode(brakePin, OUTPUT);
 }
 
 void MyMotor::acw() {
@@ -26,8 +27,14 @@ void MyMotor::off() {
   digitalWrite(disablePin, LOW);
 }
 
-int MyMotor::rpm() {
-  long high_time = pulseIn(tachoPin, HIGH, 300000);
-  return floor(correctionFactor * (1000000 / high_time));
+void MyMotor::setMag(int _mag) {
+  analogWrite(speedPin, (correctionFactor * _mag));
+}
+
+void MyMotor::brakeOn() {
+  digitalWrite(brakePin, HIGH);
+}
+void MyMotor::brakeOff() {
+  digitalWrite(brakePin, LOW);
 }
 
