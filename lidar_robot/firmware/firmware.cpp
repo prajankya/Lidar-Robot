@@ -55,6 +55,9 @@ double odom_x = 0;
 double odom_y = 0;
 double odom_angle = 0;
 
+double azx = 0, azy = 0, azz = 0;
+bool brake = false;
+
 int brake_ = 0;
 int dir_ = 5;
 int mag_ = 0;
@@ -71,9 +74,6 @@ void messageCb( const std_msgs::String &_cmd) {
 }
 
 ros::Subscriber<std_msgs::String> base_sub("Base_command", messageCb);
-
-double azx = 0, azy = 0, azz = 0;
-bool brake = false;
 
 void setup() {
   nh.initNode();
@@ -160,7 +160,6 @@ void loop() {
 
   pub2.publish(&imu);
 
-  //  String s2 = String(cmd.magnitude);
   String s = "dir = " + String(dir_) + "  mag=" + String(mag_) + " brake= " + String(brake_);
   char bb[50];
   s.toCharArray(bb, 50);
@@ -170,21 +169,21 @@ void loop() {
   odom.header.stamp = nh.now();
   /*
     odom.pose.pose.position.x = 0.0;
-    odom.pose.pose.position.y = 0.0;
-    odom.pose.pose.position.z = 0.0;
-    odom.pose.pose.orientation = tf::createQuaternionFromYaw(0);
+   odom.pose.pose.position.y = 0.0;
+   odom.pose.pose.position.z = 0.0;
+   odom.pose.pose.orientation = tf::createQuaternionFromYaw(0);
+   
+   odom.twist.twist.linear.x = 0.0;
+   odom.twist.twist.linear.y = 0.0;
+   odom.twist.twist.linear.z = 0.0;
+   
+   odom.twist.twist.angular.x = 0.0;
+   odom.twist.twist.angular.y = 0.0;
+   odom.twist.twist.angular.z = 0.0;
+   */
 
-    odom.twist.twist.linear.x = 0.0;
-    odom.twist.twist.linear.y = 0.0;
-    odom.twist.twist.linear.z = 0.0;
-
-    odom.twist.twist.angular.x = 0.0;
-    odom.twist.twist.angular.y = 0.0;
-    odom.twist.twist.angular.z = 0.0;
-  */
-
-  double dAng = 0;//change in angle
-  double dlen = 0;//change in length
+  double dAng = theta.read() * 0.104719755;//change in angle
+  double dlen = r.read() * 0.0011709;//change in length
 
   odom_x += dlen * cos(dAng);
   odom_y += dlen * sin(dAng);
@@ -212,19 +211,20 @@ void loop() {
   }
 
   nh.spinOnce();
-  /*
-    if (cmd.brake && !brake) {
-      base.brakeOn();
-      brake = true;
-    }
 
-    if (brake && !cmd.brake) {
-      base.brakeOff();
-      brake = false;
-    }
+  if (cmd.brake && !brake) {
+    base.brakeOn();
+    brake = true;
+  }
 
-    base.setDir(cmd.direction);
-    base.setMag(cmd.magnitude);
-  */
+  if (brake && !cmd.brake) {
+    base.brakeOff();
+    brake = false;
+  }
+
+  base.setDir(cmd.direction);
+  base.setMag(cmd.magnitude);
+
   delay(10);
 }
+
