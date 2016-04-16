@@ -48,12 +48,13 @@ ros::Publisher pub3("debug_out", &str_msg);
 ros::Publisher pub4("temperature", &temperature);
 ros::Publisher pub5("pressure", &pressure);
 
-Encoder r(18, 22);
-Encoder theta(19, 23);
+Encoder theta(18, 22);
+Encoder r(19, 23);
 
 double odom_x = 0;
 double odom_y = 0;
 double odom_angle = 0;
+//double priv_x = 0, priv_y =0, priv_ang = 0, priv_len = 0;
 
 double azx = 0, azy = 0, azz = 0;
 bool brake = false;
@@ -181,18 +182,35 @@ void loop() {
    odom.twist.twist.angular.y = 0.0;
    odom.twist.twist.angular.z = 0.0;
    */
+  /*odom_x += dlen * cos(dAng);
+  odom_y += dlen * sin(dAng);
+  odom_angle += dAng;
+  odom.transform.rotation = tf::createQuaternionFromYaw(odom_angle);
+*/
+  double ang = theta.read() * 0.104719755;//change in angle
 
+  double len = r.read() * 0.0011709;//change in length
+
+  odom.transform.translation.x = cos(ang) * len;
+  odom.transform.translation.y = sin(ang) * len;
+  odom.transform.rotation = tf::createQuaternionFromYaw(ang);
+
+/*
   double dAng = theta.read() * 0.104719755;//change in angle
   double dlen = r.read() * 0.0011709;//change in length
 
   odom_x += dlen * cos(dAng);
   odom_y += dlen * sin(dAng);
-  odom_angle += dAng;
+  odom_angle += dAng - priv_ang;
 
-  odom.transform.translation.x = odom_x;
-  odom.transform.translation.y = odom_y;
+  odom.transform.translation.x = odom_x - priv_x;
+  odom.transform.translation.y = odom_y - priv_y;
 
-  odom.transform.rotation = tf::createQuaternionFromYaw(odom_angle);
+  priv_x = odom_x;
+  priv_y = odom_y;
+  priv_ang = odom_angle;
+
+*/
   odom.header.stamp = nh.now();
   odom_broadcaster.sendTransform(odom);
 
@@ -212,18 +230,18 @@ void loop() {
 
   nh.spinOnce();
 
-  if (cmd.brake && !brake) {
+  if (brake_ && !brake) {
     base.brakeOn();
     brake = true;
   }
 
-  if (brake && !cmd.brake) {
+  if (brake && !brake_) {
     base.brakeOff();
     brake = false;
   }
 
-  base.setDir(cmd.direction);
-  base.setMag(cmd.magnitude);
+  base.setDir(dir_);
+  base.setMag(mag_);
 
   delay(10);
 }
