@@ -77,10 +77,10 @@ ros::Subscriber<std_msgs::String> base_sub("Base_command", messageCb);
 
     switch(type){
       case 1:
-      design.inOut(5);
+      design.inOut(2);
       break;
       case 2:
-      design.outIn(5);
+      design.outIn(2);
       break;
       case 3: //blink
       design.on();
@@ -93,22 +93,22 @@ ros::Subscriber<std_msgs::String> base_sub("Base_command", messageCb);
       break;
       case 4: //wave
       design.on(1);
-      delay(30);
+      delay(50);
       design.on(2);
       design.off(1);
-      delay(30);
+      delay(50);
       design.on(3);
       design.off(2);
-      delay(30);
+      delay(50);
       design.on(4);
       design.off(3);
-      delay(30);
+      delay(50);
       design.on(5);
       design.off(4);
-      delay(30);
+      delay(50);
       design.on(6);
       design.off(5);
-      delay(30);
+      delay(50);
       design.off(6);
       break;
     }
