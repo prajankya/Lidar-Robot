@@ -33,13 +33,10 @@ void twistReceived(const geometry_msgs::Twist &msg){
   myY = msg.linear.y;
   myRot = msg.angular.z;
 
-  double a = 20;
+  double a = 20 * 0.2;
   myX *= a;
   myY *= a;
   myRot *= a;
-
- // int dir = 5;
- // int mag = 0;
 
   if(absolute(myX) < tol  && absolute(myY) < tol){
     dir = 5;

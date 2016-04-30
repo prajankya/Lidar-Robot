@@ -1,6 +1,7 @@
 #include<Arduino.h>
 #include"MyMotor.h"
 
+
 void MyMotor::init(int _speedPin, int _disablePin, int _directionPin, int _brakePin, float _correctionFactor) {
   speedPin = _speedPin;
   disablePin = _disablePin;
@@ -28,7 +29,7 @@ void MyMotor::off() {
 }
 
 void MyMotor::setMag(int _mag) {
-  analogWrite(speedPin, (correctionFactor * _mag));
+  analogWrite(speedPin, constrain(round(correctionFactor * _mag), 0, 255));
 }
 
 void MyMotor::brakeOn() {

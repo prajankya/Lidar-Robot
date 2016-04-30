@@ -1,4 +1,4 @@
-#define USE_IMU 
+//#define USE_IMU
 #define USE_ODOM
 #define USE_DESIGN
 #define USE_BASE
@@ -74,44 +74,7 @@ ros::Subscriber<std_msgs::String> base_sub("Base_command", messageCb);
   void animate_Design_callback(const Test::Request & req, Test::Response & res){
     String s = String(req.input);
     int type = s.toInt();
-
-    switch(type){
-      case 1:
-      design.inOut(2);
-      break;
-      case 2:
-      design.outIn(2);
-      break;
-      case 3: //blink
-      design.on();
-      delay(50);
-      design.off();
-      delay(100);
-      design.on();
-      delay(50);
-      design.off();
-      break;
-      case 4: //wave
-      design.on(1);
-      delay(50);
-      design.on(2);
-      design.off(1);
-      delay(50);
-      design.on(3);
-      design.off(2);
-      delay(50);
-      design.on(4);
-      design.off(3);
-      delay(50);
-      design.on(5);
-      design.off(4);
-      delay(50);
-      design.on(6);
-      design.off(5);
-      delay(50);
-      design.off(6);
-      break;
-    }
+    design.animate(type);
   }
   ros::ServiceServer<Test::Request, Test::Response> server("animate_Design",&animate_Design_callback);
 #endif
@@ -135,9 +98,6 @@ void setup() {
   #ifdef USE_DESIGN
     design.init(7, 8, 9, 10, 11, 12);//L1, L2, L3, L4, L5, L6
     nh.advertiseService(server);
-    design.inOut(3);
-    delay(500);
-    design.outIn(5);
   #endif
 
   #ifdef USE_ODOM
@@ -145,12 +105,12 @@ void setup() {
   odom.child_frame_id = "base_link";
   odom_broadcaster.init(nh);
   #endif
-  
+
   #ifdef USE_BASE
     nh.subscribe(base_sub);
 
-    base.setMotor1(46, 50, 48, 52, 0.15); //speedPin, disablePin, directionPin, brakePin, speedFactor
-    base.setMotor2(4, 42, 40, 44, 2);
+    base.setMotor1(46, 50, 48, 52, 1); //speedPin, disablePin, directionPin, brakePin, speedFactor
+    base.setMotor2(4, 42, 40, 44, 1);
     base.setMotor3(3, 34, 32, 36, 1);
     base.setMotor4(2, 26, 24, 28, 1);
 

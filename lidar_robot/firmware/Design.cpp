@@ -44,6 +44,46 @@ void Design::inOut(int inDelay) {
   }
 
 }
+void Design::animate(int type){
+  switch(type){
+    case 1:
+      inOut(2);
+      break;
+    case 2:
+      outIn(2);
+      break;
+    case 3: //blink
+      on();
+      delay(50);
+      off();
+      delay(100);
+      on();
+      delay(50);
+      off();
+      break;
+    case 4: //wave
+      on(1);
+      delay(50);
+      on(2);
+      off(1);
+      delay(50);
+      on(3);
+      off(2);
+      delay(50);
+      on(4);
+      off(3);
+      delay(50);
+      on(5);
+      off(4);
+      delay(50);
+      on(6);
+      off(5);
+      delay(50);
+      off(6);
+      break;
+    }
+}
+
 
 void Design::outIn(int inDelay) {
   for (int i = 255; i >= 0; i -= 5) {
