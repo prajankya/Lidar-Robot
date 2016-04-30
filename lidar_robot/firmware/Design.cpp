@@ -47,39 +47,39 @@ void Design::inOut(int inDelay) {
 void Design::animate(int type){
   switch(type){
     case 1:
-      design.inOut(2);
+      inOut(2);
       break;
     case 2:
-      design.outIn(2);
+      outIn(2);
       break;
     case 3: //blink
-      design.on();
+      on();
       delay(50);
-      design.off();
+      off();
       delay(100);
-      design.on();
+      on();
       delay(50);
-      design.off();
+      off();
       break;
     case 4: //wave
-      design.on(1);
+      on(1);
       delay(50);
-      design.on(2);
-      design.off(1);
+      on(2);
+      off(1);
       delay(50);
-      design.on(3);
-      design.off(2);
+      on(3);
+      off(2);
       delay(50);
-      design.on(4);
-      design.off(3);
+      on(4);
+      off(3);
       delay(50);
-      design.on(5);
-      design.off(4);
+      on(5);
+      off(4);
       delay(50);
-      design.on(6);
-      design.off(5);
+      on(6);
+      off(5);
       delay(50);
-      design.off(6);
+      off(6);
       break;
     }
 }

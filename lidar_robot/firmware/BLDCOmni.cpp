@@ -4,9 +4,9 @@
 
 void BLDCOmni::setMag(int mag) {
   m1.setMag(mag);
-  m1.setMag(mag);
-  m1.setMag(mag);
-  m1.setMag(mag);
+  m2.setMag(mag);
+  m3.setMag(mag);
+  m4.setMag(mag);
 }
 
 void BLDCOmni::brakeOn() {
@@ -108,6 +108,7 @@ void BLDCOmni::setDir(byte dir) {
       setDir(5);
       break;
   }
+m3.brakeOn();
 }
 
 void BLDCOmni::setMotor1(int _speedPin, int _disablePin, int _directionPin, int _brakePin, float _correctionFactor) {

@@ -110,7 +110,7 @@ void setup() {
     nh.subscribe(base_sub);
 
     base.setMotor1(46, 50, 48, 52, 1); //speedPin, disablePin, directionPin, brakePin, speedFactor
-    base.setMotor2(5, 42, 40, 44, 1);
+    base.setMotor2(4, 42, 40, 44, 1);
     base.setMotor3(3, 34, 32, 36, 1);
     base.setMotor4(2, 26, 24, 28, 1);
 
