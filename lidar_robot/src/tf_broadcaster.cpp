@@ -29,20 +29,10 @@ int main(int argc, char** argv){
         tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(0, 0, 0)),
         ros::Time::now(),"odom", "base_link"));
   */
-    
-    broadcaster.sendTransform(
-      tf::StampedTransform(
-        tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(1, 0, 0)),
-        ros::Time::now(),"base_link", "x"));
-    broadcaster.sendTransform(
-      tf::StampedTransform(
-        tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(0, 1, 0)),
-        ros::Time::now(),"base_link", "y"));
-    
 
-    broadcaster.sendTransform(
+      broadcaster.sendTransform(
       tf::StampedTransform(
-        tf::Transform(tf::createQuaternionFromRPY(pi/2, 0, pi/2), tf::Vector3(0, 0, 0.2265)),
+        tf::Transform(tf::createQuaternionFromRPY(pi/2, 0, 0), tf::Vector3(0, 0, 0.11675)),
         ros::Time::now(),"base_link", "rplidar"));
     
     broadcaster.sendTransform(
