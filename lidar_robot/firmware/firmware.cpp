@@ -74,44 +74,7 @@ ros::Subscriber<std_msgs::String> base_sub("Base_command", messageCb);
   void animate_Design_callback(const Test::Request & req, Test::Response & res){
     String s = String(req.input);
     int type = s.toInt();
-
-    switch(type){
-      case 1:
-      design.inOut(2);
-      break;
-      case 2:
-      design.outIn(2);
-      break;
-      case 3: //blink
-      design.on();
-      delay(50);
-      design.off();
-      delay(100);
-      design.on();
-      delay(50);
-      design.off();
-      break;
-      case 4: //wave
-      design.on(1);
-      delay(50);
-      design.on(2);
-      design.off(1);
-      delay(50);
-      design.on(3);
-      design.off(2);
-      delay(50);
-      design.on(4);
-      design.off(3);
-      delay(50);
-      design.on(5);
-      design.off(4);
-      delay(50);
-      design.on(6);
-      design.off(5);
-      delay(50);
-      design.off(6);
-      break;
-    }
+    design.animate(type);
   }
   ros::ServiceServer<Test::Request, Test::Response> server("animate_Design",&animate_Design_callback);
 #endif
