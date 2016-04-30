@@ -33,7 +33,7 @@ void twistReceived(const geometry_msgs::Twist &msg){
   myY = msg.linear.y;
   myRot = msg.angular.z;
 
-  double a = 20;
+  double a = 20 * 10;
   myX *= a;
   myY *= a;
   myRot *= a;

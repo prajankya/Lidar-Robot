@@ -1,4 +1,4 @@
-#define USE_IMU 
+//#define USE_IMU
 #define USE_ODOM
 #define USE_DESIGN
 #define USE_BASE
@@ -135,9 +135,6 @@ void setup() {
   #ifdef USE_DESIGN
     design.init(7, 8, 9, 10, 11, 12);//L1, L2, L3, L4, L5, L6
     nh.advertiseService(server);
-    design.inOut(3);
-    delay(500);
-    design.outIn(5);
   #endif
 
   #ifdef USE_ODOM
@@ -145,12 +142,12 @@ void setup() {
   odom.child_frame_id = "base_link";
   odom_broadcaster.init(nh);
   #endif
-  
+
   #ifdef USE_BASE
     nh.subscribe(base_sub);
 
-    base.setMotor1(46, 50, 48, 52, 0.15); //speedPin, disablePin, directionPin, brakePin, speedFactor
-    base.setMotor2(4, 42, 40, 44, 2);
+    base.setMotor1(46, 50, 48, 52, 1); //speedPin, disablePin, directionPin, brakePin, speedFactor
+    base.setMotor2(5, 42, 40, 44, 1);
     base.setMotor3(3, 34, 32, 36, 1);
     base.setMotor4(2, 26, 24, 28, 1);
 
