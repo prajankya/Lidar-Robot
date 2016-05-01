@@ -85,7 +85,7 @@ ros::Subscriber<std_msgs::String> base_sub("Base_command", messageCb);
 
 
 void setup() {
-  nh.initNode();
+    nh.initNode();
 
   #ifdef USE_DEBUG
     nh.advertise(pub3);
@@ -101,9 +101,9 @@ void setup() {
   #endif
 
   #ifdef USE_ODOM
-  odom.header.frame_id = "odom";
-  odom.child_frame_id = "base_link";
-  odom_broadcaster.init(nh);
+    odom.header.frame_id = "odom";
+    odom.child_frame_id = "base_link";
+    odom_broadcaster.init(nh);
   #endif
 
   #ifdef USE_BASE
@@ -121,7 +121,7 @@ void setup() {
 
 void loop() {
   #ifdef USE_IMU
-  imu.loop();
+    imu.loop();
   #endif
 
   #ifdef USE_ODOM
@@ -129,7 +129,7 @@ void loop() {
 
     double ang = theta.read() * 0.104719755;//change in angle
     double len = r.read() * 0.0011709;//change in length
-          
+
     odom.transform.translation.x = cos(ang) * len;
     odom.transform.translation.y = sin(ang) * len;
     odom.transform.rotation = tf::createQuaternionFromYaw(ang);

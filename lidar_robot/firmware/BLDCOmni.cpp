@@ -108,7 +108,6 @@ void BLDCOmni::setDir(byte dir) {
       setDir(5);
       break;
   }
-m3.brakeOn();
 }
 
 void BLDCOmni::setMotor1(int _speedPin, int _disablePin, int _directionPin, int _brakePin, float _correctionFactor) {
