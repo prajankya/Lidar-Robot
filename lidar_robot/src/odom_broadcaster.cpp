@@ -89,7 +89,7 @@ int main(int argc, char ** argv){
     odom_x += dLen * cos(heading - odom_theta);
     odom_y += dLen * sin(heading - odom_theta);
 
-    ROS_INFO("Heading : %lf", ((heading - odom_theta)*180/3.142));
+//    ROS_INFO("Heading : %lf", ((heading - odom_theta)*180/3.142));
 
     geometry_msgs::TransformStamped odom_trans;
     odom_trans.header.stamp = current_time;

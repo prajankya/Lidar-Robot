@@ -130,7 +130,7 @@ void setup() {
     base.setMotor1(46, 50, 48, 52, 1); //speedPin, disablePin, directionPin, brakePin, speedFactor
     base.setMotor2(4, 42, 40, 44, 0.9);
     base.setMotor3(3, 34, 32, 36, 1);
-    base.setMotor4(2, 26, 24, 28, 0.9);
+    base.setMotor4(2, 26, 24, 28, 1);
 
     base.setDir(5);
     base.setMag(0);
