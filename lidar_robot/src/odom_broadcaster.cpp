@@ -34,7 +34,7 @@ void odomReceived(const std_msgs::String &msg){
 
 void magReceived(const sensor_msgs::MagneticField &msg){
   heading = atan2(msg.magnetic_field.y, msg.magnetic_field.x);
-  ROS_INFO("Heading : %lf", heading);
+
 //  heading +=0.22; // Declination Angle
 }
 
@@ -85,9 +85,11 @@ int main(int argc, char ** argv){
       pLen = len;
     }
 
-    odom_x += dLen * cos(dAng);
-    odom_y += dLen * sin(dAng);
     odom_theta += dAng;
+    odom_x += dLen * cos(heading - odom_theta);
+    odom_y += dLen * sin(heading - odom_theta);
+
+    ROS_INFO("Heading : %lf", ((heading - odom_theta)*180/3.142));
 
     geometry_msgs::TransformStamped odom_trans;
     odom_trans.header.stamp = current_time;
