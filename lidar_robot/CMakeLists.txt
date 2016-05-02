@@ -43,5 +43,5 @@ target_link_libraries(base ${catkin_LIBRARIES})
 add_executable(tf_broadcaster src/tf_broadcaster.cpp)
 target_link_libraries(tf_broadcaster ${catkin_LIBRARIES})
 
-add_executable(masterStart src/masterStart.cpp)
-target_link_libraries(masterStart ${catkin_LIBRARIES})
+add_executable(odom_broadcaster src/odom_broadcaster.cpp)
+target_link_libraries(odom_broadcaster ${catkin_LIBRARIES})
