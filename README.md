@@ -1,3 +1,6 @@
+[![DOI](https://zenodo.org/badge/22321/prajankya/Lidar-Robot.svg)](https://zenodo.org/badge/latestdoi/22321/prajankya/Lidar-Robot)
+
+
 ## Unmanned Mapping Vehicle Using L.O.A.M. in Real-time
  L.O.A.M. - Lidar Odometry and Mapping in Real-time
 
