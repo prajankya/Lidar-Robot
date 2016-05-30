@@ -1,0 +1,30 @@
+{
+  "name": "lidar-robot",
+  "version": "1.0.0",
+  "description": "Website Server for hosting the lidar-robot documentation",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prajankya/Lidar-Robot.git"
+  },
+  "keywords": [
+    "website",
+    "3D",
+    "Documentation"
+  ],
+  "author": "Prajankya",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/prajankya/Lidar-Robot/issues"
+  },
+  "homepage": "https://github.com/prajankya/Lidar-Robot#readme",
+  "dependencies": {
+    "connect": "^3.4.1",
+    "jquery": "^2.2.4",
+    "serve-static": "^1.10.2",
+    "three": "^0.77.1"
+  }
+}

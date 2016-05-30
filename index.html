@@ -1,53 +1,173 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Unmanned Mapping Vehicle Using L.O.A.M. in Real-time by prajankya</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-      body{
-        background-color: #777;
-        color: #fff;
-      }
-    </style>
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Unmanned Mapping Vehicle Using L.O.A.M. in Real-time</h1>
-      <h2 class="project-tagline">Minor Project</h2>
-    </section>
+<html>
+	<head>
+		<title>My first Three.js app</title>
+		<style>
+			body { margin: 0; }
+			#loader{
+				position: fixed;
+				background-color: rgba(0, 0, 0, 0.5);
+				top: 0px;
+				bottom: 0px;
+				right: 0px;
+				left: 0px;
+				z-index: 999;
+			}
+			#loader > div{
+				font-size: 24px;
+				color: white;
+				position: fixed;
+				left: 50%;
+				top: 30%;
+				margin-left: -5%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="loader">
+			<div>
+				Loading ...<span id='progressinfo'></span>
+			</div>
+		</div>
 
-    <section class="main-content">
-      <p>L.O.A.M. - Lidar Odometry and Mapping in Real-time</p>
+		<script src="./node_modules/three/build/three.min.js"></script>
+		<script src="./node_modules/jquery/dist/jquery.min.js"></script>
+		<script src="./javascripts/OrbitControls.js"></script>
+		<script>
+			var scene, camera, renderer;
+			var progress = [];
+			var objects = [];
 
-<p>6th sem, 2017 Batch<br>
-Automation and Robotics Dept.<br>
-B. V. Bhoomaraddi College of Engineering and Technology, Hubli<br></p>
+			$(function(){
+					loader("models/json/rplidar.json", 0);
+					myProgress(function () {
+						$("#loader").hide();
+						init();
+						animate();
+					})
+			});
 
-<blockquote>
-<h2>
-<a id="team-9" class="anchor" href="#team-9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Team 9</h2>
+			function myProgress(callback){
+				var inter = setInterval(function(){
+					var tot = 0;
+					for(var i = 0; i < progress.length; i++){
+						tot += progress[i];
+					}
+					tot /= progress.length;
+					tot *= 1000;
+					tot = parseInt(tot);
+					tot /= 10;
+					$("#progressinfo").html(tot+"%");
+					if(tot == 100){
+						callback();
+						clearInterval(inter);
+					}
+				},100);
+			}
 
-<ul>
-<li><a href="http://github.com/Belavatagi">Adarsh Belavatagi</a></li>
-<li><a href="http://github.com/DarshaBafna">Darshan Bafna</a></li>
-<li><a href="http://github.com/pujarmani">Manikanta Pujar</a></li>
-<li><a href="http://github.com/Prajankya">Prajankya Sonar</a></li>
-</ul>
-</blockquote>
+			function loader(url, index){
+				$.ajax({
+					type:"GET",
+					url:url,
+					xhr:function(){
+						var xhr = new window.XMLHttpRequest();
+						xhr.upload.addEventListener("progress",function(evt){
+							if(evt.lengthComputable){
+								progress[index] = evt.loaded / evt.total;
+							}
+						},false);
+						xhr.addEventListener("progress",function(evt){
+							if(evt.lengthComputable){
+								progress[index] = evt.loaded / evt.total;
+							}
+						}, false);
+						return xhr;
+					},
+					success:function(data){
+						objects[index] = data;
+					},
+					error:function(err){
+						console.log(err);
+					}
+				});
+			}
 
-<h3>
-  This page in in Alpha phase, please follow the
-  <a href="https://github.com/prajankya/Lidar-Robot/wiki"><strong>Wiki</strong></a>
-   to know more about this project
-</h3>
+		  // Sets up the scene.
+		  function init() {
 
-  <footer class="site-footer">
-      <a href="https://github.com/prajankya/Lidar-Robot">Unmanned Mapping Vehicle Using L.O.A.M. in Real-time</a> is maintained by <a href="https://github.com/prajankya">prajankya</a>.</span>
-  </footer>
+		    // Create the scene and set the scene size.
+		    scene = new THREE.Scene();
+		    var WIDTH = window.innerWidth,
+		        HEIGHT = window.innerHeight-5;
 
-    </section>
+		    // Create a renderer and add it to the DOM.
+		    renderer = new THREE.WebGLRenderer({antialias:true});
+		    renderer.setSize(WIDTH, HEIGHT);
+		    document.body.appendChild(renderer.domElement);
+
+		    // Create a camera, zoom it out from the model a bit, and add it to the scene.
+		    camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 0.01, 5);
+		    camera.position.set(0,0.2,0);
+		    scene.add(camera);
+
+		    // Create an event listener that resizes the renderer with the browser window.
+		    window.addEventListener('resize', function() {
+		      var WIDTH = window.innerWidth,
+		          HEIGHT = window.innerHeight-5;
+		      renderer.setSize(WIDTH, HEIGHT);
+		      camera.aspect = WIDTH / HEIGHT;
+		      camera.updateProjectionMatrix();
+		    });
+
+		    // Set the background color of the scene.
+		    renderer.setClearColor(0x333F47, 1);
+
+		    // Create a light, set its position, and add it to the scene.
+		    var light = new THREE.PointLight(0xffffff);
+				light.position.set(-100,200,100);
+		    scene.add(light);
+
+				var light2 = new THREE.PointLight(0xffffff);
+				light2.position.set(-100,-200,100);
+		    scene.add(light2);
 
 
-  </body>
+		  /*  // Load in the mesh and add it to the scene.
+		    var loader = new THREE.JSONLoader();
+		    loader.load( "models/rplidar.json", function(geometry){
+		      var material = new THREE.MeshLambertMaterial({color: 0x55B663});
+		      mesh = new THREE.Mesh(geometry, material);
+		      scene.add(mesh);
+		    });
+		*/
+				/*var loader = new THREE.ObjectLoader();
+				loader.load("models/rplidar.json",function ( obj ) {
+		    	scene.add(obj);
+				});
+*/
+				for(var i = 0; i < objects.length; i++){
+					var loader = new THREE.ObjectLoader();
+					loader.parse( objects[i], function ( obj ) {
+			    	scene.add(obj);
+					});
+				}
+				// Add OrbitControls so that we can pan around with the mouse.
+		    controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+		  }
+
+
+		  // Renders the scene and updates the render as needed.
+		  function animate() {
+
+		    // Read more about requestAnimationFrame at http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+		    requestAnimationFrame(animate);
+
+		    // Render the scene.
+		    renderer.render(scene, camera);
+		    controls.update();
+
+		  }
+    </script>
+	</body>
 </html>
