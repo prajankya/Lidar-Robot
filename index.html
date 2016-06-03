@@ -37,6 +37,8 @@
 			var scene, camera, renderer;
 			var progress = [];
 			var objects = [];
+			var mouse = new THREE.Vector2(), INTERSECTED;
+			var radius = 100, theta = 0;
 
 			$(function(){
 					loader("models/json/rplidar.json", 0);
@@ -94,9 +96,14 @@
 
 		  // Sets up the scene.
 		  function init() {
-
 		    // Create the scene and set the scene size.
 		    scene = new THREE.Scene();
+				scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
+
+				scene.add(new THREE.AmbientLight(0x444444));
+
+				raycaster = new THREE.Raycaster();
+
 		    var WIDTH = window.innerWidth,
 		        HEIGHT = window.innerHeight-5;
 
@@ -131,43 +138,54 @@
 				light2.position.set(-100,-200,100);
 		    scene.add(light2);
 
-
-		  /*  // Load in the mesh and add it to the scene.
-		    var loader = new THREE.JSONLoader();
-		    loader.load( "models/rplidar.json", function(geometry){
-		      var material = new THREE.MeshLambertMaterial({color: 0x55B663});
-		      mesh = new THREE.Mesh(geometry, material);
-		      scene.add(mesh);
-		    });
-		*/
-				/*var loader = new THREE.ObjectLoader();
-				loader.load("models/rplidar.json",function ( obj ) {
-		    	scene.add(obj);
-				});
-*/
 				for(var i = 0; i < objects.length; i++){
 					var loader = new THREE.ObjectLoader();
-					loader.parse( objects[i], function ( obj ) {
+					loader.parse(objects[i], function(obj){
+						obj.children[0].myName = "dsfsfd";
 			    	scene.add(obj);
 					});
 				}
+
 				// Add OrbitControls so that we can pan around with the mouse.
 		    controls = new THREE.OrbitControls(camera, renderer.domElement);
-
+				document.addEventListener('mousemove', onDocumentMouseMove, false);
 		  }
+			function onDocumentMouseMove( event ) {
+					event.preventDefault();
 
+					mouse.x = (event.clientX/window.innerWidth) * 2 - 1;
+					mouse.y = -(event.clientY/window.innerHeight) * 2 + 1;
+				}
 
 		  // Renders the scene and updates the render as needed.
 		  function animate() {
-
-		    // Read more about requestAnimationFrame at http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
 		    requestAnimationFrame(animate);
-
+				render();
 		    // Render the scene.
-		    renderer.render(scene, camera);
 		    controls.update();
-
 		  }
+
+			function render() {
+				raycaster.setFromCamera(mouse, camera);
+				var intersects = raycaster.intersectObjects(scene.children[4].children);
+
+				if(intersects.length > 0) {
+					if(INTERSECTED != intersects[0].object) {
+						if(INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+						INTERSECTED = intersects[0].object;
+						INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+						INTERSECTED.material.emissive.setHex(0xff0000);
+						if(INTERSECTED.myName){
+							console.log(INTERSECTED.myName);
+
+						}
+					}
+				} else {
+					if(INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+					INTERSECTED = null;
+				}
+				renderer.render(scene, camera);
+			}
     </script>
 	</body>
 </html>
