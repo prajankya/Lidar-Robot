@@ -41,7 +41,7 @@
 			var radius = 100, theta = 0;
 
 			$(function(){
-					loader("models/json/rplidar.json", 0);
+					loader("models/json/rplidar.json", 0, 0x000000);
 					myProgress(function () {
 						$("#loader").hide();
 						init();
@@ -67,7 +67,7 @@
 				},100);
 			}
 
-			function loader(url, index){
+			function loader(url, index, color){
 				$.ajax({
 					type:"GET",
 					url:url,
@@ -86,6 +86,10 @@
 						return xhr;
 					},
 					success:function(data){
+						data.materials[0].color=color;
+
+						data.object.children[0].myName = "dsfsfd";
+						//console.log(data);
 						objects[index] = data;
 					},
 					error:function(err){
@@ -141,8 +145,7 @@
 				for(var i = 0; i < objects.length; i++){
 					var loader = new THREE.ObjectLoader();
 					loader.parse(objects[i], function(obj){
-						obj.children[0].myName = "dsfsfd";
-			    	scene.add(obj);
+						scene.add(obj);
 					});
 				}
 
@@ -152,7 +155,6 @@
 		  }
 			function onDocumentMouseMove( event ) {
 					event.preventDefault();
-
 					mouse.x = (event.clientX/window.innerWidth) * 2 - 1;
 					mouse.y = -(event.clientY/window.innerHeight) * 2 + 1;
 				}
@@ -175,9 +177,9 @@
 						INTERSECTED = intersects[0].object;
 						INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
 						INTERSECTED.material.emissive.setHex(0xff0000);
+						console.log(INTERSECTED);
 						if(INTERSECTED.myName){
-							console.log(INTERSECTED.myName);
-
+							console.log(INTERSECTED);
 						}
 					}
 				} else {
