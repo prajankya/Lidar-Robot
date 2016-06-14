@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>lidar_robot</name>
+  <version>0.3.57</version>
+  <description>The lidar_robot package</description>
+
+  <maintainer email="ros@todo.todo">Adarsh</maintainer>
+  <maintainer email="ros@todo.todo">Darshan</maintainer>
+  <maintainer email="ros@todo.todo">Manikanta</maintainer>
+  <maintainer email="prajankya@rig.solutions">Prajankya</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>std_msgs</depend>
+
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>tf</depend>
+  <depend>nav_msgs</depend>
+</package>
