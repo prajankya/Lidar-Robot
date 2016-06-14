@@ -9,10 +9,16 @@
 <script src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
 <script src="http://cdn.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
 <script src="http://cdn.robotwebtools.org/ros3djs/current/ros3d.min.js"></script>
+<script src="http://cdn.robotwebtools.org/jointstatepublisherjs/current/jointstatepublisher.min.js"></script>
 <script>
   function init() {
     var ros = new ROSLIB.Ros({
       url : 'ws://ros-mini:9090'
+    });
+
+    var jsp = new JOINTSTATEPUBLISHER.JointStatePublisher({
+      ros : ros,
+      divID : 'sliders'
     });
 
     var viewer = new ROS3D.Viewer({
@@ -51,7 +57,7 @@
     new ROS3D.UrdfClient({
       ros : ros,
       tfClient : tfClient,
-      path : 'http://ros-mini:8080/src/',
+      path : './src/',
       rootObject : viewer.scene,
       loader :  ROS3D.COLLADA_LOADER_2
     });
@@ -59,6 +65,7 @@
 </script>
 </head>
 <body onload="init()">
+  <div id="sliders" style="float: right"></div>
   <div id="urdf"></div>
 </body>
 </html>
