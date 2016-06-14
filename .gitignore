@@ -1,4 +1,4 @@
 devel/
 build/
-**/node_modules/
 .catkin_workspace
+**/node_modules/
