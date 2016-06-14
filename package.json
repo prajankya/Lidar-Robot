@@ -2,7 +2,7 @@
   "name": "webserver",
   "version": "1.0.0",
   "description": "Webserver GUI for Controlling ROS Bot",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,7 +25,7 @@
     "url": "https://github.com/prajankya/Lidar-Robot/issues"
   },
   "dependencies": {
-    "serve-static": "~1.11.1",
-    "connect": "~3.4.1"
+    "exec": "~0.2.1",
+    "express": "~4.13.4"
   }
 }

@@ -27,7 +27,7 @@
       cellSize: 0.5,
       num_cells: 20
     }));
-
+/*
     var param = new ROSLIB.Param({
       ros : ros,
       name : 'robot_description'
@@ -38,8 +38,9 @@
         string : param
       });
       console.log(urdfModel);
-    });    
-    var tfClient = new ROSLIB.TFClient({
+    });*/    
+  
+   var tfClient = new ROSLIB.TFClient({
       ros : ros,
       angularThres : 0.01,
       transThres : 0.01,
@@ -50,7 +51,7 @@
     new ROS3D.UrdfClient({
       ros : ros,
       tfClient : tfClient,
-      path : 'http://resources.robotwebtools.org/',
+      path : 'http://ros-mini:8080/src/',
       rootObject : viewer.scene,
       loader :  ROS3D.COLLADA_LOADER_2
     });
