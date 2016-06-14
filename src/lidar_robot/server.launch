@@ -7,8 +7,11 @@
     <arg name="port" value="9090"/>
   </include>
 
-  <node name="odom_broadcaster" pkg="lidar_robot" ns="lidar_robot" type="odom_broadcaster" output="screen"/>
+  <node name="tf_broadcaster" pkg="lidar_robot" ns="lidar_robot" type="tf_broadcaster" />
+  <node name="base" pkg="lidar_robot" ns="lidar_robot" type="base" output="screen"/>
 
+<!--  <node name="odom_broadcaster" pkg="lidar_robot" ns="lidar_robot" type="odom_broadcaster" output="screen"/>-->
+
+  <node name="serial_node" pkg="rosserial_python" ns="lidar_robot" type="serial_node.py" args="$(arg port)" respawn="true"/>
   <node name="rplidar" pkg="rplidar_ros" ns="lidar_robot" type="rplidarNode" respawn="false"/>
-
 </launch>
