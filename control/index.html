@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app="roscc" id="ng-app">
+  <head>
+    <meta charset="utf-8"/>
+    <title>ROS Control Center</title>
+
+    <link rel="shortcut icon" href="assets/images/ros-logo.svg" type="image/svg" />
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/roscc.css">
+  </head>
+
+  <body>
+    <cc-navbar></cc-navbar>
+
+    <div ng-view></div>
+
+    <script type="text/javascript" src="assets/js/underscore-min.js"></script>
+    <script type="text/javascript" src="assets/js/angular.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-route.min.js"></script>
+    <script type="text/javascript" src="assets/js/angular-local-storage.min.js"></script>
+    <script type="text/javascript" src="assets/js/ui-bootstrap-tpls.js"></script>
+
+    <script type="text/javascript" src="assets/js/eventemitter2.js"></script>
+    <script type="text/javascript" src="assets/js/roslib.js"></script>
+
+    <script type="text/javascript" src="assets/js/roscc.js"></script>
+  </body>
+</html>
