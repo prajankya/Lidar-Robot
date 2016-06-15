@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="lidar_robot">
-    <!--<xacro:property name="pi" value="3.14159265359"/>-->
     <material name="transparent_acrylic">
         <color rgba="0.8 0.8 0.8 0.4"/>
     </material>
     <material name="aluminium">
         <color rgba="0.8 0.8 0.8 1"/>
     </material>
-    <material name="aluminium_darl">
+    <material name="aluminium_dark">
         <color rgba="0.6 0.6 0.6 1"/>
     </material>
     <material name="plastic">
@@ -64,11 +63,11 @@
     </joint>
     <link name="wheel">
         <visual>
-            <origin xyz="-0.34 0 0.045" rpy="${pi/2} ${pi} 0"/>
+            <origin xyz="-0.365 0 0.045" rpy="0 0 ${pi/2}"/>
             <geometry>
-                <mesh filename="package://lidar_robot/models/wheel.ply" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://lidar_robot/models/wheel.dae"/>
             </geometry>
-            <material name="plastic"/>
+            <material name="aluminium_dark"/>
         </visual>
     </link>
     <joint name="shaft_wheel_1" type="fixed">
