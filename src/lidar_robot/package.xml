@@ -1,24 +1,25 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>lidar_robot</name>
-  <version>0.3.57</version>
-  <description>The lidar_robot package</description>
+    <name>lidar_robot</name>
+    <version>10.3.57</version>
+    <description>The lidar_robot package</description>
+    <maintainer email="prajankya@rig.solutions">Prajankya</maintainer>
+    <license>GNU-3.0</license>
+    <buildtool_depend>catkin</buildtool_depend>
 
-  <maintainer email="ros@todo.todo">Adarsh</maintainer>
-  <maintainer email="ros@todo.todo">Darshan</maintainer>
-  <maintainer email="ros@todo.todo">Manikanta</maintainer>
-  <maintainer email="prajankya@rig.solutions">Prajankya</maintainer>
+    <depend>std_msgs</depend>
+    <depend>std_srvs</depend>
+    <depend>roscpp</depend>
+    <depend>rospy</depend>
+    <depend>sensor_msgs</depend>
+    <depend>geometry_msgs</depend>
+    <depend>tf</depend>
+    <depend>nav_msgs</depend>
+    <depend>rosserial_arduino</depend>
+    <depend>rosserial_client</depend>
 
-  <license>TODO</license>
-
-  <buildtool_depend>catkin</buildtool_depend>
-
-  <depend>std_msgs</depend>
-
-  <depend>roscpp</depend>
-  <depend>rospy</depend>
-  <depend>sensor_msgs</depend>
-  <depend>geometry_msgs</depend>
-  <depend>tf</depend>
-  <depend>nav_msgs</depend>
+    <depend>robot_state_publisher</depend>
+    <depend>joint_state_publisher</depend>
+    <depend>tf2_web_republisher</depend>
+    <depend>rosserial_python</depend>
 </package>

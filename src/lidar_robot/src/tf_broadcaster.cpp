@@ -3,7 +3,7 @@
 
 #define pi 3.142
 
-double wheel_dist=0.35521;
+double wheel_dist = 0.35521;
 
 int main(int argc, char** argv){
   ros::init(argc, argv, "robot_tf_publisher");
@@ -13,7 +13,7 @@ int main(int argc, char** argv){
 
   tf::TransformBroadcaster broadcaster;
 
-  while(n.ok()){
+  while(n.ok()) {
     broadcaster.sendTransform(
       tf::StampedTransform(
         tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(0, 0, 0)),
@@ -24,20 +24,20 @@ int main(int argc, char** argv){
         tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(0, 0, 0)),
         ros::Time::now(),"odom", "base_link"));
 
-/*    broadcaster.sendTransform(
+    broadcaster.sendTransform(
       tf::StampedTransform(
         tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(0, 0, 0)),
-        ros::Time::now(),"odom", "base_link"));
-  */
+        ros::Time::now(),"map", "odom"));
 
-      broadcaster.sendTransform(
+
+    broadcaster.sendTransform(
       tf::StampedTransform(
-        tf::Transform(tf::createQuaternionFromRPY(pi/2, 0, 0), tf::Vector3(0, 0, 0.11675)),
+        tf::Transform(tf::createQuaternionFromRPY(pi / 2, 0, 0), tf::Vector3(0, 0, 0.11675)),
         ros::Time::now(),"base_link", "rplidar"));
 
     broadcaster.sendTransform(
       tf::StampedTransform(
-        tf::Transform(tf::createQuaternionFromRPY(pi/2, 0, 0), tf::Vector3(0, 0, 0)),
+        tf::Transform(tf::createQuaternionFromRPY(pi / 2, 0, 0), tf::Vector3(0, 0, 0)),
         ros::Time::now(),"rplidar", "laser_frame"));
 
     r.sleep();
