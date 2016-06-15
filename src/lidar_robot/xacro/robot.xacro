@@ -22,56 +22,62 @@
             <material name="transparent_acrylic"/>
         </visual>
     </link>
-    <link name="c_clamp">
-        <visual>
-            <origin xyz="-0.32 0.05 0.09" rpy="${pi/2} 0 0"/>
-            <geometry>
-                <mesh filename="package://lidar_robot/models/c_clamp.stl" scale="0.001 0.001 0.001"/>
-            </geometry>
-            <material name="aluminium"/>
-        </visual>
-    </link>
-    <joint name="base_c_clamp_1" type="fixed">
-        <parent link="base_link"/>
-        <child link="c_clamp"/>
-    </joint>
-    <link name="motor">
-        <visual>
-            <origin xyz="-0.308 0 0.045" rpy="${pi/2} 0 ${pi/2}"/>
-            <geometry>
-                <mesh filename="package://lidar_robot/models/motor.stl" scale="0.001 0.001 0.001"/>
-            </geometry>
-            <material name="aluminium_dark"/>
-        </visual>
-    </link>
-    <joint name="c_clamp_motor_1" type="fixed">
-        <parent link="c_clamp"/>
-        <child link="motor"/>
-    </joint>
-    <link name="shaft">
-        <visual>
-            <origin xyz="-0.33 0 0.045" rpy="${pi/2} ${pi} 0"/>
-            <geometry>
-                <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
-            </geometry>
-            <material name="plastic"/>
-        </visual>
-    </link>
-    <joint name="motor_shaft_1" type="fixed">
-        <parent link="motor"/>
-        <child link="shaft"/>
-    </joint>
-    <link name="wheel">
-        <visual>
-            <origin xyz="-0.365 0 0.045" rpy="0 0 ${pi/2}"/>
-            <geometry>
-                <mesh filename="package://lidar_robot/models/wheel.dae"/>
-            </geometry>
-            <material name="aluminium_dark"/>
-        </visual>
-    </link>
-    <joint name="shaft_wheel_1" type="fixed">
-        <parent link="shaft"/>
-        <child link="wheel"/>
-    </joint>
+    <xacro:macro name="my_wheel" params="no ang">
+        <link name="c_clamp_${no}">
+            <visual>
+                <origin xyz="${(ang%2*-0.32)+((ang+1)%2*0.05)} ${(ang%2*0.05)+((ang+1)%2*0.32)} 0.09" rpy="${pi/2} 0 -${(ang-1)*(pi/2)}"/>
+                <geometry>
+                    <mesh filename="package://lidar_robot/models/c_clamp.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="aluminium"/>
+            </visual>
+        </link>
+        <joint name="base_c_clamp_${no}" type="fixed">
+            <parent link="base_link"/>
+            <child link="c_clamp_${no}"/>
+        </joint>
+        <link name="motor_${no}">
+            <visual>
+                <origin xyz="${(ang%2*-0.308)} ${(ang+1)%2*0.308} 0.045" rpy="${pi/2} 0 ${(ang)*(pi/2)+pi}"/>
+                <geometry>
+                    <mesh filename="package://lidar_robot/models/motor.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="aluminium_dark"/>
+            </visual>
+        </link>
+        <joint name="c_clamp_motor_${no}" type="fixed">
+            <parent link="c_clamp_${no}"/>
+            <child link="motor_${no}"/>
+        </joint>
+        <link name="shaft_${no}">
+            <visual>
+                <origin xyz="-0.33 0 0.045" rpy="${pi/2} ${pi} 0"/>
+                <geometry>
+                    <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="plastic"/>
+            </visual>
+        </link>
+        <joint name="motor_shaft_${no}" type="fixed">
+            <parent link="motor_${no}"/>
+            <child link="shaft_${no}"/>
+        </joint>
+        <link name="wheel_${no}">
+            <visual>
+                <origin xyz="-0.365 0 0.045" rpy="0 0 ${pi/2}"/>
+                <geometry>
+                    <mesh filename="package://lidar_robot/models/wheel2.dae"/>
+                </geometry>
+                <material name="wheel">
+                    <texture filename="package://lidar_robot/models/wheel_color.png"/>
+                </material>
+            </visual>
+        </link>
+        <joint name="shaft_wheel_${no}" type="fixed">
+            <parent link="shaft_${no}"/>
+            <child link="wheel_${no}"/>
+        </joint>
+    </xacro:macro>
+    <!--<xacro:my_wheel no="1" ang="1"/>-->
+    <xacro:my_wheel no="2" ang="2"/>
 </robot>

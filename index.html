@@ -33,18 +33,18 @@
                cellSize: 1,
                num_cells: 20
             }));
-            /*
-                var param = new ROSLIB.Param({
-                  ros : ros,
-                  name : 'robot_description'
-                });
 
-                param.get(function(param) {
-                  var urdfModel = new ROSLIB.UrdfModel({
-                    string : param
-                  });
-                  console.log(urdfModel);
-                });*/
+            var param = new ROSLIB.Param({
+               ros: ros,
+               name: 'robot_description'
+            });
+
+            param.get(function(param) {
+               var urdfModel = new ROSLIB.UrdfModel({
+                  string: param
+               });
+               //console.log(JSON.stringify(urdfModel));
+            });
 
             var tfClient = new ROSLIB.TFClient({
                ros: ros,
@@ -54,13 +54,14 @@
                fixedFrame: '/map'
             });
 
-            new ROS3D.UrdfClient({
+            var u = new ROS3D.UrdfClient({
                ros: ros,
                tfClient: tfClient,
                path: './src/',
                rootObject: viewer.scene,
                loader: ROS3D.COLLADA_LOADER_2
             });
+            //console.log(u.rootObject);
          }
       </script>
    </head>
