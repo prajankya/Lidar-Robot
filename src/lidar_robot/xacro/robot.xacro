@@ -38,7 +38,7 @@
         </joint>
         <link name="motor_${no}">
             <visual>
-                <origin xyz="${(ang%2*-0.308)} ${(ang+1)%2*0.308} 0.045" rpy="${pi/2} 0 ${(ang)*(pi/2)+pi}"/>
+                <origin xyz="${(ang%2*-0.308)} ${(ang+1)%2*0.308} 0.045" rpy="${pi/2} 0 ${(pi/2)+(1-ang)*(pi/2)}"/>
                 <geometry>
                     <mesh filename="package://lidar_robot/models/motor.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
@@ -51,7 +51,7 @@
         </joint>
         <link name="shaft_${no}">
             <visual>
-                <origin xyz="-0.33 0 0.045" rpy="${pi/2} ${pi} 0"/>
+                <origin xyz="${(ang%2*-0.33)} ${(ang+1)%2*0.33} 0.045" rpy="0 0 ${pi-((ang-1)*(pi/2))}"/>
                 <geometry>
                     <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
@@ -64,7 +64,7 @@
         </joint>
         <link name="wheel_${no}">
             <visual>
-                <origin xyz="-0.365 0 0.045" rpy="0 0 ${pi/2}"/>
+                <origin xyz="${(ang%2*-0.365)} ${(ang+1)%2*0.365} 0.045" rpy="0 0 ${(ang)*pi/2}"/>
                 <geometry>
                     <mesh filename="package://lidar_robot/models/wheel2.dae"/>
                 </geometry>
@@ -78,6 +78,7 @@
             <child link="wheel_${no}"/>
         </joint>
     </xacro:macro>
-    <!--<xacro:my_wheel no="1" ang="1"/>-->
+    <xacro:my_wheel no="1" ang="1"/>
     <xacro:my_wheel no="2" ang="2"/>
+
 </robot>
