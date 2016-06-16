@@ -15,6 +15,9 @@
     <material name="plastic">
         <color rgba="0.95 0.95 0.95 1"/>
     </material>
+    <material name="black_plastic">
+        <color rgba="0.0 0.0 0.0 1"/>
+    </material>
     <material name="blue">
         <color rgba="0 0 1.0 1"/>
     </material>
@@ -358,5 +361,17 @@
         <parent link="lidar_base"/>
         <child link="lidar_bottom"/>
     </joint>
-
+    <link name="lidar_up">
+        <visual>
+            <origin xyz="0.0 0 0.158" rpy="${pi/2} 0 ${-pi/2}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/lidar_up.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="black_plastic"/>
+        </visual>
+    </link>
+    <joint name="lidar_bottom_lidar_up" type="fixed">
+        <parent link="lidar_bottom"/>
+        <child link="lidar_up"/>
+    </joint>
 </robot>
