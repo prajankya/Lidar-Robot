@@ -20,7 +20,23 @@
     </material>
 
     <xacro:property name="c_clamp_dist" value="0.31"/>
+    <xacro:macro name="stud" params="myname x y z parent">
+        <link name="${myname}">
+            <visual>
+                <origin xyz="${x} ${y} ${z}" rpy="${pi/2} 0 0"/>
+                <geometry>
+                    <mesh filename="package://lidar_robot/models/stud.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="bronze"/>
+            </visual>
+        </link>
+        <joint name="${parent}_${myname}" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${myname}"/>
+        </joint>
+    </xacro:macro>
 
+    <!-- ======================================================= Base Link ====================================================================== -->
     <link name="base_link">
         <visual>
             <origin xyz="0.01 0 0" rpy="${pi/2} 0 0"/>
@@ -296,22 +312,6 @@
         <child link="feedback"/>
     </joint>
 
-    <xacro:macro name="stud" params="myname x y z parent">
-        <link name="${myname}">
-            <visual>
-                <origin xyz="${x} ${y} ${z}" rpy="${pi/2} 0 0"/>
-                <geometry>
-                    <mesh filename="package://lidar_robot/models/stud.stl" scale="0.001 0.001 0.001"/>
-                </geometry>
-                <material name="bronze"/>
-            </visual>
-        </link>
-        <joint name="${parent}_${myname}" type="fixed">
-            <parent link="${parent}"/>
-            <child link="${myname}"/>
-        </joint>
-    </xacro:macro>
-
     <xacro:stud myname="s1" x="0.073" y="0.06" z="0.006" parent="feedback"/>
     <xacro:stud myname="s2" x="-0.073" y="0.06" z="0.006" parent="feedback"/>
     <xacro:stud myname="s3" x="0.073" y="-0.06" z="0.006" parent="feedback"/>
@@ -321,5 +321,25 @@
     <xacro:stud myname="s6" x="-0.06" y="0.0735" z="0.006" parent="feedback"/>
     <xacro:stud myname="s7" x="0.06" y="-0.0735" z="0.006" parent="feedback"/>
     <xacro:stud myname="s8" x="-0.06" y="-0.0735" z="0.006" parent="feedback"/>
+
+    <!-- ======================================================= lidar Base ====================================================================== -->
+    <link name="lidar_base">
+        <visual>
+            <origin xyz="0.0 -0.01 0.1134" rpy="${pi/2} 0 ${-pi/2}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/lidar_base.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="transparent_acrylic"/>
+        </visual>
+    </link>
+    <joint name="circuit_plate_lidar_base" type="fixed">
+        <parent link="circuit_plate"/>
+        <child link="lidar_base"/>
+    </joint>
+
+    <xacro:stud myname="s9" x="0.0321" y="0.021" z="0.098" parent="circuit_plate"/>
+    <xacro:stud myname="s10" x="0.0321" y="-0.041" z="0.098" parent="circuit_plate"/>
+    <xacro:stud myname="s11" x="-0.0321" y="-0.041" z="0.098" parent="circuit_plate"/>
+    <xacro:stud myname="s12" x="-0.0321" y="0.021" z="0.098" parent="circuit_plate"/>
 
 </robot>
