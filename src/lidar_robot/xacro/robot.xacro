@@ -15,6 +15,10 @@
     <material name="blue">
         <color rgba="0 0 1.0 1"/>
     </material>
+    <material name="bronze">
+        <color rgba="0.8039 0.498 0.196 1"/>
+    </material>
+
     <xacro:property name="c_clamp_dist" value="0.31"/>
 
     <link name="base_link">
@@ -277,4 +281,45 @@
         <parent link="top_plate"/>
         <child link="circuit_plate"/>
     </joint>
+    <!-- ======================================================= feedback ====================================================================== -->
+    <link name="feedback">
+        <visual>
+            <origin xyz="0.063 0.1 -0.06" rpy="${pi/2} 0 ${pi/4}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/feedback.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="aluminium_dark"/>
+        </visual>
+    </link>
+    <joint name="base_link_feedback" type="fixed">
+        <parent link="base_link"/>
+        <child link="feedback"/>
+    </joint>
+
+    <xacro:macro name="stud" params="myname x y z parent">
+        <link name="${myname}">
+            <visual>
+                <origin xyz="${x} ${y} ${z}" rpy="${pi/2} 0 0"/>
+                <geometry>
+                    <mesh filename="package://lidar_robot/models/stud.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="bronze"/>
+            </visual>
+        </link>
+        <joint name="${parent}_${myname}" type="fixed">
+            <parent link="${parent}"/>
+            <child link="${myname}"/>
+        </joint>
+    </xacro:macro>
+
+    <xacro:stud myname="s1" x="0.073" y="0.06" z="0.006" parent="feedback"/>
+    <xacro:stud myname="s2" x="-0.073" y="0.06" z="0.006" parent="feedback"/>
+    <xacro:stud myname="s3" x="0.073" y="-0.06" z="0.006" parent="feedback"/>
+    <xacro:stud myname="s4" x="-0.073" y="-0.06" z="0.006" parent="feedback"/>
+
+    <xacro:stud myname="s5" x="0.06" y="0.0735" z="0.006" parent="feedback"/>
+    <xacro:stud myname="s6" x="-0.06" y="0.0735" z="0.006" parent="feedback"/>
+    <xacro:stud myname="s7" x="0.06" y="-0.0735" z="0.006" parent="feedback"/>
+    <xacro:stud myname="s8" x="-0.06" y="-0.0735" z="0.006" parent="feedback"/>
+
 </robot>
