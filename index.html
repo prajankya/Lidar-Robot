@@ -2,7 +2,10 @@
 <html>
 
    <head>
+      <title>Lidar Robot GUI</title>
       <meta charset="utf-8" />
+      <link href="./webserver/css/nouislider.min.css" rel="stylesheet">
+
       <script src="./webserver/js/three.min.js"></script>
       <script src="./webserver/js/ColladaLoader2.min.js"></script>
       <script src="./webserver/js/STLLoader.min.js"></script>
@@ -10,6 +13,28 @@
       <script src="./webserver/js/roslib.min.js"></script>
       <script src="./webserver/js/ros3d.min.js"></script>
       <script src="./webserver/js/jointstatepublisher.min.js"></script>
+      <script src="./webserver/js/keyboardteleop.min.js"></script>
+      <script src="./webserver/js/jquery-3.0.0.min.js"></script>
+      <script src="./webserver/js/nouislider.min.js"></script>
+      <style>
+               body {
+            padding: 0px;
+            margin: 0px;
+            overflow: hidden;
+           }
+
+           #sliders {
+              background-color: rgba(255, 255, 255, 0.7);
+              padding: 10px;
+              right: 20px;
+              top: 20px;
+              position: absolute;
+             }
+
+             #sliders * {
+                position: relative!important;
+               }
+      </style>
       <script>
          function init() {
             var ros = new ROSLIB.Ros({
@@ -19,6 +44,12 @@
             var jsp = new JOINTSTATEPUBLISHER.JointStatePublisher({
                ros: ros,
                divID: 'sliders'
+            });
+
+            // Initialize the teleop.
+            var teleop = new KEYBOARDTELEOP.Teleop({
+               ros: ros,
+               topic: '/my_command'
             });
 
             var viewer = new ROS3D.Viewer({
@@ -62,12 +93,31 @@
                loader: ROS3D.COLLADA_LOADER_2
             });
             //console.log(u.rootObject);
+            var speed = document.getElementById('speed');
+            noUiSlider.create(speed, {
+               start: 90, // Handle start position
+               range: { // Slider can select '0' to '100'
+                  'min': 0,
+                  'max': 100
+               }
+            });
+            speed.noUiSlider.on('update', function(values, handle) {
+               values[0]
+               document.getElementById('speedInfo').innerHTML = values[0];
+               teleop.scale = (values[0] / 100.0);
+            });
          }
       </script>
    </head>
 
    <body onload="init()">
-      <div id="sliders" style="float: right"></div>
+      <div id="sliders">
+         <label for="speed">
+            Robot Speed: <b><span id="speedInfo">90</span>%</b>
+            <br>
+            <span id="speed"></span>
+         </label>
+      </div>
       <div id="urdf"></div>
    </body>
 
