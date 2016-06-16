@@ -12,6 +12,11 @@
     <material name="plastic">
         <color rgba="0.95 0.95 0.95 1"/>
     </material>
+    <material name="blue">
+        <color rgba="0 0 1.0 1"/>
+    </material>
+    <xacro:property name="c_clamp_dist" value="2.1"/>
+    <xacro:property name="the_radius" value="2.1"/>
 
     <link name="base_link">
         <visual>
@@ -252,9 +257,7 @@
             <geometry>
                 <mesh filename="package://lidar_robot/models/top_plate.stl" scale="0.001 0.001 0.001"/>
             </geometry>
-            <material name="blue">
-                <color rgba="0 0 1.0 1"/>
-            </material>
+            <material name="blue"/>
         </visual>
     </link>
     <joint name="base_link_top_plate" type="fixed">
