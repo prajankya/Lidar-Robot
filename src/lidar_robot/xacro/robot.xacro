@@ -22,63 +22,241 @@
             <material name="transparent_acrylic"/>
         </visual>
     </link>
-    <xacro:macro name="my_wheel" params="no ang">
-        <link name="c_clamp_${no}">
-            <visual>
-                <origin xyz="${(ang%2*-0.32)+((ang+1)%2*0.05)} ${(ang%2*0.05)+((ang+1)%2*0.32)} 0.09" rpy="${pi/2} 0 -${(ang-1)*(pi/2)}"/>
-                <geometry>
-                    <mesh filename="package://lidar_robot/models/c_clamp.stl" scale="0.001 0.001 0.001"/>
-                </geometry>
-                <material name="aluminium"/>
-            </visual>
-        </link>
-        <joint name="base_c_clamp_${no}" type="fixed">
-            <parent link="base_link"/>
-            <child link="c_clamp_${no}"/>
-        </joint>
-        <link name="motor_${no}">
-            <visual>
-                <origin xyz="${(ang%2*-0.308)} ${(ang+1)%2*0.308} 0.045" rpy="${pi/2} 0 ${(pi/2)+(1-ang)*(pi/2)}"/>
-                <geometry>
-                    <mesh filename="package://lidar_robot/models/motor.stl" scale="0.001 0.001 0.001"/>
-                </geometry>
-                <material name="aluminium_dark"/>
-            </visual>
-        </link>
-        <joint name="c_clamp_motor_${no}" type="fixed">
-            <parent link="c_clamp_${no}"/>
-            <child link="motor_${no}"/>
-        </joint>
-        <link name="shaft_${no}">
-            <visual>
-                <origin xyz="${(ang%2*-0.33)} ${(ang+1)%2*0.33} 0.045" rpy="0 0 ${pi-((ang-1)*(pi/2))}"/>
-                <geometry>
-                    <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
-                </geometry>
-                <material name="plastic"/>
-            </visual>
-        </link>
-        <joint name="motor_shaft_${no}" type="fixed">
-            <parent link="motor_${no}"/>
-            <child link="shaft_${no}"/>
-        </joint>
-        <link name="wheel_${no}">
-            <visual>
-                <origin xyz="${(ang%2*-0.365)} ${(ang+1)%2*0.365} 0.045" rpy="0 0 ${(ang)*pi/2}"/>
-                <geometry>
-                    <mesh filename="package://lidar_robot/models/wheel2.dae"/>
-                </geometry>
-                <material name="wheel">
-                    <texture filename="package://lidar_robot/models/wheel_color.png"/>
-                </material>
-            </visual>
-        </link>
-        <joint name="shaft_wheel_${no}" type="fixed">
-            <parent link="shaft_${no}"/>
-            <child link="wheel_${no}"/>
-        </joint>
-    </xacro:macro>
-    <xacro:my_wheel no="1" ang="1"/>
-    <xacro:my_wheel no="2" ang="2"/>
 
+    <!-- =======================================================Wheel 4====================================================================== -->
+    <link name="c_clamp_1">
+        <visual>
+            <origin xyz="-0.32 0.05 0.09" rpy="${pi/2} 0 0"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/c_clamp.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="aluminium"/>
+        </visual>
+    </link>
+    <joint name="base_c_clamp_1" type="fixed">
+        <parent link="base_link"/>
+        <child link="c_clamp_1"/>
+    </joint>
+    <link name="motor_1">
+        <visual>
+            <origin xyz="-0.308 0 0.045" rpy="${pi/2} 0 ${pi/2}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/motor.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="aluminium_dark"/>
+        </visual>
+    </link>
+    <joint name="c_clamp_motor_1" type="fixed">
+        <parent link="c_clamp_1"/>
+        <child link="motor_1"/>
+    </joint>
+    <link name="shaft_1">
+        <visual>
+            <origin xyz="-0.33 0 0.045" rpy="0 0 ${pi}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="plastic"/>
+        </visual>
+    </link>
+    <joint name="motor_shaft_1" type="continuous">
+        <parent link="motor_1"/>
+        <child link="shaft_1"/>
+    </joint>
+    <link name="wheel_1">
+        <visual>
+            <origin xyz="-0.365 0 0.045" rpy="0 0 ${pi/2}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/wheel2.dae"/>
+            </geometry>
+            <material name="wheel">
+                <texture filename="package://lidar_robot/models/wheel_color.png"/>
+            </material>
+        </visual>
+    </link>
+    <joint name="shaft_wheel_1" type="fixed">
+        <parent link="shaft_1"/>
+        <child link="wheel_1"/>
+    </joint>
+
+    <!-- =======================================================Wheel 2====================================================================== -->
+    <link name="c_clamp_2">
+        <visual>
+            <origin xyz="0.05 0.32 0.09" rpy="${pi/2} 0 -${pi/2}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/c_clamp.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="aluminium"/>
+        </visual>
+    </link>
+    <joint name="base_c_clamp_2" type="fixed">
+        <parent link="base_link"/>
+        <child link="c_clamp_2"/>
+    </joint>
+    <link name="motor_2">
+        <visual>
+            <origin xyz="0 0.308 0.045" rpy="${pi/2} -${pi} 0"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/motor.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="aluminium_dark"/>
+        </visual>
+    </link>
+    <joint name="c_clamp_motor_2" type="fixed">
+        <parent link="c_clamp_2"/>
+        <child link="motor_2"/>
+    </joint>
+    <link name="shaft_2">
+        <visual>
+            <origin xyz="0 0.33 0.045" rpy="0 0 ${pi/2}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="plastic"/>
+        </visual>
+    </link>
+    <joint name="motor_shaft_2" type="continuous">
+        <parent link="motor_2"/>
+        <child link="shaft_2"/>
+    </joint>
+    <link name="wheel_2">
+        <visual>
+            <origin xyz="0 0.35 0.045" rpy="0 0 ${pi}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/wheel2.dae"/>
+            </geometry>
+            <material name="wheel">
+                <texture filename="package://lidar_robot/models/wheel_color.png"/>
+            </material>
+        </visual>
+    </link>
+    <joint name="shaft_wheel_2" type="fixed">
+        <parent link="shaft_2"/>
+        <child link="wheel_2"/>
+    </joint>
+    <!-- =======================================================Wheel 3====================================================================== -->
+    <link name="c_clamp_3">
+        <visual>
+            <origin xyz="0.32 -0.05 0.09" rpy="${pi/2} 0 ${pi}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/c_clamp.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="aluminium"/>
+        </visual>
+    </link>
+    <joint name="base_c_clamp_3" type="fixed">
+        <parent link="base_link"/>
+        <child link="c_clamp_3"/>
+    </joint>
+    <link name="motor_3">
+        <visual>
+            <origin xyz="0.308 0 0.045" rpy="${pi/2} 0 -${pi/2}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/motor.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="aluminium_dark"/>
+        </visual>
+    </link>
+    <joint name="c_clamp_motor_3" type="fixed">
+        <parent link="c_clamp_3"/>
+        <child link="motor_3"/>
+    </joint>
+    <link name="shaft_3">
+        <visual>
+            <origin xyz="0.33 0 0.045" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="plastic"/>
+        </visual>
+    </link>
+    <joint name="motor_shaft_3" type="continuous">
+        <parent link="motor_3"/>
+        <child link="shaft_3"/>
+    </joint>
+    <link name="wheel_3">
+        <visual>
+            <origin xyz="0.35 0 0.045" rpy="0 0 ${pi/2}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/wheel2.dae"/>
+            </geometry>
+            <material name="wheel">
+                <texture filename="package://lidar_robot/models/wheel_color.png"/>
+            </material>
+        </visual>
+    </link>
+    <joint name="shaft_wheel_3" type="fixed">
+        <parent link="shaft_3"/>
+        <child link="wheel_3"/>
+    </joint>
+
+    <!-- =======================================================Wheel 4====================================================================== -->
+    <link name="c_clamp_4">
+        <visual>
+            <origin xyz="-0.05 -0.32 0.09" rpy="${pi/2} 0 ${pi/2}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/c_clamp.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="aluminium"/>
+        </visual>
+    </link>
+    <joint name="base_c_clamp_4" type="fixed">
+        <parent link="base_link"/>
+        <child link="c_clamp_4"/>
+    </joint>
+    <link name="motor_4">
+        <visual>
+            <origin xyz="0 -0.308 0.045" rpy="${pi/2} 0 ${pi}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/motor.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="aluminium_dark"/>
+        </visual>
+    </link>
+    <joint name="c_clamp_motor_4" type="fixed">
+        <parent link="c_clamp_4"/>
+        <child link="motor_4"/>
+    </joint>
+    <link name="shaft_4">
+        <visual>
+            <origin xyz="0 -0.33 0.045" rpy="0 0 ${-pi/2}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="plastic"/>
+        </visual>
+    </link>
+    <joint name="motor_shaft_4" type="continuous">
+        <parent link="motor_4"/>
+        <child link="shaft_4"/>
+    </joint>
+    <link name="wheel_4">
+        <visual>
+            <origin xyz="0 -0.35 0.045" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/wheel2.dae"/>
+            </geometry>
+            <material name="wheel">
+                <texture filename="package://lidar_robot/models/wheel_color.png"/>
+            </material>
+        </visual>
+    </link>
+    <joint name="shaft_wheel_4" type="fixed">
+        <parent link="shaft_4"/>
+        <child link="wheel_4"/>
+    </joint>
+    <!-- ======================================================= Top Plate ====================================================================== -->
+    <link name="top_plate">
+        <visual>
+            <origin xyz="0 0 0.0836" rpy="${pi/2} 0 0"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/top_plate.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="plastic"/>
+        </visual>
+    </link>
+    <joint name="base_link_top_plate" type="fixed">
+        <parent link="base_link"/>
+        <child link="top_plate"/>
+    </joint>
 </robot>
