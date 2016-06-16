@@ -4,14 +4,13 @@
 <!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
 <!-- =================================================================================== -->
 <robot name="lidar_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <!--<xacro:property name="pi" value="3.14159265359"/>-->
   <material name="transparent_acrylic">
     <color rgba="0.8 0.8 0.8 0.4"/>
   </material>
   <material name="aluminium">
     <color rgba="0.8 0.8 0.8 1"/>
   </material>
-  <material name="aluminium_darl">
+  <material name="aluminium_dark">
     <color rgba="0.6 0.6 0.6 1"/>
   </material>
   <material name="plastic">
@@ -26,7 +25,7 @@
       <material name="transparent_acrylic"/>
     </visual>
   </link>
-  <link name="c_clamp">
+  <link name="c_clamp_1">
     <visual>
       <origin rpy="1.57079632679 0 0" xyz="-0.32 0.05 0.09"/>
       <geometry>
@@ -37,9 +36,9 @@
   </link>
   <joint name="base_c_clamp_1" type="fixed">
     <parent link="base_link"/>
-    <child link="c_clamp"/>
+    <child link="c_clamp_1"/>
   </joint>
-  <link name="motor">
+  <link name="motor_1">
     <visual>
       <origin rpy="1.57079632679 0 1.57079632679" xyz="-0.308 0 0.045"/>
       <geometry>
@@ -49,10 +48,10 @@
     </visual>
   </link>
   <joint name="c_clamp_motor_1" type="fixed">
-    <parent link="c_clamp"/>
-    <child link="motor"/>
+    <parent link="c_clamp_1"/>
+    <child link="motor_1"/>
   </joint>
-  <link name="shaft">
+  <link name="shaft_1">
     <visual>
       <origin rpy="1.57079632679 3.14159265359 0" xyz="-0.33 0 0.045"/>
       <geometry>
@@ -62,21 +61,24 @@
     </visual>
   </link>
   <joint name="motor_shaft_1" type="fixed">
-    <parent link="motor"/>
-    <child link="shaft"/>
+    <parent link="motor_1"/>
+    <child link="shaft_1"/>
   </joint>
-  <link name="wheel">
+  <link name="wheel_1">
     <visual>
-      <origin rpy="1.57079632679 3.14159265359 0" xyz="-0.34 0 0.045"/>
+      <origin rpy="0 0 1.57079632679" xyz="-0.365 0 0.045"/>
       <geometry>
-        <mesh filename="package://lidar_robot/models/wheel.ply" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://lidar_robot/models/wheel2.dae"/>
       </geometry>
-      <material name="plastic"/>
+      <material name="wheel">
+        <texture filename="package://lidar_robot/models/wheel_color.png"/>
+      </material>
     </visual>
   </link>
   <joint name="shaft_wheel_1" type="fixed">
-    <parent link="shaft"/>
-    <child link="wheel"/>
+    <parent link="shaft_1"/>
+    <child link="wheel_1"/>
   </joint>
+  <!--<xacro:my_wheel no="2" ang="2"/>-->
 </robot>
 
