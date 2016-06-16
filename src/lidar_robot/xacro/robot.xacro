@@ -15,8 +15,7 @@
     <material name="blue">
         <color rgba="0 0 1.0 1"/>
     </material>
-    <xacro:property name="c_clamp_dist" value="2.1"/>
-    <xacro:property name="the_radius" value="2.1"/>
+    <xacro:property name="c_clamp_dist" value="0.31"/>
 
     <link name="base_link">
         <visual>
@@ -31,7 +30,7 @@
     <!-- =======================================================Wheel 1====================================================================== -->
     <link name="c_clamp_1">
         <visual>
-            <origin xyz="-0.32 0.05 0.09" rpy="${pi/2} 0 0"/>
+            <origin xyz="${-c_clamp_dist} 0.05 0.09" rpy="${pi/2} 0 0"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/c_clamp.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -44,7 +43,7 @@
     </joint>
     <link name="motor_1">
         <visual>
-            <origin xyz="-0.308 0 0.045" rpy="${pi/2} 0 ${pi/2}"/>
+            <origin xyz="${-(c_clamp_dist-0.012)} 0 0.045" rpy="${pi/2} 0 ${pi/2}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/motor.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -57,7 +56,7 @@
     </joint>
     <link name="shaft_1">
         <visual>
-            <origin xyz="-0.33 0 0.045" rpy="0 0 ${pi}"/>
+            <origin xyz="${-(c_clamp_dist+0.01)} 0 0.045" rpy="0 0 ${pi}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -70,7 +69,7 @@
     </joint>
     <link name="wheel_1">
         <visual>
-            <origin xyz="-0.365 0 0.045" rpy="0 0 ${pi/2}"/>
+            <origin xyz="${-(c_clamp_dist+0.03)} 0 0.045" rpy="0 0 ${pi/2}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/wheel2.dae"/>
             </geometry>
@@ -87,7 +86,7 @@
     <!-- =======================================================Wheel 2====================================================================== -->
     <link name="c_clamp_2">
         <visual>
-            <origin xyz="0.05 0.32 0.09" rpy="${pi/2} 0 -${pi/2}"/>
+            <origin xyz="0.05 ${c_clamp_dist} 0.09" rpy="${pi/2} 0 -${pi/2}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/c_clamp.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -100,7 +99,7 @@
     </joint>
     <link name="motor_2">
         <visual>
-            <origin xyz="0 0.308 0.045" rpy="${pi/2} -${pi} 0"/>
+            <origin xyz="0 ${(c_clamp_dist-0.012)} 0.045" rpy="${pi/2} -${pi} 0"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/motor.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -113,7 +112,7 @@
     </joint>
     <link name="shaft_2">
         <visual>
-            <origin xyz="0 0.33 0.045" rpy="0 0 ${pi/2}"/>
+            <origin xyz="0 ${(c_clamp_dist+0.01)} 0.045" rpy="0 0 ${pi/2}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -126,7 +125,7 @@
     </joint>
     <link name="wheel_2">
         <visual>
-            <origin xyz="0 0.35 0.045" rpy="0 0 ${pi}"/>
+            <origin xyz="0 ${(c_clamp_dist+0.03)} 0.045" rpy="0 0 ${pi}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/wheel2.dae"/>
             </geometry>
@@ -142,7 +141,7 @@
     <!-- =======================================================Wheel 3====================================================================== -->
     <link name="c_clamp_3">
         <visual>
-            <origin xyz="0.32 -0.05 0.09" rpy="${pi/2} 0 ${pi}"/>
+            <origin xyz="${c_clamp_dist} -0.05 0.09" rpy="${pi/2} 0 ${pi}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/c_clamp.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -155,7 +154,7 @@
     </joint>
     <link name="motor_3">
         <visual>
-            <origin xyz="0.308 0 0.045" rpy="${pi/2} 0 -${pi/2}"/>
+            <origin xyz="${(c_clamp_dist-0.012)} 0 0.045" rpy="${pi/2} 0 -${pi/2}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/motor.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -168,7 +167,7 @@
     </joint>
     <link name="shaft_3">
         <visual>
-            <origin xyz="0.33 0 0.045" rpy="0 0 0"/>
+            <origin xyz="${(c_clamp_dist+0.01)} 0 0.045" rpy="0 0 0"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -181,7 +180,7 @@
     </joint>
     <link name="wheel_3">
         <visual>
-            <origin xyz="0.35 0 0.045" rpy="0 0 ${pi/2}"/>
+            <origin xyz="${(c_clamp_dist+0.03)} 0 0.045" rpy="0 0 ${pi/2}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/wheel2.dae"/>
             </geometry>
@@ -198,7 +197,7 @@
     <!-- =======================================================Wheel 4====================================================================== -->
     <link name="c_clamp_4">
         <visual>
-            <origin xyz="-0.05 -0.32 0.09" rpy="${pi/2} 0 ${pi/2}"/>
+            <origin xyz="-0.05 ${-c_clamp_dist} 0.09" rpy="${pi/2} 0 ${pi/2}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/c_clamp.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -211,7 +210,7 @@
     </joint>
     <link name="motor_4">
         <visual>
-            <origin xyz="0 -0.308 0.045" rpy="${pi/2} 0 ${pi}"/>
+            <origin xyz="0 ${-(c_clamp_dist-0.012)} 0.045" rpy="${pi/2} 0 ${pi}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/motor.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -224,7 +223,7 @@
     </joint>
     <link name="shaft_4">
         <visual>
-            <origin xyz="0 -0.33 0.045" rpy="0 0 ${-pi/2}"/>
+            <origin xyz="0 ${-(c_clamp_dist+0.01)} 0.045" rpy="0 0 ${-pi/2}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -237,7 +236,7 @@
     </joint>
     <link name="wheel_4">
         <visual>
-            <origin xyz="0 -0.35 0.045" rpy="0 0 0"/>
+            <origin xyz="0 ${-(c_clamp_dist+0.03)} 0.045" rpy="0 0 0"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/wheel2.dae"/>
             </geometry>
