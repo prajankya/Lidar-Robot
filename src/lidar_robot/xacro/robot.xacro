@@ -3,6 +3,9 @@
     <material name="transparent_acrylic">
         <color rgba="0.8 0.8 0.8 0.4"/>
     </material>
+    <material name="transparent_acrylic_dark">
+        <color rgba="0.4 0.4 0.4 0.4"/>
+    </material>
     <material name="aluminium">
         <color rgba="0.8 0.8 0.8 1"/>
     </material>
@@ -329,7 +332,7 @@
             <geometry>
                 <mesh filename="package://lidar_robot/models/lidar_base.stl" scale="0.001 0.001 0.001"/>
             </geometry>
-            <material name="transparent_acrylic"/>
+            <material name="transparent_acrylic_dark"/>
         </visual>
     </link>
     <joint name="circuit_plate_lidar_base" type="fixed">
@@ -341,5 +344,19 @@
     <xacro:stud myname="s10" x="0.0321" y="-0.041" z="0.098" parent="circuit_plate"/>
     <xacro:stud myname="s11" x="-0.0321" y="-0.041" z="0.098" parent="circuit_plate"/>
     <xacro:stud myname="s12" x="-0.0321" y="0.021" z="0.098" parent="circuit_plate"/>
+    <!-- ======================================================= RPlidar ====================================================================== -->
+    <link name="lidar_bottom">
+        <visual>
+            <origin xyz="0.0 0 0.161" rpy="${pi/2} 0 ${-pi/2}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/lidar_bottom.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="aluminium"/>
+        </visual>
+    </link>
+    <joint name="lidar_base_lidar_bottom" type="fixed">
+        <parent link="lidar_base"/>
+        <child link="lidar_bottom"/>
+    </joint>
 
 </robot>
