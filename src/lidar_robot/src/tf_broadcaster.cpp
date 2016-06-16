@@ -17,17 +17,18 @@ int main(int argc, char** argv){
     broadcaster.sendTransform(
       tf::StampedTransform(
         tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(0, 0, 0)),
-        ros::Time::now(),"base_link", "imu_sensor"));
+        ros::Time::now(),"map", "odom"));
 
     broadcaster.sendTransform(
       tf::StampedTransform(
         tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(0, 0, 0)),
         ros::Time::now(),"odom", "base_link"));
+/*
 
     broadcaster.sendTransform(
       tf::StampedTransform(
         tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(0, 0, 0)),
-        ros::Time::now(),"map", "odom"));
+        ros::Time::now(),"base_link", "imu_sensor"));
 
 
     broadcaster.sendTransform(
@@ -39,7 +40,7 @@ int main(int argc, char** argv){
       tf::StampedTransform(
         tf::Transform(tf::createQuaternionFromRPY(pi / 2, 0, 0), tf::Vector3(0, 0, 0)),
         ros::Time::now(),"rplidar", "laser_frame"));
-
+ */
     r.sleep();
   }
 }

@@ -15,11 +15,11 @@
             var ros = new ROSLIB.Ros({
                url: 'ws://ros-mini:9090'
             });
-            /*
-                        var jsp = new JOINTSTATEPUBLISHER.JointStatePublisher({
-                           ros: ros,
-                           divID: 'sliders'
-                        });*/
+
+            var jsp = new JOINTSTATEPUBLISHER.JointStatePublisher({
+               ros: ros,
+               divID: 'sliders'
+            });
 
             var viewer = new ROS3D.Viewer({
                divID: 'urdf',
