@@ -42,6 +42,24 @@
         </joint>
     </xacro:macro>
 
+    <xacro:macro name="wheel">
+        <visual>
+            <origin xyz="0.02 0 0" rpy="0 0 ${pi/2}"/>
+            <geometry>
+                <mesh filename="package://lidar_robot/models/wheel2.dae"/>
+            </geometry>
+        </visual>
+        <inertial>
+            <mass value="0.5"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.000001" iyz="0.0" izz="0.0"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.027 0 0.0" rpy="0 ${pi/2} 0"/>
+            <geometry>
+                <cylinder length="0.045" radius="0.08"/>
+            </geometry>
+        </collision>
+    </xacro:macro>
     <!-- ======================================================= Base Link ====================================================================== -->
     <link name="base_link">
         <visual>
@@ -56,8 +74,15 @@
             <inertia ixx="0.000231" ixy="0.0" ixz="0.0" iyy="0.000439" iyz="-0.000001" izz="0.999454"/>
         </inertial>
         <collision>
+            <origin xyz="0 0 0.05" rpy="0 0 ${pi/4}"/>
             <geometry>
-                <box size="0.613 0.613 0.21"/>
+                <box size="0.52 0.52 0.11"/>
+            </geometry>
+        </collision>
+        <collision>
+            <origin xyz="0 0 0.07" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.205" radius=".07"/>
             </geometry>
         </collision>
     </link>
@@ -99,18 +124,13 @@
         </visual>
     </link>
     <joint name="motor_shaft_1" type="continuous">
-        <parent link="motor_1"/>
+        <parent link="base_link"/>
         <child link="shaft_1"/>
         <axis xyz="1 0 0"/>
         <origin xyz="${-(c_clamp_dist+0.01)} 0 0.045" rpy="0 0 ${pi}"/>
     </joint>
     <link name="wheel_1">
-        <visual>
-            <origin xyz="0.02 0 0" rpy="0 0 ${pi/2}"/>
-            <geometry>
-                <mesh filename="package://lidar_robot/models/wheel2.dae"/>
-            </geometry>
-        </visual>
+        <xacro:wheel/>
     </link>
     <joint name="shaft_wheel_1" type="fixed">
         <parent link="shaft_1"/>
@@ -154,17 +174,12 @@
         </visual>
     </link>
     <joint name="motor_shaft_2" type="continuous">
-        <parent link="motor_2"/>
+        <parent link="base_link"/>
         <child link="shaft_2"/>
         <origin xyz="0 ${(c_clamp_dist+0.01)} 0.045" rpy="0 0 ${pi/2}"/>
     </joint>
     <link name="wheel_2">
-        <visual>
-            <origin xyz="0.02 0 0" rpy="0 0 ${pi/2}"/>
-            <geometry>
-                <mesh filename="package://lidar_robot/models/wheel2.dae"/>
-            </geometry>
-        </visual>
+        <xacro:wheel/>
     </link>
     <joint name="shaft_wheel_2" type="fixed">
         <parent link="shaft_2"/>
@@ -207,17 +222,12 @@
         </visual>
     </link>
     <joint name="motor_shaft_3" type="continuous">
-        <parent link="motor_3"/>
+        <parent link="base_link"/>
         <child link="shaft_3"/>
         <origin xyz="${(c_clamp_dist+0.01)} 0 0.045" rpy="0 0 0"/>
     </joint>
     <link name="wheel_3">
-        <visual>
-            <origin xyz="0.02 0 0" rpy="0 0 ${pi/2}"/>
-            <geometry>
-                <mesh filename="package://lidar_robot/models/wheel2.dae"/>
-            </geometry>
-        </visual>
+        <xacro:wheel/>
     </link>
     <joint name="shaft_wheel_3" type="fixed">
         <parent link="shaft_3"/>
@@ -261,17 +271,12 @@
         </visual>
     </link>
     <joint name="motor_shaft_4" type="continuous">
-        <parent link="motor_4"/>
+        <parent link="base_link"/>
         <child link="shaft_4"/>
         <origin xyz="0 ${-(c_clamp_dist+0.01)} 0.045" rpy="0 0 ${-pi/2}"/>
     </joint>
     <link name="wheel_4">
-        <visual>
-            <origin xyz="0.02 0 0" rpy="0 0 ${pi/2}"/>
-            <geometry>
-                <mesh filename="package://lidar_robot/models/wheel2.dae"/>
-            </geometry>
-        </visual>
+        <xacro:wheel/>
     </link>
     <joint name="shaft_wheel_4" type="fixed">
         <parent link="shaft_4"/>

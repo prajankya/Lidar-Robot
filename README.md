@@ -41,6 +41,25 @@ Principal axes are :
 axis momenta are :
 | 0.000231 0.000439 0.000230 |
 
+##Wheel Geometrical Info
+>
+Mesh Bounding Box Size 0.149237 0.038020 0.148513
+Mesh Bounding Box Diag 0.213947
+Mesh Volume is 0.000238
+Mesh Surface is 0.093921
+Thin shell barycenter 0.000002 -0.005367 0.000031
+Center of Mass is 0.000001 -0.005476 0.000028
+Inertia Tensor is :
+| 0.000000 0.000000 0.000000 |
+| 0.000000 0.000001 0.000000 |
+| 0.000000 0.000000 0.000000 |
+Principal axes are :
+| 0.863798 0.000013 0.503839 |
+| 0.000080 1.000000 -0.000163 |
+| -0.503839 0.000181 0.863798 |
+axis momenta are :
+| 0.000000 0.000001 0.000000 |
+
 
 >
 ##Team 9

@@ -2,7 +2,7 @@
 <launch>
     <arg name="port" default="/dev/ttyACM0"/>
     <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find lidar_robot)/xacro/robot.xacro'"/>
-    <param name="use_gui" value="true"/>
+    <param name="use_gui" value="false"/>
 
     <node name="tf_broadcaster" pkg="lidar_robot" ns="lidar_robot" type="tf_broadcaster"/>
 
