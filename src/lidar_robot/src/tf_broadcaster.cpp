@@ -23,6 +23,11 @@ int main(int argc, char** argv){
       tf::StampedTransform(
         tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(0, 0, 0)),
         ros::Time::now(),"odom", "base_link"));
+
+    broadcaster.sendTransform(
+      tf::StampedTransform(
+        tf::Transform(tf::createQuaternionFromRPY(0, 0, 0), tf::Vector3(0, 0, 0.2)),
+        ros::Time::now(),"lidar_up", "laser_frame"));
 /*
 
     broadcaster.sendTransform(

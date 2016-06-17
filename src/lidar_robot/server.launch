@@ -2,31 +2,32 @@
 <launch>
     <arg name="port" default="/dev/ttyACM0"/>
     <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find lidar_robot)/xacro/robot.xacro'"/>
-    <param name="use_gui" value="false"/>
+    <param name="use_gui" value="true"/>
 
-    <node name="tf_broadcaster" pkg="lidar_robot" ns="lidar_robot" type="tf_broadcaster"/>
+    <node name="tf_broadcaster" pkg="lidar_robot" ns="lidar_robot" type="tf_broadcaster" output="screen"/>
 
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen"/>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen">
         <rosparam param="source_list">['/web_joint_states',]</rosparam>
     </node>
 
     <!-- ============================================================= Gazebo ================================================================================ -->
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model lidar_robot"/>
+
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="verbose" value="true"/>
-        <arg name="paused" value="true"/>
-        <!--  <arg name="debug" value="true"/>-->
+        <arg name="verbose" value="false"/>
+        <arg name="paused" value="false"/>
     </include>
 
     <!-- ============================================================= RViz ================================================================================ -->
-    <!--<node name="rviz" pkg="rviz" required="true" args="-d $(find lidar_robot)/extras/config.rviz" type="rviz"/>-->
+
+    <node name="rviz" pkg="rviz" required="true" args="-d $(find lidar_robot)/extras/config.rviz" type="rviz"/>
 
     <!-- ============================================================= Web server Connectors =============================================================== -->
     <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch">
         <arg name="port" value="9090"/>
     </include>
-    <node name="tf2_web_republisher" pkg="tf2_web_republisher" type="tf2_web_republisher"/>
+    <node name="tf2_web_republisher" pkg="tf2_web_republisher" type="tf2_web_republisher" output="screen"/>
 
     <!--  <node name="base" pkg="lidar_robot" ns="lidar_robot" type="base" output="screen"/>
 
