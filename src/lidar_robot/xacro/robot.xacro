@@ -51,6 +51,15 @@
             </geometry>
             <material name="transparent_acrylic"/>
         </visual>
+        <inertial>
+            <mass value="8"/>
+            <inertia ixx="0.000231" ixy="0.0" ixz="0.0" iyy="0.000439" iyz="-0.000001" izz="0.999454"/>
+        </inertial>
+        <collision>
+            <geometry>
+                <box size="0.613 0.613 0.21"/>
+            </geometry>
+        </collision>
     </link>
 
     <!-- =======================================================Wheel 1====================================================================== -->

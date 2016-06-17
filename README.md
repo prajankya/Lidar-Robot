@@ -15,12 +15,32 @@ The Bot uses ROS(Robot Operating System) at its core running on a compact mobile
 
 ##How to Install
 rosdep install --from-paths /opt/ros/jade --ignore-src
- 
+
 rosdep install --from-paths Lidar-Robot/src --ignore-src
 
 6th sem, 2017 Batch  
 Department of Automation and Robotics.  
 B. V. Bhoomaraddi College of Engineering and Technology, Hubli  
+
+##Robot Geometrical Info
+>
+Mesh Bounding Box Size 0.726000 0.153518 0.728274
+Mesh Bounding Box Diag 1.039725
+Mesh Volume is 0.007492
+Mesh Surface is 2.565935
+Thin shell barycenter 0.000109 0.009018 -0.000083
+Center of Mass is 0.000050 0.006649 -0.000088
+Inertia Tensor is :
+| 0.000231 -0.000000 0.000000 |
+| -0.000000 0.000439 -0.000000 |
+| 0.000000 -0.000000 0.000230 |
+Principal axes are :
+| 0.999454 -0.000068 -0.033026 |
+| 0.000068 1.000000 -0.000001 |
+| 0.033026 -0.000001 0.999454 |
+axis momenta are :
+| 0.000231 0.000439 0.000230 |
+
 
 >
 ##Team 9
