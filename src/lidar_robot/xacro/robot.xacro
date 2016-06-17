@@ -82,20 +82,22 @@
     </joint>
     <link name="shaft_1">
         <visual>
-            <origin xyz="${-(c_clamp_dist+0.01)} 0 0.045" rpy="0 0 ${pi}"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="plastic"/>
         </visual>
     </link>
-    <joint name="motor_shaft_1" type="fixed">
+    <joint name="motor_shaft_1" type="continuous">
         <parent link="motor_1"/>
         <child link="shaft_1"/>
+        <axis xyz="1 0 0"/>
+        <origin xyz="${-(c_clamp_dist+0.01)} 0 0.045" rpy="0 0 ${pi}"/>
     </joint>
     <link name="wheel_1">
         <visual>
-            <origin xyz="-${(c_clamp_dist+0.03)} 0 0.045" rpy="0 0 ${-pi/2}"/>
+            <origin xyz="0.02 0 0" rpy="0 0 ${pi/2}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/wheel2.dae"/>
             </geometry>
@@ -135,20 +137,21 @@
     </joint>
     <link name="shaft_2">
         <visual>
-            <origin xyz="0 ${(c_clamp_dist+0.01)} 0.045" rpy="0 0 ${pi/2}"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="plastic"/>
         </visual>
     </link>
-    <joint name="motor_shaft_2" type="fixed">
+    <joint name="motor_shaft_2" type="continuous">
         <parent link="motor_2"/>
         <child link="shaft_2"/>
+        <origin xyz="0 ${(c_clamp_dist+0.01)} 0.045" rpy="0 0 ${pi/2}"/>
     </joint>
     <link name="wheel_2">
         <visual>
-            <origin xyz="0 ${(c_clamp_dist+0.03)} 0.045" rpy="0 0 ${pi}"/>
+            <origin xyz="0.02 0 0" rpy="0 0 ${pi/2}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/wheel2.dae"/>
             </geometry>
@@ -187,20 +190,21 @@
     </joint>
     <link name="shaft_3">
         <visual>
-            <origin xyz="${(c_clamp_dist+0.01)} 0 0.045" rpy="0 0 0"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="plastic"/>
         </visual>
     </link>
-    <joint name="motor_shaft_3" type="fixed">
+    <joint name="motor_shaft_3" type="continuous">
         <parent link="motor_3"/>
         <child link="shaft_3"/>
+        <origin xyz="${(c_clamp_dist+0.01)} 0 0.045" rpy="0 0 0"/>
     </joint>
     <link name="wheel_3">
         <visual>
-            <origin xyz="${(c_clamp_dist+0.03)} 0 0.045" rpy="0 0 ${pi/2}"/>
+            <origin xyz="0.02 0 0" rpy="0 0 ${pi/2}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/wheel2.dae"/>
             </geometry>
@@ -240,20 +244,21 @@
     </joint>
     <link name="shaft_4">
         <visual>
-            <origin xyz="0 ${-(c_clamp_dist+0.01)} 0.045" rpy="0 0 ${-pi/2}"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/motor_shaft.stl" scale="0.001 0.001 0.001"/>
             </geometry>
             <material name="plastic"/>
         </visual>
     </link>
-    <joint name="motor_shaft_4" type="fixed">
+    <joint name="motor_shaft_4" type="continuous">
         <parent link="motor_4"/>
         <child link="shaft_4"/>
+        <origin xyz="0 ${-(c_clamp_dist+0.01)} 0.045" rpy="0 0 ${-pi/2}"/>
     </joint>
     <link name="wheel_4">
         <visual>
-            <origin xyz="0 ${-(c_clamp_dist+0.03)} 0.045" rpy="0 0 0"/>
+            <origin xyz="0.02 0 0" rpy="0 0 ${pi/2}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/wheel2.dae"/>
             </geometry>

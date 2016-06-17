@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="port" default="/dev/ttyACM0"/>
-    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find lidar_robot)/xacro/rviz.xacro'"/>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find lidar_robot)/xacro/robot.xacro'"/>
     <param name="use_gui" value="true"/>
     <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch">
         <arg name="port" value="9090"/>
