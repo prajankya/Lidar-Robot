@@ -20,7 +20,7 @@
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model lidar_robot"/>
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="worlds/willowgarage.world"/>
+        <!--<arg name="world_name" value="worlds/willowgarage.world"/>-->
         <arg name="verbose" value="false"/>
         <arg name="paused" value="false"/>
     </include>
