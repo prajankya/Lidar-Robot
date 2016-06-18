@@ -1,0 +1,26 @@
+lidar_robot:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+  # Velocity Controllers ---------------------------------------
+  motor_shaft_1_velocity_controller:
+    type: effort_controllers/JointVelocityController
+    joint: motor_shaft_1
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  motor_shaft_2_velocity_controller:
+    type: effort_controllers/JointVelocityController
+    joint: motor_shaft_2
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  motor_shaft_3_velocity_controller:
+    type: effort_controllers/JointVelocityController
+    joint: motor_shaft_3
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+
+  motor_shaft_4_velocity_controller:
+    type: effort_controllers/JointVelocityController
+    joint: motor_shaft_4
+    pid: {p: 100.0, i: 0.01, d: 10.0}

@@ -18,6 +18,16 @@ rosdep install --from-paths /opt/ros/jade --ignore-src
 
 rosdep install --from-paths Lidar-Robot/src --ignore-src
 
+As of June 2017, One of the Package for gazebo simulation in not available for ROS-Jade
+namely __gazebo_ros_control__
+
+- http://answers.gazebosim.org/question/8802/installing-ros-jade-with-gazebo-501/
+- http://gazebosim.org/tutorials?tut=ros_installing&cat=connect_ros
+- https://github.com/ros-controls/ros_control/issues/201
+
+As A Remedy, we can download this package and put in catkin_ws/src folder and build with it
+https://github.com/ros-controls/gazebo_ros_control
+
 6th sem, 2017 Batch  
 Department of Automation and Robotics.  
 B. V. Bhoomaraddi College of Engineering and Technology, Hubli  
