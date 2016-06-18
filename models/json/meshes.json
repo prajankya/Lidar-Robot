@@ -15,16 +15,6 @@
             "receiveShadow": true,
             "geometry": "C30FEC56-A1AD-3771-8249-495E3B1D9DB2"
         },{
-            "name": "c_clamp",
-            "uuid": "912E78BE-7445-30E9-9E38-101EBDBAB023",
-            "matrix": [-1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1],
-            "visible": true,
-            "type": "Mesh",
-            "material": "A7CA37FD-7CFE-39EC-A18B-21223ED98036",
-            "castShadow": true,
-            "receiveShadow": true,
-            "geometry": "BE86A308-1BD4-3A23-981C-3B4D7E0DBDB5"
-        },{
             "name": "circuit_plate",
             "uuid": "A57F9E7D-6D07-3A7E-AE68-B87C51C4F8C2",
             "matrix": [-1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1],
@@ -75,8 +65,78 @@
             "receiveShadow": true,
             "geometry": "5585FC50-6CE6-33E8-888D-172B32929B37"
         },{
-            "name": "motor",
+            "name": "c_clamp_1",
+            "uuid": "BCBF553C-C29A-4298-9521-C3C30049DBD8",
+            "matrix": [-1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1],
+            "visible": true,
+            "type": "Mesh",
+            "material": "A7CA37FD-7CFE-39EC-A18B-21223ED98036",
+            "castShadow": true,
+            "receiveShadow": true,
+            "geometry": "BE86A308-1BD4-3A23-981C-3B4D7E0DBDB5"
+        },{
+            "name": "c_clamp_2",
+            "uuid": "F354D111-9D71-4DF3-9F6F-250E6FD93E1C",
+            "matrix": [-1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1],
+            "visible": true,
+            "type": "Mesh",
+            "material": "A7CA37FD-7CFE-39EC-A18B-21223ED98036",
+            "castShadow": true,
+            "receiveShadow": true,
+            "geometry": "BE86A308-1BD4-3A23-981C-3B4D7E0DBDB5"
+        },{
+            "name": "c_clamp_3",
+            "uuid": "912E78BE-7445-30E9-9E38-101EBDBAB023",
+            "matrix": [-1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1],
+            "visible": true,
+            "type": "Mesh",
+            "material": "A7CA37FD-7CFE-39EC-A18B-21223ED98036",
+            "castShadow": true,
+            "receiveShadow": true,
+            "geometry": "BE86A308-1BD4-3A23-981C-3B4D7E0DBDB5"
+        },{
+            "name": "c_clamp_4",
+            "uuid": "E1D7F048-D58D-4700-91C6-1DA615F898BD",
+            "matrix": [-1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1],
+            "visible": true,
+            "type": "Mesh",
+            "material": "A7CA37FD-7CFE-39EC-A18B-21223ED98036",
+            "castShadow": true,
+            "receiveShadow": true,
+            "geometry": "BE86A308-1BD4-3A23-981C-3B4D7E0DBDB5"
+        },{
+            "name": "motor_1",
             "uuid": "773CAD3D-2CFE-3F70-9EE9-DAD60938A02C",
+            "matrix": [-1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1],
+            "visible": true,
+            "type": "Mesh",
+            "material": "A7CA37FD-7CFE-39EC-A18B-21223ED98036",
+            "castShadow": true,
+            "receiveShadow": true,
+            "geometry": "A4A99717-1795-339D-B239-02D1B88E1F38"
+        },{
+            "name": "motor_2",
+            "uuid": "6703B85B-E483-4778-8E66-55BFF9FF9D12",
+            "matrix": [-1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1],
+            "visible": true,
+            "type": "Mesh",
+            "material": "A7CA37FD-7CFE-39EC-A18B-21223ED98036",
+            "castShadow": true,
+            "receiveShadow": true,
+            "geometry": "A4A99717-1795-339D-B239-02D1B88E1F38"
+        },{
+            "name": "motor_3",
+            "uuid": "6087ECC9-8E25-4F0C-9840-9BA545673C25",
+            "matrix": [-1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1],
+            "visible": true,
+            "type": "Mesh",
+            "material": "A7CA37FD-7CFE-39EC-A18B-21223ED98036",
+            "castShadow": true,
+            "receiveShadow": true,
+            "geometry": "A4A99717-1795-339D-B239-02D1B88E1F38"
+        },{
+            "name": "motor_4",
+            "uuid": "989954E7-0C51-46E6-88D7-EC10CD50FCA8",
             "matrix": [-1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1],
             "visible": true,
             "type": "Mesh",
