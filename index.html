@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<title>3D Visualize Lidar Robot</title>
 		<style>
-			body { margin: 0; }
-			#loader{
+			body {
+				margin: 0;
+			}
+
+			#loader {
 				position: fixed;
 				background-color: rgba(0, 0, 0, 0.5);
 				top: 0px;
@@ -13,7 +17,8 @@
 				left: 0px;
 				z-index: 999;
 			}
-			#loader > div{
+
+			#loader> div {
 				font-size: 24px;
 				color: white;
 				position: fixed;
@@ -23,6 +28,7 @@
 			}
 		</style>
 	</head>
+
 	<body>
 		<div id="loader">
 			<div>
@@ -30,7 +36,7 @@
 			</div>
 		</div>
 		<div class="viewport"></div>
-		<script src="./node_modules/three/build/three.min.js"></script>
+		<script src="./javascripts/three.min.js"></script>
 		<script src="./javascripts/OrbitControls.js"></script>
 		<script>
 			var container, scene, renderer, camera, light, loader, controls;
@@ -40,16 +46,18 @@
 
 
 			WIDTH = window.innerWidth,
-			HEIGHT = window.innerHeight-6;
+				HEIGHT = window.innerHeight - 6;
 
 			VIEW_ANGLE = 45,
-			ASPECT = WIDTH / HEIGHT,
-			NEAR = 1,
-			FAR = 10000;
+				ASPECT = WIDTH / HEIGHT,
+				NEAR = 1,
+				FAR = 10000;
 
 			scene = new THREE.Scene();
 
-			renderer = new THREE.WebGLRenderer({antialias: true});
+			renderer = new THREE.WebGLRenderer({
+				antialias: true
+			});
 
 			renderer.setSize(WIDTH, HEIGHT);
 			renderer.shadowMap.enabled = true;
@@ -89,7 +97,7 @@
 
 			window.addEventListener('resize', function() {
 				WIDTH = window.innerWidth,
-				HEIGHT = window.innerHeight-6;
+					HEIGHT = window.innerHeight - 6;
 
 				renderer.setSize(WIDTH, HEIGHT);
 				camera.aspect = WIDTH / HEIGHT;
@@ -100,19 +108,19 @@
 
 			loader = new THREE.ObjectLoader();
 
-			loader.load('models/json/meshes.json', function (_scene) {
+			loader.load('models/json/meshes.json', function(_scene) {
 				document.querySelector("#loader").style.display = "none";
-				for(var i =0;i<_scene.children.length; i++){
+				for (var i = 0; i < _scene.children.length; i++) {
 					_scene.children[i].position.y = Math.random() * 100;
 					_scene.children[i].position.x = Math.random() * 200;
 					scene.add(_scene.children[i]);
 				}
 				render();
-			},function(d){
-				if(d.type == "progress" && d.lengthComputable){
-					var tot = parseInt(d.loaded/d.total*1000);
+			}, function(d) {
+				if (d.type == "progress" && d.lengthComputable) {
+					var tot = parseInt(d.loaded / d.total * 1000);
 					tot /= 10;
-					document.querySelector("#progressinfo").innerHTML= (tot + "%");
+					document.querySelector("#progressinfo").innerHTML = (tot + "%");
 				}
 			});
 
@@ -121,6 +129,7 @@
 				renderer.render(scene, camera);
 				requestAnimationFrame(render);
 			}
-			</script>
-		</body>
+		</script>
+	</body>
+
 </html>
