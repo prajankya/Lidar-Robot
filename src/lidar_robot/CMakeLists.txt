@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 catkin_package(
-  CATKIN_DEPENDS 
+  CATKIN_DEPENDS
   std_msgs
 )
 
@@ -45,3 +45,6 @@ target_link_libraries(tf_broadcaster ${catkin_LIBRARIES})
 
 add_executable(odom_broadcaster src/odom_broadcaster.cpp)
 target_link_libraries(odom_broadcaster ${catkin_LIBRARIES})
+
+add_executable(gazebo_driver src/gazebo_driver.cpp)
+target_link_libraries(gazebo_driver ${catkin_LIBRARIES})

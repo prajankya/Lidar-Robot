@@ -2,6 +2,17 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="lidar_robot">
     <xacro:include filename="$(find lidar_robot)/xacro/materials.xacro"/>
     <xacro:property name="c_clamp_dist" value="0.31"/>
+
+    <gazebo>
+        <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+            <commandTopic>/cmd_vel</commandTopic>
+            <odometryTopic>odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+            <odometryRate>20.0</odometryRate>
+            <robotBaseFrame>base_link</robotBaseFrame>
+        </plugin>
+    </gazebo>
+
     <xacro:macro name="stud" params="myname x y z parent">
         <link name="${myname}">
             <visual>
