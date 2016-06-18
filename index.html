@@ -110,11 +110,20 @@
 
 			loader.load('models/json/meshes.json', function(_scene) {
 				document.querySelector("#loader").style.display = "none";
-				for (var i = 0; i < _scene.children.length; i++) {
-					_scene.children[i].position.y = Math.random() * 100;
-					_scene.children[i].position.x = Math.random() * 200;
-					scene.add(_scene.children[i]);
-				}
+				var motor = _scene.getObjectByName("motor");
+				var motor_shaft = _scene.getObjectByName("motor_shaft");
+				var wheel = _scene.getObjectByName("wheel");
+				var base = _scene.getObjectByName("base");
+				var c_clamp = _scene.getObjectByName("c_clamp");
+				var top_plate = _scene.getObjectByName("top_plate");
+
+				scene.add(motor);
+				scene.add(motor_shaft);
+				scene.add(wheel);
+				scene.add(base);
+				scene.add(c_clamp);
+				scene.add(top_plate);
+
 				render();
 			}, function(d) {
 				if (d.type == "progress" && d.lengthComputable) {
