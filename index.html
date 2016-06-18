@@ -40,16 +40,16 @@
             var ros = new ROSLIB.Ros({
                url: 'ws://127.0.0.1:9090'
             });
-
-            var jsp = new JOINTSTATEPUBLISHER.JointStatePublisher({
-               ros: ros,
-               divID: 'sliders'
-            });
+            /*
+                        var jsp = new JOINTSTATEPUBLISHER.JointStatePublisher({
+                           ros: ros,
+                           divID: 'sliders'
+                        });*/
 
             // Initialize the teleop.
             var teleop = new KEYBOARDTELEOP.Teleop({
                ros: ros,
-               topic: '/my_command'
+               topic: '/cmd_vel'
             });
 
             var viewer = new ROS3D.Viewer({
