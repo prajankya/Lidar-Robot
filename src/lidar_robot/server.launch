@@ -6,11 +6,11 @@
 
     <node name="tf_broadcaster" pkg="lidar_robot" ns="lidar_robot" type="tf_broadcaster" output="screen"/>
 
-    <!--<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen"/>-->
-    <!--<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen">
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen"/>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen">
         <rosparam param="source_list">['/web_joint_states',]</rosparam>
     </node>
--->
+
     <!-- ============================================================= Gazebo ================================================================================ -->
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model lidar_robot"/>
 
@@ -18,25 +18,6 @@
         <arg name="verbose" value="false"/>
         <arg name="paused" value="false"/>
     </include>
-
-    <!-- Load joint controller configurations from YAML file to parameter server -->
-    <rosparam file="$(find lidar_robot)/extras/lidar_robot_control.yaml" command="load"/>
-
-    <!-- load the controllers -->
-    <node
-        name="controller_spawner"
-        pkg="controller_manager"
-        type="spawner"
-        respawn="false"
-        output="screen"
-        ns="/lidar_robot"
-        args="motor_shaft_1_velocity_controller motor_shaft_2_velocity_controller motor_shaft_3_velocity_controller motor_shaft_4_velocity_controller joint_state_controller"/>
-
-    <!-- convert joint states to TF transforms for rviz, etc -->
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
-        <remap from="/joint_states" to="/lidar_robot/joint_states"/>
-    </node>
-
     <!-- ============================================================= RViz ================================================================================ -->
 
     <node name="rviz" pkg="rviz" required="true" args="-d $(find lidar_robot)/extras/config.rviz" type="rviz"/>

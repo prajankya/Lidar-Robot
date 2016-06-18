@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="lidar_robot">
     <xacro:include filename="$(find lidar_robot)/xacro/materials.xacro"/>
-    <gazebo>
-        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotNamespace>/lidar_robot</robotNamespace>
-        </plugin>
-    </gazebo>
-
     <xacro:property name="c_clamp_dist" value="0.31"/>
     <xacro:macro name="stud" params="myname x y z parent">
         <link name="${myname}">
@@ -119,16 +113,6 @@
         <parent link="shaft_1"/>
         <child link="wheel_1"/>
     </joint>
-    <transmission name="trans_m1">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="motor_shaft_1">
-            <hardwareInterface>EffortJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="motor1">
-            <hardwareInterface>EffortJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
     <!-- =======================================================Wheel 2====================================================================== -->
     <link name="c_clamp_2">
         <visual>
@@ -177,16 +161,6 @@
         <parent link="shaft_2"/>
         <child link="wheel_2"/>
     </joint>
-    <transmission name="trans_m2">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="motor_shaft_2">
-            <hardwareInterface>EffortJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="motor2">
-            <hardwareInterface>EffortJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
     <!-- =======================================================Wheel 3====================================================================== -->
     <link name="c_clamp_3">
         <visual>
@@ -235,16 +209,6 @@
         <parent link="shaft_3"/>
         <child link="wheel_3"/>
     </joint>
-    <transmission name="trans_m3">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="motor_shaft_3">
-            <hardwareInterface>EffortJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="motor3">
-            <hardwareInterface>EffortJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
     <!-- =======================================================Wheel 4====================================================================== -->
     <link name="c_clamp_4">
         <visual>
@@ -293,16 +257,6 @@
         <parent link="shaft_4"/>
         <child link="wheel_4"/>
     </joint>
-    <transmission name="trans_m4">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="motor_shaft_4">
-            <hardwareInterface>EffortJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="motor4">
-            <hardwareInterface>EffortJointInterface</hardwareInterface>
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-    </transmission>
     <!-- ======================================================= Top Plate ====================================================================== -->
     <link name="top_plate">
         <visual>
