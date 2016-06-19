@@ -37,14 +37,5 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(base src/base.cpp)
-target_link_libraries(base ${catkin_LIBRARIES})
-
-add_executable(tf_broadcaster src/tf_broadcaster.cpp)
-target_link_libraries(tf_broadcaster ${catkin_LIBRARIES})
-
-add_executable(odom_broadcaster src/odom_broadcaster.cpp)
-target_link_libraries(odom_broadcaster ${catkin_LIBRARIES})
-
-add_executable(gazebo_driver src/gazebo_driver.cpp)
-target_link_libraries(gazebo_driver ${catkin_LIBRARIES})
+#add_executable(base src/base.cpp)
+#target_link_libraries(base ${catkin_LIBRARIES})

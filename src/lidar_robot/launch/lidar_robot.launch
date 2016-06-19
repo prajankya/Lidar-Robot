@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="port" default="/dev/ttyACM0"/>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find lidar_robot)/xacro/robot.xacro'"/>
+
+    <include file="$(find lidar_robot)/launch/core.launch"/>
+
+    <!-- ====================================================== Hector Slam  ========================================================================= -->
+    <include file="$(find lidar_robot)/launch/hector_slam.launch"/>
+
+    <!-- ============================================================= Gazebo ======================================================================== -->
+    <include file="$(find lidar_robot)/launch/gazebo.launch"/>
+
+    <!-- ============================================================= RViz ========================================================================== -->
+    <node name="rviz" pkg="rviz" required="true" args="-d $(find lidar_robot)/extras/config.rviz" type="rviz"/>
+
+</launch>

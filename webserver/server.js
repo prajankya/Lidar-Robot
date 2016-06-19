@@ -9,7 +9,7 @@ var port = 8080;
 server.listen(port, function() {
     console.log('server listening on port ' + port);
 });
-var child = require('child_process').spawn('roslaunch', ['lidar_robot', 'server.launch']);
+var child = require('child_process').spawn('roslaunch', ['lidar_robot', 'lidar_robot.launch']);
 
 child.stdout.on('data', function (data) {
   console.log(data.toString());
