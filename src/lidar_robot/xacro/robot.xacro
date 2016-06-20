@@ -411,7 +411,7 @@
                 </noise>
             </ray>
             <plugin name="gazebo_ros_rplidar_controller" filename="libgazebo_ros_laser.so">
-                <topicName>/scan</topicName>
+                <topicName>/lidar_robot/scan</topicName>
                 <frameName>/rplidar_frame</frameName>
             </plugin>
         </sensor>

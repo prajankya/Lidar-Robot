@@ -22,4 +22,5 @@
     <depend>joint_state_publisher</depend>
     <depend>tf2_web_republisher</depend>
     <depend>rosserial_python</depend>
+    <depend>dwa_local_planner</depend>
 </package>
