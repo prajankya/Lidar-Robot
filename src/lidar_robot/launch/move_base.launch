@@ -3,7 +3,6 @@
     <master auto="start"/>
 
     <arg name="no_static_map" default="true"/>
-
     <arg name="base_global_planner" default="navfn/NavfnROS"/>
     <arg name="base_local_planner" default="dwa_local_planner/DWAPlannerROS"/>
     <!--<arg name="base_local_planner" default="base_local_planner/TrajectoryPlannerROS"/>-->
