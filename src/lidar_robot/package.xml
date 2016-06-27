@@ -23,4 +23,5 @@
     <depend>tf2_web_republisher</depend>
     <depend>rosserial_python</depend>
     <depend>dwa_local_planner</depend>
+    <depend>frontier_exploration</depend>
 </package>
