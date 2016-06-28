@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-    <node pkg="frontier_exploration" type="explore_server" name="explore_server" output="screen">
+    <node pkg="frontier_exploration" type="explore_server" name="explore_server">
         <param name="frequency" value="1.0"/>
 
         <!-- Should be less than sensor range -->

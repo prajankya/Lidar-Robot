@@ -98,6 +98,11 @@
                rootObject: viewer.scene,
                loader: ROS3D.COLLADA_LOADER_2
             });
+            /*var gridClient = new ROS3D.OccupancyGridClient({
+               ros: ros,
+               rootObject: viewer.scene,
+               continuous: true
+            });*/
 
             var speed = document.getElementById('speed');
             noUiSlider.create(speed, {
@@ -137,6 +142,7 @@
             <br>
             <span id="speed"></span>
          </label>
+         <a href="webserver/map.html"> Map </a>
       </div>
       <div id="urdf"></div>
    </body>
