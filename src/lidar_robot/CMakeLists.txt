@@ -37,5 +37,5 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-#add_executable(base src/base.cpp)
-#target_link_libraries(base ${catkin_LIBRARIES})
+add_executable(explorer src/explorer.cpp)
+target_link_libraries(explorer ${catkin_LIBRARIES})

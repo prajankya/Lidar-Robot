@@ -1,7 +1,7 @@
 <launch>
 
     <!-- Set to your sensor's range -->
-    <arg name="sensor_range" default="1.0"/>
+    <arg name="sensor_range" default="4.0"/>
 
     <node pkg="frontier_exploration" type="explore_client" name="explore_client" output="screen"/>
 
@@ -12,17 +12,17 @@
 
         #All standard costmap_2d parameters as in move_base, other than BoundedExploreLayer
         <rosparam ns="explore_costmap" subst_value="true">
-            footprint: [[0.1, 0.0], [0.0, 0.1], [-0.1, 0.0], [0.0, -0.1]]
-            robot_radius: 0.10
+            footprint: [[0.18, 0.0], [0.0, 0.18], [-0.18, 0.0], [0.0, -0.18]]
+            robot_radius: 0.18
 
             transform_tolerance: 0.5
-            update_frequency: 5.0
-            publish_frequency: 5.0
+            update_frequency: 2.0
+            publish_frequency: 2.0
 
             #must match incoming static map
             global_frame: map
-            robot_base_frame: base_link
-            resolution: 0.05
+            robot_base_frame: base_footprint #base_link
+            resolution: 0.03
 
             rolling_window: false
             track_unknown_space: true
@@ -52,7 +52,7 @@
                 laser: {data_type: LaserScan, clearing: true, marking: true, topic: scan, inf_is_valid: true, raytrace_range: $(arg sensor_range), obstacle_range: $(arg sensor_range)}
 
             inflation:
-                inflation_radius: 0.15
+                inflation_radius: 0.20
       </rosparam>
     </node>
 

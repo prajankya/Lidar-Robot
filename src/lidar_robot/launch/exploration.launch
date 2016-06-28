@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-    <node pkg="frontier_exploration" type="explore_client" name="explore_client" output="screen"/>
+    <!--<node pkg="frontier_exploration" type="explore_client" name="explore_client" output="screen"/>-->
     <node pkg="frontier_exploration" type="explore_server" name="explore_server" output="screen">
         <param name="frequency" value="1.0"/>
 
