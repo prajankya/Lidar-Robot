@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+    <master auto="start"/>
+    <node name="rviz" pkg="rviz" required="true" args="-d $(find lidar_robot)/extras/config.rviz" type="rviz"/>
+</launch>

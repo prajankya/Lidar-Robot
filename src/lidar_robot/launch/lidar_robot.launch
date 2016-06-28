@@ -6,9 +6,9 @@
     <include file="$(find lidar_robot)/launch/core.launch"/>
 
     <!-- ============================================================= Gazebo ======================================================================== -->
-    <include file="$(find lidar_robot)/launch/gazebo.launch"/>
+    <!-- <include file="$(find lidar_robot)/launch/gazebo.launch"/> -->
 
     <!-- ============================================================= RViz ========================================================================== -->
-    <node name="rviz" pkg="rviz" required="true" args="-d $(find lidar_robot)/extras/config.rviz" type="rviz"/>
+    <!-- <include file="$(find lidar_robot)/launch/rviz.launch"/> -->
 
 </launch>
