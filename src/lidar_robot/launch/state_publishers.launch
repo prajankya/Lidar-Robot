@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <launch>
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen">
-        <rosparam param="source_list">['/web_joint_states',]</rosparam>
-    </node>
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher"/>
+    <!--  <rosparam param="source_list">['/web_joint_states',]</rosparam>-->
     <!--<node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 map odom 100"/>-->
 </launch>

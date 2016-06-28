@@ -1,10 +1,19 @@
 <?xml version="1.0"?>
 <launch>
-    <!-- ======================================================== State Publishers =================================================================== -->
+    <!-- State Publishers -->
     <include file="$(find lidar_robot)/launch/state_publishers.launch"/>
 
-    <!-- ====================================================== Web server Connectors ================================================================ -->
+    <!-- Web server Connectors -->
     <include file="$(find lidar_robot)/launch/web_connectors.launch"/>
+
+    <!-- Move Base -->
+    <include file="$(find lidar_robot)/launch/move_base.launch"/>
+
+    <!-- Gmapping -->
+    <include file="$(find lidar_robot)/launch/gmapping.launch"/>
+
+    <!-- Frontier Exploration Server -->
+    <include file="$(find lidar_robot)/launch/exploration.launch"/>
 
     <!--
       <node name="serial_node" pkg="rosserial_python" ns="lidar_robot" type="serial_node.py" args="$(arg port)" respawn="true"/>

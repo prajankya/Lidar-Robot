@@ -44,7 +44,4 @@
     </rosparam>
     <remap from="scan" to="$(arg scan_topic)"/>
   </node>
-
-  <!--- Run Move Base -->
-  <include file="$(find lidar_robot)/launch/move_base.launch" />
 </launch>

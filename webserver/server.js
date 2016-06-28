@@ -21,4 +21,5 @@ child.stderr.on('data', function (data) {
 
 child.on('close', function (code) {
     console.log('child process exited with code ' + code);
+    process.exit(code);
 });
