@@ -12,11 +12,13 @@ find_package(catkin REQUIRED COMPONENTS
   nav_msgs
   rosserial_arduino
   rosserial_client
+	frontier_exploration
 )
 
 catkin_package(
   CATKIN_DEPENDS
   std_msgs
+	frontier_exploration
 )
 
 rosserial_generate_ros_lib(
