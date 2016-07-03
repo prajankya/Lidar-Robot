@@ -1,150 +1,195 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
-   <head>
-      <title>Lidar Robot GUI</title>
-      <meta charset="utf-8" />
-      <link href="./webserver/css/nouislider.min.css" rel="stylesheet">
+    <head>
+        <title>Lidar Robot GUI</title>
 
-      <script src="./webserver/js/three.min.js"></script>
-      <script src="./webserver/js/ColladaLoader2.min.js"></script>
-      <script src="./webserver/js/STLLoader.min.js"></script>
-      <script src="./webserver/js/eventemitter2.min.js"></script>
-      <script src="./webserver/js/roslib.min.js"></script>
-      <script src="./webserver/js/ros3d.min.js"></script>
-      <script src="./webserver/js/jointstatepublisher.min.js"></script>
-      <script src="./webserver/js/keyboardteleop.min.js"></script>
-      <script src="./webserver/js/jquery-3.0.0.min.js"></script>
-      <script src="./webserver/js/nouislider.min.js"></script>
-      <style>
-               body {
-            padding: 0px;
-            margin: 0px;
-            overflow: hidden;
-           }
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-           #sliders {
-              background-color: rgba(255, 255, 255, 0.7);
-              padding: 10px;
-              right: 20px;
-              top: 20px;
-              position: absolute;
-             }
+        <link href="./webserver/css/bootstrap.min.css" rel="stylesheet">
+        <!--<link href="./webserver/css/bootstrap-theme.min.css" rel="stylesheet">-->
 
-             #sliders * {
-                position: relative!important;
-               }
-      </style>
-      <script>
-         function init() {
-            var ros = new ROSLIB.Ros();
-            // If there is an error on the backend, an 'error' emit will be emitted.
-            ros.on('error', function(error) {
-               document.getElementById('connecting').style.display = 'none';
-               document.getElementById('connected').style.display = 'none';
-               document.getElementById('closed').style.display = 'none';
-               document.getElementById('error').style.display = 'inline';
-               console.log(error);
+        <script src="./webserver/js/jquery-2.2.4.min.js"></script>
+        <script src="./webserver/js/bootstrap.min.js"></script>
+
+        <script src="./webserver/js/eventemitter2.min.js"></script>
+        <script src="./webserver/js/roslib.min.js"></script>
+        <style>
+            .glyphicon-refresh-animate {
+                -animation: spin .7s infinite linear;
+                -webkit-animation: spin2 .7s infinite linear;
+                padding: 0;
+                padding-top: 2px;
+                margin: 0;
+            }
+
+            @-webkit-keyframes spin2 {
+                from {
+                    -webkit-transform: rotate(0deg);
+                }
+                to {
+                    -webkit-transform: rotate(360deg);
+                }
+            }
+
+            @keyframes spin {
+                from {
+                    transform: scale(1) rotate(0deg);
+                }
+                to {
+                    transform: scale(1) rotate(360deg);
+                }
+            }
+
+            #body {
+                height: 100vh;
+                padding: 25px;
+                overflow: hidden;
+            }
+
+            #space {
+                height: 30px;
+            }
+
+            #btn_c {
+                padding: 10px 0px;
+            }
+
+            .col-sm-6 {
+                padding: 8px;
+            }
+
+            #console {
+                padding: 4px;
+                overflow: auto;
+                height: calc(100vh - 230px);
+            }
+        </style>
+        <script>
+            var QueryString = function() {
+                // This function is anonymous, is executed immediately and
+                // the return value is assigned to QueryString!
+                var query_string = {};
+                var query = window.location.search.substring(1);
+                var vars = query.split("&");
+                for (var i = 0; i < vars.length; i++) {
+                    var pair = vars[i].split("=");
+                    // If first entry with this name
+                    if (typeof query_string[pair[0]] === "undefined") {
+                        query_string[pair[0]] = decodeURIComponent(pair[1]);
+                        // If second entry with this name
+                    } else if (typeof query_string[pair[0]] === "string") {
+                        var arr = [query_string[pair[0]], decodeURIComponent(pair[1])];
+                        query_string[pair[0]] = arr;
+                        // If third or later entry with this name
+                    } else {
+                        query_string[pair[0]].push(decodeURIComponent(pair[1]));
+                    }
+                }
+                return query_string;
+            }();
+
+            /*TODO transfer server IP as string */
+            var ROS_IP = "127.0.0.1";
+
+            $(function() {
+                var ros = new ROSLIB.Ros();
+                // If there is an error on the backend, an 'error' emit will be emitted.
+                ros.on('error', function(error) {
+                    console.log(error);
+                    $('.status').hide();
+                    $('#error').show();
+                });
+                ros.on('connection', function() {
+                    console.log('Connection made!');
+                    $('.status').hide();
+                    $('#connected').show();
+                });
+                ros.on('close', function() {
+                    console.log('Connection closed.');
+                    $('.status').hide();
+                    $('#closed').show();
+                });
+                ros.connect('ws://' + ROS_IP + ':9090');
+
+                $("#switch").click(function() {
+                    if (window.mapping) {
+                        window.mapping = false;
+                        console.log("off");
+                        $(this)
+                            .addClass('btn-primary')
+                            .removeClass('btn-warning')
+                            .html("Start Mapping");
+                    } else {
+                        window.mapping = true;
+                        console.log("on");
+                        $(this)
+                            .addClass('btn-warning')
+                            .removeClass('btn-primary')
+                            .html("Stop Mapping");
+                    }
+                });
             });
-            // Find out exactly when we made a connection.
-            ros.on('connection', function() {
-               console.log('Connection made!');
-               document.getElementById('connecting').style.display = 'none';
-               document.getElementById('error').style.display = 'none';
-               document.getElementById('closed').style.display = 'none';
-               document.getElementById('connected').style.display = 'inline';
-            });
-            ros.on('close', function() {
-               console.log('Connection closed.');
-               document.getElementById('connecting').style.display = 'none';
-               document.getElementById('connected').style.display = 'none';
-               document.getElementById('closed').style.display = 'inline';
-            });
+        </script>
+    </head>
 
-            ros.connect('ws://127.0.0.1:9090');
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="connecting" class="status">
+                        <a href="#" style="color:orange">
+                            <span class=" glyphicon glyphicon-refresh glyphicon-refresh-animate ">
+                          </span> Connecting to ROS...
+                        </a>
+                    </li>
+                    <li id="connected" class="status" style="display:none">
+                        <a href="#" style="color:#00ff00;">
+                            <span class="glyphicon glyphicon-ok">
+                          </span> Connected
+                        </a>
+                    </li>
+                    <li id="error" class="status" style="display:none">
+                        <a href="#" style="color:red;">
+                            <span class="glyphicon glyphicon-remove">
+                          </span> Error in the backend!
+                        </a>
+                    </li>
+                    <li id="closed" class="status" style="display:none">
+                        <a href="#">
+                            <span class="glyphicon glyphicon-exclamation-sign">
+                          </span> Connection closed.
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="body">
+            <div id="space">
+            </div>
+            <div id="btn_c" class="row">
+                <div class="col-lg-1">
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <button id="switch" type="button" class="btn btn-primary btn-lg btn-block">
+                        Start Mapping
+                    </button>
+                </div>
+                <div class="col-lg-2">
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <button id="estop" type="button" class="btn btn-danger btn-lg btn-block">
+                        Emergency Stop
+                    </button>
+                </div>
+                <div class="col-lg-1">
+                </div>
+            </div>
+            <div id="console" class="bg-info">
 
-            // Initialize the teleop.
-            var teleop = new KEYBOARDTELEOP.Teleop({
-               ros: ros,
-               topic: '/cmd_vel'
-            });
-
-            var viewer = new ROS3D.Viewer({
-               divID: 'urdf',
-               width: window.innerWidth,
-               height: window.innerHeight,
-               antialias: true,
-               background: '#002233'
-            });
-
-            viewer.addObject(new ROS3D.Grid({
-               color: '#0181c4',
-               cellSize: 1,
-               num_cells: 100
-            }));
-
-            var tfClient = new ROSLIB.TFClient({
-               ros: ros,
-               angularThres: 0.01,
-               transThres: 0.01,
-               rate: 10.0,
-               fixedFrame: '/map'
-            });
-
-            var u = new ROS3D.UrdfClient({
-               ros: ros,
-               tfClient: tfClient,
-               path: './src/',
-               rootObject: viewer.scene,
-               loader: ROS3D.COLLADA_LOADER_2
-            });
-            /*var gridClient = new ROS3D.OccupancyGridClient({
-               ros: ros,
-               rootObject: viewer.scene,
-               continuous: true
-            });*/
-
-            var speed = document.getElementById('speed');
-            noUiSlider.create(speed, {
-               start: 90, // Handle start position
-               range: { // Slider can select '0' to '100'
-                  'min': 0,
-                  'max': 100
-               }
-            });
-            speed.noUiSlider.on('update', function(values, handle) {
-               values[0]
-               document.getElementById('speedInfo').innerHTML = values[0];
-               teleop.scale = (values[0] / 100.0);
-            });
-         }
-      </script>
-   </head>
-
-   <body onload="init()">
-      <div id="sliders">
-         <div id="statusIndicator">
-            <p id="connecting">
-               Connecting to rosbridge...
-            </p>
-            <p id="connected" style="color:#00D600; display:none">
-               Connected
-            </p>
-            <p id="error" style="color:#FF0000; display:none">
-               Error in the backend!
-            </p>
-            <p id="closed" style="display:none">
-               Connection closed.
-            </p>
-         </div>
-         <label for="speed">
-            Robot Speed: <b><span id="speedInfo">90</span>%</b>
-            <br>
-            <span id="speed"></span>
-         </label>
-         <a href="webserver/map.html"> Map </a>
-      </div>
-      <div id="urdf"></div>
-   </body>
+            </div>
+        </div>
+    </body>
 
 </html>

@@ -2,7 +2,7 @@ var exec = require('child_process').exec;
 var sudo = require('sudo');
 var options = {
     cachePassword: true,
-    prompt: 'Password, yo? ',
+    prompt: 'Please Enter Sudo Password ? ',
     spawnOptions: { /* other options for spawn */ }
 };
 
@@ -26,7 +26,7 @@ server.listen(port, function() {
 //
 });
 
-var create_ap = sudo([ 'bash','./create_ap/create_ap','--config','./create_ap/create_ap.conf', '--redirect-to-localhost'], options);
+var create_ap = sudo([ 'bash',__dirname + '/create_ap/create_ap', '--redirect-to-localhost','--config',__dirname +  '/create_ap/create_ap.conf'], options);
 
 var ros = require('child_process').spawn('roslaunch', ['lidar_robot', 'lidar_robot.launch']);
 

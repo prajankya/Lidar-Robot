@@ -24,4 +24,8 @@
     <depend>rosserial_python</depend>
     <depend>dwa_local_planner</depend>
     <depend>frontier_exploration</depend>
+
+    <depend>rosbridge_server</depend>
+    <depend>move_base</depend>
+    <depend>gmapping</depend>
 </package>
