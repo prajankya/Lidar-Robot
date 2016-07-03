@@ -64,6 +64,16 @@
                 padding: 4px;
                 overflow: auto;
                 height: calc(100vh - 230px);
+                background-color: black;
+                color: white;
+            }
+
+            .log_4 {
+                color: #FFCC00;
+            }
+
+            .log_8 {
+                color: red;
             }
         </style>
         <script>
@@ -91,7 +101,8 @@
             }();
 
             /*TODO transfer server IP as string */
-            var ROS_IP = "1.1.1.1";
+            //var ROS_IP = "1.1.1.1";
+            var ROS_IP = "127.0.0.1";
 
             $(function() {
                 var ros = new ROSLIB.Ros();
@@ -116,19 +127,31 @@
                 $("#switch").click(function() {
                     if (window.mapping) {
                         window.mapping = false;
-                        console.log("off");
                         $(this)
                             .addClass('btn-primary')
                             .removeClass('btn-warning')
                             .html("Start Mapping");
                     } else {
                         window.mapping = true;
-                        console.log("on");
                         $(this)
                             .addClass('btn-warning')
                             .removeClass('btn-primary')
                             .html("Stop Mapping");
                     }
+                });
+                var listener = new ROSLIB.Topic({
+                    ros: ros,
+                    name: '/rosout_agg',
+                    messageType: 'rosgraph_msgs/Log'
+                });
+                listener.subscribe(function(log) {
+                    $('#console').html(function(index, old) {
+                        return ("<span class=log_" + log.level + "><b>" + log.file + "</b> &nbsp;&nbsp;&nbsp;&nbsp;:" +
+                            log.function+" <i><b>" + log.line + "</i></b><br>" +
+                            log.msg.substring(0, 100) + "...</span><br>[" + log.header.stamp.secs + "." +
+                            log.header.stamp.nsecs + "]<br><br>" + old).substring(0, 3000);
+                    });
+                    //listener.unsubscribe();
                 });
             });
         </script>
@@ -186,7 +209,7 @@
                 <div class="col-lg-1">
                 </div>
             </div>
-            <div id="console" class="bg-info">
+            <div id="console" class="">
 
             </div>
         </div>

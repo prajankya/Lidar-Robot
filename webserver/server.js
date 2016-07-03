@@ -16,7 +16,7 @@ var sudo = require('sudo');
 var options = {
     /*cachePassword: true,
     prompt: 'Please Enter Sudo Password ? ',*/
-    Password: 'mansi',
+    password: 'mansi',
     spawnOptions: { /* other options for spawn */ }
 };
 
