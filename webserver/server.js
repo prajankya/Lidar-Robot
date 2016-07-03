@@ -1,25 +1,49 @@
 var exec = require('child_process').exec;
+var sudo = require('sudo');
+var options = {
+    cachePassword: true,
+    prompt: 'Password, yo? ',
+    spawnOptions: { /* other options for spawn */ }
+};
 
 var express = require('express');
 
 var server = express();
 server.use(express.static(__dirname + '/../'));
 
-var port = 8080;
+var port = 80;
+
 server.listen(port, function() {
     console.log('server listening on port ' + port);
-});
-var child = require('child_process').spawn('roslaunch', ['lidar_robot', 'lidar_robot.launch']);
 
-child.stdout.on('data', function (data) {
-  console.log(data.toString());
+// console.log('User ID:',process.getuid()+', Group ID:',process.getgid());
+//    drop_root();
+//   console.log('User ID:',process.getuid()+', Group ID:',process.getgid());
+//
+//
+//sudo apt-get install libcap2-bin
+//sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``
+//
 });
 
-child.stderr.on('data', function (data) {
-  console.error(data.toString());
-});
+var create_ap = sudo([ 'bash','./create_ap/create_ap','--config','./create_ap/create_ap.conf', '--redirect-to-localhost'], options);
 
-child.on('close', function (code) {
-    console.log('child process exited with code ' + code);
-    process.exit(code);
-});
+var ros = require('child_process').spawn('roslaunch', ['lidar_robot', 'lidar_robot.launch']);
+
+c_log(create_ap);
+c_log(ros);
+
+function c_log(child){
+	child.stdout.on('data', function (data) {
+	  console.log(data.toString());
+	});
+
+	child.stderr.on('data', function (data) {
+	  console.error(data.toString());
+	});
+
+	child.on('close', function (code) {
+	    console.log('child process exited with code ' + code);
+//	    process.exit(code);
+	});
+}
