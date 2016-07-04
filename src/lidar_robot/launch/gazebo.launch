@@ -4,6 +4,7 @@
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="world_name" value="$(find lidar_robot)/worlds/myworld.world"/>
+        <arg name="gui" value="false"/>
         <!--
         <arg name="verbose" value="false"/>
         <arg name="world_name" value="$(find gazebo_ros)/worlds/willowgarage.world"/>
