@@ -74,26 +74,26 @@
 			camera.rotation.x = -Math.PI / 12;
 
 			scene.add(camera);
+			/*
+						light = new THREE.DirectionalLight(0xffffff);
 
-			light = new THREE.DirectionalLight(0xffffff);
+						light.position.set(0, 100, 60);
+						light.castShadow = true;
+						light.shadow.camera.left = -60;
+						light.shadow.camera.top = -60;
+						light.shadow.camera.right = 60;
+						light.shadow.camera.bottom = 60;
+						light.shadow.camera.near = 1;
+						light.shadow.camera.far = 3000;
+						light.shadow.bias = -.0001
+						light.shadow.mapSize.width = light.shadow.mapSize.height = 1024;
 
-			light.position.set(0, 100, 60);
-			light.castShadow = true;
-			light.shadow.camera.left = -60;
-			light.shadow.camera.top = -60;
-			light.shadow.camera.right = 60;
-			light.shadow.camera.bottom = 60;
-			light.shadow.camera.near = 1;
-			light.shadow.camera.far = 3000;
-			light.shadow.bias = -.0001
-			light.shadow.mapSize.width = light.shadow.mapSize.height = 1024;
-
-			scene.add(light);
+						scene.add(light);*/
 			controls = new THREE.OrbitControls(camera, renderer.domElement);
 
 			scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
 
-			scene.add(new THREE.AmbientLight(0x444444));
+			//	scene.add(new THREE.AmbientLight(0x444444));
 
 			window.addEventListener('resize', function() {
 				WIDTH = window.innerWidth,
@@ -110,6 +110,8 @@
 
 			loader.load('models/json/meshes.json', function(_scene) {
 				document.querySelector("#loader").style.display = "none";
+				var directionalLight1 = _scene.getObjectByName("DirectionalLight1");
+
 				var motor_1 = _scene.getObjectByName("motor_1");
 				var motor_2 = _scene.getObjectByName("motor_2");
 				var motor_3 = _scene.getObjectByName("motor_3");
@@ -131,6 +133,8 @@
 				var lidar_bottom = _scene.getObjectByName("lidar_bottom");
 				var lidar_up = _scene.getObjectByName("lidar_up");
 				var stud = _scene.getObjectByName("stud");
+
+				scene.add(directionalLight1);
 
 				base.rotation.x = 0;
 				scene.add(base);
