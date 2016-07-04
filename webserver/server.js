@@ -14,9 +14,9 @@
 var exec = require('child_process').exec;
 var sudo = require('sudo');
 var options = {
-    /*cachePassword: true,
-    prompt: 'Please Enter Sudo Password ? ',*/
-    password: 'mansi',
+    cachePassword: true,
+    prompt: 'Please Enter Sudo Password ? ',
+    Password: 'admp',
     spawnOptions: { /* other options for spawn */ }
 };
 

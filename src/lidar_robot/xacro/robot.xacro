@@ -8,7 +8,7 @@
             <commandTopic>cmd_vel</commandTopic>
             <odometryTopic>odom</odometryTopic>
             <odometryFrame>odom</odometryFrame>
-            <odometryRate>50.0</odometryRate>
+            <odometryRate>30.0</odometryRate>
             <robotBaseFrame>base_link</robotBaseFrame>
         </plugin>
     </gazebo>
