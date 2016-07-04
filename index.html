@@ -124,6 +124,14 @@
                 });
                 ros.connect('ws://' + ROS_IP + ':9090');
 
+                var startMappingClient = new ROSLIB.Service({
+                    ros: ros,
+                    name: '/startMapping',
+                    serviceType: 'std_srvs/Trigger'
+                });
+
+                var request = new ROSLIB.ServiceRequest();
+
                 $("#switch").click(function() {
                     if (window.mapping) {
                         window.mapping = false;
@@ -137,6 +145,12 @@
                             .addClass('btn-warning')
                             .removeClass('btn-primary')
                             .html("Stop Mapping");
+                        startMappingClient.callService(request, function(result) {
+                            console.log('Result for service call on ' +
+                                startMappingClient.name +
+                                ': ' +
+                                result);
+                        });
                     }
                 });
                 var listener = new ROSLIB.Topic({
@@ -149,7 +163,7 @@
                         return ("<span class=log_" + log.level + "><b>" + log.file + "</b> &nbsp;&nbsp;&nbsp;&nbsp;:" +
                             log.function+" <i><b>" + log.line + "</i></b><br>" +
                             log.msg.substring(0, 100) + "...</span><br>[" + log.header.stamp.secs + "." +
-                            log.header.stamp.nsecs + "]<br><br>" + old).substring(0, 3000);
+                            log.header.stamp.nsecs + "]<br><br>" + old).substring(0, 10000);
                     });
                     //listener.unsubscribe();
                 });

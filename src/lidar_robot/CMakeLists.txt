@@ -39,5 +39,9 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(explorer src/explorer.cpp)
-target_link_libraries(explorer ${catkin_LIBRARIES})
+#add_executable(explorer src/explorer.cpp)
+#target_link_libraries(explorer ${catkin_LIBRARIES})
+
+add_executable(controller src/controller.cpp)
+target_link_libraries(controller ${catkin_LIBRARIES})
+add_dependencies(controller std_srvs)
