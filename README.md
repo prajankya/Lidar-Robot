@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/22321/prajankya/Lidar-Robot.svg)](https://zenodo.org/badge/latestdoi/22321/prajankya/Lidar-Robot)
+[![DOI](https://zenodo.org/badge/22321/prajankya/Lidar-Robot.svg)](https://zenodo.org/badge/latestdoi/22321/prajankya/Lidar-Robot) [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/) ![Dependency Status](https://david-dm.org/boennemann/badges.svg) ![Prajankya](https://img.shields.io/badge/Developer-Prajankya-blue.svg)
 
 
 ## Unmanned Mapping Vehicle Using L.O.A.M. in Real-time
@@ -70,10 +70,7 @@ Principal axes are :
 axis momenta are :
 | 0.000000 0.000001 0.000000 |
 
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badge/)
 
->
-##Team 9
-- [Adarsh Belavatagi](http://github.com/Belavatagi)
-- [Darshan Bafna](http://github.com/Darshabafna)
-- [Manikanta Pujar](http://github.com/pujarmani)
-- [Prajankya Sonar](http://github.com/Prajankya)
+[![forthebadge](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
