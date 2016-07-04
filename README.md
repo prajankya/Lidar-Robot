@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/22321/prajankya/Lidar-Robot.svg)](https://zenodo.org/badge/latestdoi/22321/prajankya/Lidar-Robot) [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/) ![Dependency Status](https://david-dm.org/boennemann/badges.svg) ![Prajankya](https://img.shields.io/badge/Developer-Prajankya-blue.svg)
+[![DOI](https://zenodo.org/badge/22321/prajankya/Lidar-Robot.svg)](https://zenodo.org/badge/latestdoi/22321/prajankya/Lidar-Robot) [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)  ![Prajankya](https://img.shields.io/badge/Developer-Prajankya-blue.svg)
 
 
 ## Unmanned Mapping Vehicle Using L.O.A.M. in Real-time
