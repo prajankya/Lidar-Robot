@@ -1,6 +1,6 @@
 #define USE_IMU
 #define USE_ODOM
-#define USE_DESIGN
+//#define USE_DESIGN
 #define USE_BASE
 #define USE_DEBUG
 
@@ -11,8 +11,8 @@
 #include "BLDCOmni.h"
 
 #ifdef USE_IMU
-#include <IMU.h>
-IMU myIMU;
+Adafruit_HMC5883_Unified mag_sensor = Adafruit_HMC5883_Unified(12345);
+ros::Publisher imu_pub("imu", &imu_msg);
 #endif
 
 #ifdef USE_ODOM
@@ -72,7 +72,14 @@ void setup() {// ----------------------------------------- setup
 #endif
 
 #ifdef USE_IMU
-  myIMU.init(nh, String("imu").c_str());
+  if(!mag_sensor.begin()) {
+    while(1){
+      Serial.println("Ooops, no IMU detected ... Check your wiring!");
+    }
+  }
+
+  nh.advertise(imu_pub);
+
 #endif
 
 #ifdef USE_DESIGN
