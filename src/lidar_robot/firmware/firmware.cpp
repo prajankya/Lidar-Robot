@@ -11,54 +11,34 @@
 #include "BLDCOmni.h"
 
 #ifdef USE_IMU
-#include <sensor_msgs/MagneticField.h>
-#include <Adafruit_Sensor.h>
-#include <Adafruit_HMC5883_U.h>
-//  #include "IMU.h"
+#include <IMU.h>
+IMU myIMU;
 #endif
 
 #ifdef USE_ODOM
-//  #include <nav_msgs/Odometry.h>
-//  #include <tf/tf.h>
-//  #include <tf/transform_broadcaster.h>
 #include <Encoder.h>
+std_msgs::String odom_msg;
+ros::Publisher odom_pub("odom_feedback", &odom_msg);
+
+Encoder theta(18, 22);
+Encoder r(19, 23);
 #endif
 
 #ifdef USE_DESIGN
 #include <rosserial_arduino/Test.h>
 #include "Design.h"
 Design design;
+using rosserial_arduino::Test;
+void animate_Design_callback(const Test::Request & req, Test::Response & res){
+  String s = String(req.input);
+  int type = s.toInt();
+  design.animate(type);
+}
+ros::ServiceServer<Test::Request, Test::Response> server("animate_Design",&animate_Design_callback);
 #endif
 
 #ifdef USE_BASE
 BLDCOmni base;
-#endif
-
-ros::NodeHandle nh;
-
-#ifdef USE_DEBUG
-std_msgs::String str_msg;
-ros::Publisher pub3("debug_out", &str_msg);
-#endif
-
-#ifdef USE_ODOM
-//  geometry_msgs::TransformStamped odom;
-//  tf::TransformBroadcaster odom_broadcaster;
-std_msgs::String odom_msg;
-ros::Publisher odom_pub("odom_feedback", &odom_msg);
-
-Encoder theta(18, 22);
-Encoder r(19, 23);
-
-//  double pAng = 0.0;
-//  double pLen = 0.0;
-
-//  double odom_x = 0;
-//  double odom_y = 0;
-//  double odom_theta = 0;
-#endif
-
-#ifdef USE_BASE
 int brake_ = 0;
 int dir_ = 5;
 int mag_ = 0;
@@ -78,53 +58,34 @@ void messageCb(const std_msgs::String &_cmd) {
 ros::Subscriber<std_msgs::String> base_sub("Base_command", messageCb);
 #endif
 
-#ifdef USE_DESIGN
-using rosserial_arduino::Test;
-void animate_Design_callback(const Test::Request & req, Test::Response & res){
-  String s = String(req.input);
-  int type = s.toInt();
-  design.animate(type);
-}
-ros::ServiceServer<Test::Request, Test::Response> server("animate_Design",&animate_Design_callback);
+ros::NodeHandle nh;
+
+#ifdef USE_DEBUG
+std_msgs::String str_msg;
+ros::Publisher pub3("debug_out", &str_msg);
+#endif
+
+void setup() {// ----------------------------------------- setup
+  nh.initNode();
+
+#ifdef USE_DEBUG
+  nh.advertise(pub3);
 #endif
 
 #ifdef USE_IMU
-//  IMU imu(nh);
-Adafruit_HMC5883_Unified mag_sensor = Adafruit_HMC5883_Unified(12345);
-sensor_msgs::MagneticField mag;
-ros::Publisher mag_pub("imu/mag", &mag);
+  myIMU.init(nh);
 #endif
 
-
-void setup() {
-  nh.initNode();
-
-  #ifdef USE_DEBUG
-  nh.advertise(pub3);
-  #endif
-
-  #ifdef USE_IMU
-  //    imu.setup();
-  if(!mag_sensor.begin()) {
-    while(1);
-  }
-  nh.advertise(mag_pub);
-  mag.header.frame_id = "imu_sensor";
-  #endif
-
-  #ifdef USE_DESIGN
+#ifdef USE_DESIGN
   design.init(7, 8, 9, 10, 11, 12);//L1, L2, L3, L4, L5, L6
   nh.advertiseService(server);
-  #endif
+#endif
 
-  #ifdef USE_ODOM
+#ifdef USE_ODOM
   nh.advertise(odom_pub);
-  //    odom.header.frame_id = "odom";
-  //    odom.child_frame_id = "base_link";
-  //    odom_broadcaster.init(nh);
-  #endif
+#endif
 
-  #ifdef USE_BASE
+#ifdef USE_BASE
   nh.subscribe(base_sub);
 
   base.setMotor1(46, 50, 48, 52, 1); //speedPin, disablePin, directionPin, brakePin, speedFactor
@@ -134,23 +95,23 @@ void setup() {
 
   base.setDir(5);
   base.setMag(0);
-  #endif
+#endif
 }
 
 void loop() {
-  #ifdef USE_IMU
-  //    imu.loop();
-  sensors_event_t event;
-  mag_sensor.getEvent(&event);
-  mag.header.stamp = nh.now();
-  mag.magnetic_field.x = event.magnetic.x;
-  mag.magnetic_field.y = event.magnetic.y;
-  mag.magnetic_field.z = event.magnetic.z;
+#ifdef USE_IMU
+  myIMU.loop();
+/*  sensors_event_t event;
+   mag_sensor.getEvent(&event);*/
+/*  mag.header.stamp = nh.now();
+   mag.magnetic_field.x = event.magnetic.x;
+   mag.magnetic_field.y = event.magnetic.y;
+   mag.magnetic_field.z = event.magnetic.z;
 
-  mag_pub.publish(&mag);
-  #endif
+   mag_pub.publish(&mag);*/
+#endif
 
-  #ifdef USE_ODOM
+#ifdef USE_ODOM
   long r_ = round(r.read() * 117.09);//multiplied by 10e5
   long t_ = round(theta.read() * 10471.9755);
 
