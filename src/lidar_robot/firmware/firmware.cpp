@@ -1,10 +1,9 @@
 #define USE_IMU
-/*
 #define USE_ODOM
 #define USE_DESIGN
 #define USE_BASE
 #define USE_DEBUG
-*/
+
 #include <Arduino.h>
 #include <ros.h>
 #include <ros/time.h>
@@ -67,8 +66,7 @@ ros::Publisher pub3("debug_out", &str_msg);
 #endif
 
 void setup() {// ----------------------------------------- setup
- // nh.initNode();
-Serial.begin(9600);
+  nh.initNode();
 #ifdef USE_DEBUG
   nh.advertise(pub3);
 #endif
@@ -102,14 +100,6 @@ Serial.begin(9600);
 void loop() {
 #ifdef USE_IMU
   myIMU.loop();
-/*  sensors_event_t event;
-   mag_sensor.getEvent(&event);*/
-/*  mag.header.stamp = nh.now();
-   mag.magnetic_field.x = event.magnetic.x;
-   mag.magnetic_field.y = event.magnetic.y;
-   mag.magnetic_field.z = event.magnetic.z;
-
-   mag_pub.publish(&mag);*/
 #endif
 
 #ifdef USE_ODOM
@@ -121,37 +111,6 @@ void loop() {
   s2.toCharArray(bb2, 50);
   odom_msg.data = bb2;
   odom_pub.publish(&odom_msg);
-
-  /*
-     odom.header.stamp = nh.now();
-
-     double ang = theta.read() * 0.104719755;
-     double len = r.read() * 0.0011709;
-
-     double dLen = 0;
-     double dAng = 0;
-
-     if(pLen != len){
-     dLen = len - pLen;
-     pLen = len;
-     }
-
-     if(pAng != ang){
-     dAng = ang - pAng;
-     pAng = ang;
-     }
-
-     odom_x += cos(dAng) * dLen;
-     odom_y += sin(dAng) * dLen;
-     odom_theta += dAng;
-
-
-     odom.transform.translation.x = odom_x;
-     odom.transform.translation.y = odom_y;
-     odom.transform.rotation = tf::createQuaternionFromYaw(0);//odom_theta);//ang);
-     odom.header.stamp = nh.now();
-     odom_broadcaster.sendTransform(odom);
-   */
 #endif
 
 #ifdef USE_DEBUG
