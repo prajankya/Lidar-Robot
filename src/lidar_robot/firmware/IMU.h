@@ -2,12 +2,11 @@
 #define _IMU_H_
 
 #include<Arduino.h>
-#include <sensor_msgs/MagneticField.h>
-#include <Adafruit_Sensor.h>
-#include <Adafruit_HMC5883_U.h>
-#include <ros.h>
-#include <ros/time.h>
-#include <std_msgs/String.h>
+#include<Adafruit_Sensor.h>
+#include<Adafruit_HMC5883_U.h>
+#include<ros.h>
+#include<ros/time.h>
+#include<std_msgs/String.h>
 
 class IMU {
   private:
@@ -17,7 +16,7 @@ class IMU {
     Adafruit_HMC5883_Unified mag_sensor;
 
   public:
-    void init(ros::NodeHandle _nh);
+    void init(ros::NodeHandle _nh, const char * topic);
     void loop();
 };
 

@@ -1,9 +1,10 @@
 #define USE_IMU
+/*
 #define USE_ODOM
 #define USE_DESIGN
 #define USE_BASE
 #define USE_DEBUG
-
+*/
 #include <Arduino.h>
 #include <ros.h>
 #include <ros/time.h>
@@ -66,14 +67,14 @@ ros::Publisher pub3("debug_out", &str_msg);
 #endif
 
 void setup() {// ----------------------------------------- setup
-  nh.initNode();
-
+ // nh.initNode();
+Serial.begin(9600);
 #ifdef USE_DEBUG
   nh.advertise(pub3);
 #endif
 
 #ifdef USE_IMU
-  myIMU.init(nh);
+  myIMU.init(nh, String("imu").c_str());
 #endif
 
 #ifdef USE_DESIGN
