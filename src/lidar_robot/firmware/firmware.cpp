@@ -12,6 +12,7 @@
 
 #ifdef USE_IMU
 Adafruit_HMC5883_Unified mag_sensor = Adafruit_HMC5883_Unified(12345);
+std_msgs::String imu_msg;
 ros::Publisher imu_pub("imu", &imu_msg);
 #endif
 
@@ -73,13 +74,12 @@ void setup() {// ----------------------------------------- setup
 
 #ifdef USE_IMU
   if(!mag_sensor.begin()) {
-    while(1){
+    while(1) {
       Serial.println("Ooops, no IMU detected ... Check your wiring!");
     }
   }
 
   nh.advertise(imu_pub);
-
 #endif
 
 #ifdef USE_DESIGN
@@ -95,7 +95,7 @@ void setup() {// ----------------------------------------- setup
   nh.subscribe(base_sub);
 
   base.setMotor1(46, 50, 48, 52, 1); //speedPin, disablePin, directionPin, brakePin, speedFactor
-  base.setMotor2(4, 42, 40, 44, 0.9);
+  base.setMotor2(4, 42, 40, 44, 1);
   base.setMotor3(3, 34, 32, 36, 1);
   base.setMotor4(2, 26, 24, 28, 1);
 
@@ -106,7 +106,23 @@ void setup() {// ----------------------------------------- setup
 
 void loop() {
 #ifdef USE_IMU
-  myIMU.loop();
+  sensors_event_t event;
+  mag_sensor.getEvent(&event);
+
+  char x[10];
+  dtostrf(event.magnetic.x, 6, 2, x);
+
+  char y[10];
+  dtostrf(event.magnetic.y, 6, 2, y);
+
+  char z[10];
+  dtostrf(event.magnetic.z, 6, 2, z);
+
+  String s = String(x) + "," + String(y) + "," + String(z);
+  char bb[50];
+  s.toCharArray(bb, 50);
+  imu_msg.data = bb;
+  imu_pub->publish(&imu_msg);
 #endif
 
 #ifdef USE_ODOM
