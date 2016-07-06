@@ -46,7 +46,7 @@
 
             var startMappingClient = new ROSLIB.Service({
                ros: ros,
-               name: '/startMapping',
+               name: '/lidar_robot/startMapping',
                serviceType: 'std_srvs/Trigger'
             });
 
@@ -82,8 +82,8 @@
                $('#console').html(function(index, old) {
                   return ("<span class=log_" + log.level + "><b>" + log.file + "</b> &nbsp;&nbsp;&nbsp;&nbsp;:" +
                      log.function+" <i><b>" + log.line + "</i></b><br>" +
-                     log.msg.substring(0, 100) + "...</span><br>[" + log.header.stamp.secs + "." +
-                     log.header.stamp.nsecs + "]<br><br>" + old).substring(0, 10000);
+                     log.msg.substring(0, 500) + "...</span><br>[" + log.header.stamp.secs + "." +
+                     log.header.stamp.nsecs + "]<br><br>" + old).substring(0, 20000);
                });
                //listener.unsubscribe();
             });
