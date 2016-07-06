@@ -22,27 +22,40 @@
       <script src="./webserver/js/keyboardteleop.min.js"></script>
       <script src="./webserver/js/rangeslider.min.js"></script>
       <style>
-            html, body {
+                     html,
+         body {
             padding: 0px;
             margin: 0px;
             overflow: hidden;
            }
-           #urdf{
-              margin:0px;
-              margin-top:51px;
-            }
 
-           #speed_control {
-              background-color: rgba(255, 255, 255, 0.7);
-              padding: 10px;
-              right: 20px;
-              top: 80px;
-              position: fixed;
+           #urdf {
+              margin: 0px;
+              margin-top: 51px;
              }
 
-             #sliders * {
-                position: relative!important;
+             #speed_control {
+                background-color: rgba(255, 255, 255, 0.7);
+                padding: 10px;
+                right: 20px;
+                top: 80px;
+                position: fixed;
                }
+
+               .rangeslider,
+               input[type='range'] {
+                  width: 300px;
+                 }
+
+                 .rangeslider__handle {
+                    border-radius: 22px;
+                    min-width: 62px;
+                    line-height: 42px;
+                    text-align: center;
+                    &:after {
+                       background: 0;
+                      }
+                     }
       </style>
       <script>
          var ROS_IP = "1.1.1.1";
@@ -105,11 +118,27 @@
                rootObject: viewer.scene,
                loader: ROS3D.COLLADA_LOADER_2
             });
-            $('input[type="range"]').rangeslider({
-                onSlide: function(position, value) {
-                    console.log(position+"--"+value);
-                }
-            });
+            var $element = $('input[type="range"]');
+            var $handle;
+
+            $element
+               .rangeslider({
+                  polyfill: false,
+                  onInit: function() {
+                     $handle = $('.rangeslider__handle', this.$range);
+                     updateHandle($handle[0], this.value);
+                  },
+                  onSlide: function(position, value) {
+                     teleop.scale = (value / 100);
+                  }
+               })
+               .on('input', function() {
+                  updateHandle($handle[0], this.value);
+               });
+
+            function updateHandle(el, val) {
+               el.textContent = val;
+            }
          });
       </script>
    </head>
@@ -146,11 +175,12 @@
          </div>
       </nav>
       <div id="speed_control">
-      	  <label for="speed">
-              Robot Speed: <b><span id="speedInfo">90</span>%</b>
-              <br>
-              <input id="speed" type="range"></input>
-          </label>
+         <label for="speed">
+            Robot Speed:
+            <br>
+            <br>
+            <input id="speed" type="range"></input>
+         </label>
       </div>
       <div id="urdf"></div>
    </body>
