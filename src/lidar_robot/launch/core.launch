@@ -18,14 +18,14 @@
     <node pkg="lidar_robot" type="controller" name="controller" ns="lidar_robot"/>
 
     <!-- Arduino -->
-    <node name="serial_node" pkg="rosserial_python" ns="lidar_robot" type="serial_node.py" args="$(arg port)" respawn="true"/>
+    <!--  <node name="serial_node" pkg="rosserial_python" ns="lidar_robot" type="serial_node.py" args="$(arg port)" respawn="true"/>-->
 
     <!-- Arduino Communicator -->
     <node pkg="lidar_robot" ns="lidar_robot" type="base" name="base"/>
 
     <!-- RpLidar -->
-    <node name="rplidar" pkg="rplidar_ros" ns="lidar_robot" type="rplidarNode" respawn="false">
+    <!-- <node name="rplidar" pkg="rplidar_ros" ns="lidar_robot" type="rplidarNode" respawn="false">
       <param name="frame_id" value="rplidar_frame"/>
     </node>
-
+-->
 </launch>
