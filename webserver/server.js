@@ -43,7 +43,7 @@ var port_forwarder = sudo([
 });
 c_log(port_forwarder);
 
-/*
+
 var create_ap = sudo([
   'bash', __dirname + '/create_ap/create_ap', '--redirect-to-localhost', '--config', __dirname + '/create_ap/create_ap.conf'
 ], sudoOptions).on('error', function(err) {
@@ -55,4 +55,3 @@ var ros = require('child_process').spawn('roslaunch', ['lidar_robot', 'lidar_rob
     console.error(err);
 });
 c_log(ros);
-*/
