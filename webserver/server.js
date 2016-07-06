@@ -39,7 +39,7 @@ app.use(express.static(__dirname + '/../'));
 app.listen(port, function() {
     console.log('server listening on port ' + port);
 });
-
+/*
 var port_forwarder = sudo([
     'iptables', '-t', 'nat', '-A', 'PREROUTING', '-i', 'wlan0', '-p', 'tcp', '--dport', '80', '-j', 'REDIRECT', '--to-port', '8080'
 ], sudoOptions).on('error', function(err) {
@@ -59,3 +59,4 @@ var ros = require('child_process').spawn('roslaunch', ['lidar_robot', 'lidar_rob
     console.error(err);
 });
 c_log(ros);
+*/
