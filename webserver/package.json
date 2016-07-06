@@ -25,8 +25,7 @@
     "url": "https://github.com/prajankya/Lidar-Robot/issues"
   },
   "dependencies": {
-    "exec": "~0.2.1",
     "express": "~4.13.4",
-    "sudo": "^1.0.3"
+    "sudo": "git+https://git@github.com/calmh/node-sudo.git"
   }
 }

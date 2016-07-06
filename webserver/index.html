@@ -1,56 +1,152 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
    <head>
-      <meta charset="utf-8" />
+      <title>Lidar Robot GUI</title>
 
-      <script src="js/three.min.js"></script>
-      <script src="js/easeljs.min.js"></script>
-      <script src="js/eventemitter2.min.js"></script>
-      <script src="js/roslib.min.js"></script>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <script type="text/javascript" src="js/ros2d.min.js"></script>
-      <script type="text/javascript" src="js/ros3d.min.js"></script>
+      <link href="./webserver/css/bootstrap.min.css" rel="stylesheet" />
+      <link href="./webserver/css/style.css" rel="stylesheet" />
 
+      <!--<link href="./webserver/css/bootstrap-theme.min.css" rel="stylesheet">-->
+
+      <script src="./webserver/js/jquery-2.2.4.min.js"></script>
+      <script src="./webserver/js/bootstrap.min.js"></script>
+
+      <script src="./webserver/js/eventemitter2.min.js"></script>
+      <script src="./webserver/js/roslib.min.js"></script>
       <script>
-         /**
-          * Setup all visualization elements when the page is loaded.
-          */
-         function init() {
-            // Connect to ROS.
-            var ros = new ROSLIB.Ros({
-               url: 'ws://localhost:9090'
-            });
+         var ROS_IP = "1.1.1.1";
+         var ip = window.location.href.substring(7);
+         ip = ip.substr(0, ip.indexOf(":"));
+         console.log(ip);
+         console.log(ROS_IP);
+         ROS_IP = ip;
 
-            // Create the main viewer.
-            var viewer = new ROS3D.Viewer({
-               divID: 'map',
-               width: 800,
-               height: 600,
-               antialias: true
+         $(function() {
+            var ros = new ROSLIB.Ros();
+            ros.on('error', function(error) {
+               console.log(error);
+               $('.status').hide();
+               $('#error').show();
             });
+            ros.on('connection', function() {
+               console.log('Connection made!');
+               $('.status').hide();
+               $('#connected').show();
+            });
+            ros.on('close', function() {
+               console.log('Connection closed.');
+               $('.status').hide();
+               $('#closed').show();
+            });
+            ros.connect('ws://' + ROS_IP + ':9090');
 
-            // Setup the marker client.
-            var gridClient = new ROS3D.OccupancyGridClient({
+            var startMappingClient = new ROSLIB.Service({
                ros: ros,
-               rootObject: viewer.scene,
-               continuous: true
+               name: '/startMapping',
+               serviceType: 'std_srvs/Trigger'
             });
-         }
+
+            var request = new ROSLIB.ServiceRequest();
+
+            $("#switch").click(function() {
+               if (window.mapping) {
+                  window.mapping = false;
+                  $(this)
+                     .addClass('btn-primary')
+                     .removeClass('btn-warning')
+                     .html("Start Mapping");
+               } else {
+                  window.mapping = true;
+                  $(this)
+                     .addClass('btn-warning')
+                     .removeClass('btn-primary')
+                     .html("Stop Mapping");
+                  startMappingClient.callService(request, function(result) {
+                     console.log('Result for service call on ' +
+                        startMappingClient.name +
+                        ': ' +
+                        result);
+                  });
+               }
+            });
+            var listener = new ROSLIB.Topic({
+               ros: ros,
+               name: '/rosout_agg',
+               messageType: 'rosgraph_msgs/Log'
+            });
+            listener.subscribe(function(log) {
+               $('#console').html(function(index, old) {
+                  return ("<span class=log_" + log.level + "><b>" + log.file + "</b> &nbsp;&nbsp;&nbsp;&nbsp;:" +
+                     log.function+" <i><b>" + log.line + "</i></b><br>" +
+                     log.msg.substring(0, 100) + "...</span><br>[" + log.header.stamp.secs + "." +
+                     log.header.stamp.nsecs + "]<br><br>" + old).substring(0, 10000);
+               });
+               //listener.unsubscribe();
+            });
+         });
       </script>
    </head>
 
-   <body onload="init()">
-      <h1>Continuous Map Example</h1>
-      <p>
-         Use any method to publish continuous updates to topic /map and use this page to visualize updates. Follow these commands:
-      </p>
-      <ol>
-         <li><tt>roscore</tt></li>
-         <li><tt>(method of choice to publish to /map)</tt></li>
-         <li><tt>roslaunch rosbridge_server rosbridge_websocket.launch</tt></li>
-      </ol>
-      <div id="map"></div>
+   <body>
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+         <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-right">
+               <li id="connecting" class="status">
+                  <a href="#" style="color:orange">
+                     <span class=" glyphicon glyphicon-refresh glyphicon-refresh-animate ">
+                     </span> Connecting to ROS...
+                  </a>
+               </li>
+               <li id="connected" class="status" style="display:none">
+                  <a href="#" style="color:#00ff00;">
+                     <span class="glyphicon glyphicon-ok">
+                     </span> Connected
+                  </a>
+               </li>
+               <li id="error" class="status" style="display:none">
+                  <a href="#" style="color:red;">
+                     <span class="glyphicon glyphicon-remove">
+                     </span> Error in the backend!
+                  </a>
+               </li>
+               <li id="closed" class="status" style="display:none">
+                  <a href="#">
+                     <span class="glyphicon glyphicon-exclamation-sign">
+                     </span> Connection closed.
+                  </a>
+               </li>
+            </ul>
+         </div>
+      </nav>
+      <div id="body">
+         <div id="space">
+         </div>
+         <div id="btn_c" class="row">
+            <div class="col-lg-1">
+            </div>
+            <div class="col-sm-6 col-lg-4">
+               <button id="switch" type="button" class="btn btn-primary btn-lg btn-block">
+                  Start Mapping
+               </button>
+            </div>
+            <div class="col-lg-2">
+            </div>
+            <div class="col-sm-6 col-lg-4">
+               <button id="estop" type="button" class="btn btn-danger btn-lg btn-block">
+                  Emergency Stop
+               </button>
+            </div>
+            <div class="col-lg-1">
+            </div>
+         </div>
+         <div id="console" class="">
+
+         </div>
+      </div>
    </body>
 
 </html>
