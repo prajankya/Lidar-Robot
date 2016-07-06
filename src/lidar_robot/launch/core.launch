@@ -24,6 +24,8 @@
     <node pkg="lidar_robot" ns="lidar_robot" type="base" name="base"/>
 
     <!-- RpLidar -->
-    <node name="rplidar" pkg="rplidar_ros" ns="lidar_robot" type="rplidarNode" respawn="false"/>
+    <node name="rplidar" pkg="rplidar_ros" ns="lidar_robot" type="rplidarNode" respawn="false">
+      <param name="frame_id" value="rplidar_frame"/>
+    </node>
 
 </launch>

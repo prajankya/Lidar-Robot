@@ -115,7 +115,7 @@ int main(int argc, char ** argv){
   ros::Rate rate(10);
 
   //base.header.frame_id = "base_link";
-  
+
   while(nh.ok()){
     ros::Duration  d(1);
 
@@ -125,6 +125,7 @@ int main(int argc, char ** argv){
       mag = 0;
       brake = 1;
     }
+brake=0;
 	/*	std_msgs::String base=dir+","+mag+","+brake+"\n";
 char numstr[21]; // enough to hold all numbers up to 64-bits
 sprintf(numstr, "%d", age);
