@@ -17,6 +17,31 @@
 
       <script src="./webserver/js/eventemitter2.min.js"></script>
       <script src="./webserver/js/roslib.min.js"></script>
+      <style>
+                   #btn_c {
+            padding: 10px 0px;
+           }
+
+           .col-sm-6 {
+              padding: 8px;
+             }
+
+             #console {
+                padding: 4px;
+                overflow: auto;
+                height: calc(100vh - 230px);
+                background-color: black;
+                color: white;
+               }
+
+               .log_4 {
+                  color: #FFCC00;
+                 }
+
+                 .log_8 {
+                    color: red;
+                   }
+      </style>
       <script>
          var ROS_IP = "1.1.1.1";
          var ip = window.location.href.substring(7);
@@ -94,6 +119,9 @@
    <body>
       <nav class="navbar navbar-inverse navbar-fixed-top">
          <div class="container-fluid">
+            <ul class="nav navbar-nav">
+               <a href="./3d">3D</a>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
                <li id="connecting" class="status">
                   <a href="#" style="color:orange">

@@ -29,22 +29,3 @@
 #space {
     height: 30px;
 }
-#btn_c {
-    padding: 10px 0px;
-}
-.col-sm-6 {
-    padding: 8px;
-}
-#console {
-    padding: 4px;
-    overflow: auto;
-    height: calc(100vh - 230px);
-    background-color: black;
-    color: white;
-}
-.log_4 {
-    color: #FFCC00;
-}
-.log_8 {
-    color: red;
-}

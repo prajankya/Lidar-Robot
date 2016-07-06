@@ -30,6 +30,10 @@ app.get('/', function(request, response) {
     response.sendFile(__dirname + '/index.html');
 });
 
+app.get('/3d', function(request, response) {
+    response.sendFile(__dirname + '/3d.html');
+});
+
 app.use(express.static(__dirname + '/../'));
 
 app.listen(port, function() {
