@@ -17,6 +17,31 @@
 
       <script src="./webserver/js/eventemitter2.min.js"></script>
       <script src="./webserver/js/roslib.min.js"></script>
+      <style>
+                   #btn_c {
+            padding: 10px 0px;
+           }
+
+           .col-sm-6 {
+              padding: 8px;
+             }
+
+             #console {
+                padding: 4px;
+                overflow: auto;
+                height: calc(100vh - 230px);
+                background-color: black;
+                color: white;
+               }
+
+               .log_4 {
+                  color: #FFCC00;
+                 }
+
+                 .log_8 {
+                    color: red;
+                   }
+      </style>
       <script>
          var ROS_IP = "1.1.1.1";
          var ip = window.location.href.substring(7);
@@ -46,7 +71,7 @@
 
             var startMappingClient = new ROSLIB.Service({
                ros: ros,
-               name: '/startMapping',
+               name: '/lidar_robot/startMapping',
                serviceType: 'std_srvs/Trigger'
             });
 
@@ -82,8 +107,8 @@
                $('#console').html(function(index, old) {
                   return ("<span class=log_" + log.level + "><b>" + log.file + "</b> &nbsp;&nbsp;&nbsp;&nbsp;:" +
                      log.function+" <i><b>" + log.line + "</i></b><br>" +
-                     log.msg.substring(0, 100) + "...</span><br>[" + log.header.stamp.secs + "." +
-                     log.header.stamp.nsecs + "]<br><br>" + old).substring(0, 10000);
+                     log.msg.substring(0, 500) + "...</span><br>[" + log.header.stamp.secs + "." +
+                     log.header.stamp.nsecs + "]<br><br>" + old).substring(0, 20000);
                });
                //listener.unsubscribe();
             });
@@ -94,7 +119,10 @@
    <body>
       <nav class="navbar navbar-inverse navbar-fixed-top">
          <div class="container-fluid">
-            <ul class="nav navbar-nav navbar-right">
+<!--	     <ul class="nav navbar-nav">
+                 <li><a href="./3d">3D</a></li>
+            </ul>
+-->         <ul class="nav navbar-nav navbar-right">
                <li id="connecting" class="status">
                   <a href="#" style="color:orange">
                      <span class=" glyphicon glyphicon-refresh glyphicon-refresh-animate ">

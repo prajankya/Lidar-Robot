@@ -3,9 +3,15 @@
 
    <head>
       <title>Lidar Robot GUI</title>
-      <meta charset="utf-8" />
-      <link href="./webserver/css/nouislider.min.css" rel="stylesheet">
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
 
+      <link href="./webserver/css/bootstrap.min.css" rel="stylesheet" />
+      <link href="./webserver/css/rangeslider.css" rel="stylesheet" />
+      <link href="./webserver/css/style.css" rel="stylesheet" />
+
+      <script src="./webserver/js/jquery-2.2.4.min.js"></script>
+      <script src="./webserver/js/bootstrap.min.js"></script>
       <script src="./webserver/js/three.min.js"></script>
       <script src="./webserver/js/ColladaLoader2.min.js"></script>
       <script src="./webserver/js/STLLoader.min.js"></script>
@@ -14,56 +20,70 @@
       <script src="./webserver/js/ros3d.min.js"></script>
       <script src="./webserver/js/jointstatepublisher.min.js"></script>
       <script src="./webserver/js/keyboardteleop.min.js"></script>
-      <script src="./webserver/js/jquery-3.0.0.min.js"></script>
-      <script src="./webserver/js/nouislider.min.js"></script>
+      <script src="./webserver/js/rangeslider.min.js"></script>
       <style>
-               body {
+                     html,
+         body {
             padding: 0px;
             margin: 0px;
             overflow: hidden;
            }
 
-           #sliders {
-              background-color: rgba(255, 255, 255, 0.7);
-              padding: 10px;
-              right: 20px;
-              top: 20px;
-              position: absolute;
+           #urdf {
+              margin: 0px;
+              margin-top: 51px;
              }
 
-             #sliders * {
-                position: relative!important;
+             #speed_control {
+                background-color: rgba(255, 255, 255, 0.7);
+                padding: 10px;
+                right: 20px;
+                top: 80px;
+                position: fixed;
                }
+
+               .rangeslider,
+               input[type='range'] {
+                  width: 300px;
+                 }
+
+                 .rangeslider__handle {
+                    border-radius: 22px;
+                    min-width: 62px;
+                    line-height: 42px;
+                    text-align: center;
+                    &:after {
+                       background: 0;
+                      }
+                     }
       </style>
       <script>
-         function init() {
+         var ROS_IP = "1.1.1.1";
+         var ip = window.location.href.substring(7);
+         ip = ip.substr(0, ip.indexOf(":"));
+         console.log(ip);
+         console.log(ROS_IP);
+         ROS_IP = ip;
+
+         $(function() {
             var ros = new ROSLIB.Ros();
-            // If there is an error on the backend, an 'error' emit will be emitted.
             ros.on('error', function(error) {
-               document.getElementById('connecting').style.display = 'none';
-               document.getElementById('connected').style.display = 'none';
-               document.getElementById('closed').style.display = 'none';
-               document.getElementById('error').style.display = 'inline';
                console.log(error);
+               $('.status').hide();
+               $('#error').show();
             });
-            // Find out exactly when we made a connection.
             ros.on('connection', function() {
                console.log('Connection made!');
-               document.getElementById('connecting').style.display = 'none';
-               document.getElementById('error').style.display = 'none';
-               document.getElementById('closed').style.display = 'none';
-               document.getElementById('connected').style.display = 'inline';
+               $('.status').hide();
+               $('#connected').show();
             });
             ros.on('close', function() {
                console.log('Connection closed.');
-               document.getElementById('connecting').style.display = 'none';
-               document.getElementById('connected').style.display = 'none';
-               document.getElementById('closed').style.display = 'inline';
+               $('.status').hide();
+               $('#closed').show();
             });
+            ros.connect('ws://' + ROS_IP + ':9090');
 
-            ros.connect('ws://127.0.0.1:9090');
-
-            // Initialize the teleop.
             var teleop = new KEYBOARDTELEOP.Teleop({
                ros: ros,
                topic: '/cmd_vel'
@@ -72,7 +92,7 @@
             var viewer = new ROS3D.Viewer({
                divID: 'urdf',
                width: window.innerWidth,
-               height: window.innerHeight,
+               height: window.innerHeight - 51,
                antialias: true,
                background: '#002233'
             });
@@ -98,51 +118,69 @@
                rootObject: viewer.scene,
                loader: ROS3D.COLLADA_LOADER_2
             });
-            /*var gridClient = new ROS3D.OccupancyGridClient({
-               ros: ros,
-               rootObject: viewer.scene,
-               continuous: true
-            });*/
+            var $element = $('input[type="range"]');
+            var $handle;
 
-            var speed = document.getElementById('speed');
-            noUiSlider.create(speed, {
-               start: 90, // Handle start position
-               range: { // Slider can select '0' to '100'
-                  'min': 0,
-                  'max': 100
-               }
-            });
-            speed.noUiSlider.on('update', function(values, handle) {
-               values[0]
-               document.getElementById('speedInfo').innerHTML = values[0];
-               teleop.scale = (values[0] / 100.0);
-            });
-         }
+            $element
+               .rangeslider({
+                  polyfill: false,
+                  onInit: function() {
+                     $handle = $('.rangeslider__handle', this.$range);
+                     updateHandle($handle[0], this.value);
+                  },
+                  onSlide: function(position, value) {
+                     teleop.scale = (value / 100);
+                  }
+               })
+               .on('input', function() {
+                  updateHandle($handle[0], this.value);
+               });
+
+            function updateHandle(el, val) {
+               el.textContent = val;
+            }
+         });
       </script>
    </head>
 
-   <body onload="init()">
-      <div id="sliders">
-         <div id="statusIndicator">
-            <p id="connecting">
-               Connecting to rosbridge...
-            </p>
-            <p id="connected" style="color:#00D600; display:none">
-               Connected
-            </p>
-            <p id="error" style="color:#FF0000; display:none">
-               Error in the backend!
-            </p>
-            <p id="closed" style="display:none">
-               Connection closed.
-            </p>
+   <body>
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+         <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-right">
+               <li id="connecting" class="status">
+                  <a href="#" style="color:orange">
+                     <span class=" glyphicon glyphicon-refresh glyphicon-refresh-animate ">
+                     </span> Connecting to ROS...
+                  </a>
+               </li>
+               <li id="connected" class="status" style="display:none">
+                  <a href="#" style="color:#00ff00;">
+                     <span class="glyphicon glyphicon-ok">
+                     </span> Connected
+                  </a>
+               </li>
+               <li id="error" class="status" style="display:none">
+                  <a href="#" style="color:red;">
+                     <span class="glyphicon glyphicon-remove">
+                     </span> Error in the backend!
+                  </a>
+               </li>
+               <li id="closed" class="status" style="display:none">
+                  <a href="#">
+                     <span class="glyphicon glyphicon-exclamation-sign">
+                     </span> Connection closed.
+                  </a>
+               </li>
+            </ul>
          </div>
+      </nav>
+      <div id="speed_control">
          <label for="speed">
-            Robot Speed: <b><span id="speedInfo">90</span>%</b>
+            Robot Speed:
             <br>
-            <span id="speed"></span>
+            <br>
+            <input id="speed" type="range"></input>
          </label>
-         <a href="webserver/map.html"> Map </a>
       </div>
       <div id="urdf"></div>
    </body>

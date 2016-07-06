@@ -9,6 +9,8 @@
 #include <ros/time.h>
 #include <std_msgs/String.h>
 #include "BLDCOmni.h"
+#include <Adafruit_Sensor.h>
+#include <Adafruit_HMC5883_U.h>
 
 #ifdef USE_IMU
 Adafruit_HMC5883_Unified mag_sensor = Adafruit_HMC5883_Unified(12345);
@@ -118,11 +120,11 @@ void loop() {
   char z[10];
   dtostrf(event.magnetic.z, 6, 2, z);
 
-  String s = String(x) + "," + String(y) + "," + String(z);
+  String s1 = String(x) + "," + String(y) + "," + String(z);
   char bb[50];
-  s.toCharArray(bb, 50);
+  s1.toCharArray(bb, 50);
   imu_msg.data = bb;
-  imu_pub->publish(&imu_msg);
+  imu_pub.publish(&imu_msg);
 #endif
 
 #ifdef USE_ODOM
@@ -138,9 +140,9 @@ void loop() {
 
 #ifdef USE_DEBUG
   String s = "dir = " + String(dir_) + "  mag=" + String(mag_) + " brake= " + String(brake_);
-  char bb[50];
-  s.toCharArray(bb, 50);
-  str_msg.data = bb;
+  char bb3[50];
+  s.toCharArray(bb3, 50);
+  str_msg.data = bb3;
   pub3.publish(&str_msg);
 #endif
 

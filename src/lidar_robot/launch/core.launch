@@ -3,25 +3,27 @@
     <arg name="port" default="/dev/ttyACM0"/>
 
     <!-- State Publishers -->
-    <!--    <include file="$(find lidar_robot)/launch/state_publishers.launch"/>-->
+    <include file="$(find lidar_robot)/launch/state_publishers.launch"/>
 
     <!-- Web server Connectors -->
-    <!--   <include file="$(find lidar_robot)/launch/web_connectors.launch"/>-->
+    <include file="$(find lidar_robot)/launch/web_connectors.launch"/>
 
     <!-- Gmapping -->
-    <!--    <include file="$(find lidar_robot)/launch/gmapping.launch"/>-->
+    <include file="$(find lidar_robot)/launch/gmapping.launch"/>
 
     <!-- Frontier Exploration Server -->
-    <!--    <include file="$(find lidar_robot)/launch/exploration.launch"/>-->
+    <include file="$(find lidar_robot)/launch/exploration.launch"/>
 
     <!-- Controller -->
-    <!--    <node pkg="lidar_robot" type="controller" name="controller"/>-->
+    <node pkg="lidar_robot" type="controller" name="controller" ns="lidar_robot"/>
 
+    <!-- Arduino -->
     <node name="serial_node" pkg="rosserial_python" ns="lidar_robot" type="serial_node.py" args="$(arg port)" respawn="true"/>
 
+    <!-- Arduino Communicator -->
     <node pkg="lidar_robot" ns="lidar_robot" type="base" name="base"/>
 
-    <!--
-      <node name="rplidar" pkg="rplidar_ros" ns="lidar_robot" type="rplidarNode" respawn="false"/>
-    -->
+    <!-- RpLidar -->
+    <node name="rplidar" pkg="rplidar_ros" ns="lidar_robot" type="rplidarNode" respawn="false"/>
+
 </launch>
