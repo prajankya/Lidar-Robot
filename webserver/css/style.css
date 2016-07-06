@@ -1,0 +1,50 @@
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+    padding: 0;
+    padding-top: 2px;
+    margin: 0;
+}
+@-webkit-keyframes spin2 {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}
+#body {
+    height: 100vh;
+    padding: 25px;
+    overflow: hidden;
+}
+#space {
+    height: 30px;
+}
+#btn_c {
+    padding: 10px 0px;
+}
+.col-sm-6 {
+    padding: 8px;
+}
+#console {
+    padding: 4px;
+    overflow: auto;
+    height: calc(100vh - 230px);
+    background-color: black;
+    color: white;
+}
+.log_4 {
+    color: #FFCC00;
+}
+.log_8 {
+    color: red;
+}
