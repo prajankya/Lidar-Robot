@@ -2,6 +2,6 @@
 <launch>
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
     <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher"/>
-    <!--  <rosparam param="source_list">['/web_joint_states',]</rosparam>-->
-    <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 odom base_link 40"/>
+    <!-- <rosparam param="source_list">['/web_joint_states',]</rosparam> -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 odom base_link 40"/> -->
 </launch>
