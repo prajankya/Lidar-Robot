@@ -4,6 +4,9 @@
 #include <iostream>
 #include <sstream>
 #include <tf/transform_broadcaster.h>
+#include <geometry_msgs/PointStamped.h>
+#include <tf/transform_listener.h>
+#include <tf/transform_datatypes.h>
 #include <geometry_msgs/TransformStamped.h>
 #include <std_msgs/String.h>
 #include <std_msgs/MultiArrayLayout.h>
@@ -46,9 +49,14 @@ double string_to_double( const std::string& s ){
   return x;
 }
 
+std::string odom_input = "";
+
 void odomReceived(const std_msgs::String &msg){
-  std::string input = msg.data;
-  std::istringstream ss(input);
+  odom_input = msg.data;
+}
+
+void calcOdom(const tf::TransformListener& listener){
+  std::istringstream ss(odom_input);
   std::string token;
   int i = 0;
   std::string in[3];
@@ -62,7 +70,7 @@ void odomReceived(const std_msgs::String &msg){
   //ROS_INFO_STREAM("received : " << an << "  : " << l << " ");
 
   int ang = round((fmod(an, 60)) * 360 / 60);
-  double heading = string_to_double(in[2]);
+  double heading = (string_to_double(in[2])*3.142)/180;
 
   double len = l * 0.0011709;
   //ROS_INFO_STREAM("received : " << ang << " deg  : " << len << " m");
@@ -72,6 +80,7 @@ void odomReceived(const std_msgs::String &msg){
     dLen = len - priv_len;
     priv_len = len;
   }
+
   if(priv_ang!=ang) {
     dAng = ang - priv_ang;
     priv_ang = ang;
@@ -84,19 +93,38 @@ void odomReceived(const std_msgs::String &msg){
 
   //ROS_INFO_STREAM("X:" << odom_x << " m \tY:" << odom_y << " m\tTheta:" << odom_theta);
 
-  geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(heading);//imu_yaw
+  geometry_msgs::QuaternionStamped imu_quat;
+  imu_quat.header.frame_id = "imu";
+  imu_quat.header.stamp = ros::Time();
+  imu_quat.quaternion = tf::createQuaternionMsgFromYaw(heading);//imu_yaw
 
-  odom_trans.transform.translation.x = odom_x;
-  odom_trans.transform.translation.y = odom_y;
-  odom_trans.transform.translation.z = 0.0;
-  odom_trans.transform.rotation = odom_quat;
 
-  //set the position
-  odom.pose.pose.position.x = odom_x;
-  odom.pose.pose.position.y = odom_y;
-  odom.pose.pose.position.z = 0.0;
-  odom.pose.pose.orientation = odom_quat;
+  try{
+    geometry_msgs::QuaternionStamped odom_quat;
 
+    listener.transformQuaternion("base_link", imu_quat, odom_quat);
+
+    odom_trans.transform.translation.x = odom_x;
+    odom_trans.transform.translation.y = odom_y;
+    odom_trans.transform.translation.z = 0.0;
+    odom_trans.transform.rotation = odom_quat.quaternion;
+
+    //set the position
+    odom.pose.pose.position.x = odom_x;
+    odom.pose.pose.position.y = odom_y;
+    odom.pose.pose.position.z = 0.0;
+    odom.pose.pose.orientation = odom_quat.quaternion;
+
+    tf::Quaternion q(odom_quat.quaternion.x, odom_quat.quaternion.y, odom_quat.quaternion.z, odom_quat.quaternion.w);
+
+    tf::Matrix3x3 m(q);
+    double roll, pitch, yaw;
+    m.getRPY(roll, pitch, yaw);
+    std::cout << "Roll: " << roll << ", Pitch: " << pitch << ", Yaw: " << yaw << std::endl;
+
+  }catch(tf::TransformException &ex){
+    ROS_ERROR("Received an exception trying to transform a point from \"imu\" to \"base_link\": %s", ex.what());
+  }
 /*  //set the velocity
    odom.twist.twist.linear.x = vx;
    odom.twist.twist.linear.y = vy;
@@ -197,6 +225,8 @@ int main(int argc, char ** argv){
   odom.header.frame_id = "odom";
   odom.child_frame_id = "base_link";
 
+  tf::TransformListener listener(ros::Duration(10));
+
   ros::spinOnce();
 
   ros::Rate rate(10);
@@ -220,8 +250,10 @@ int main(int argc, char ** argv){
 
     base_pub.publish(base);
 
+    calcOdom(listener);
+
     odom_trans.header.stamp = ros::Time::now();
-//    odom_broadcaster.sendTransform(odom_trans);
+    odom_broadcaster.sendTransform(odom_trans);
     odom.header.stamp = ros::Time::now();
     odom_pub.publish(odom);
 
