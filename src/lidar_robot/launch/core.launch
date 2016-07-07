@@ -24,7 +24,13 @@
     <node pkg="lidar_robot" ns="lidar_robot" type="base" name="base" output="screen"/>
 
     <!-- RpLidar -->
-    <node name="rplidar" pkg="rplidar_ros" ns="lidar_robot" type="rplidarNode" respawn="false">
-      <param name="frame_id" value="rplidar_frame"/>
+    <node name="rplidarNode" ns="lidar_robot" pkg="rplidar_ros" type="rplidarNode" output="screen">
+      <param name="serial_port"         type="string" value="/dev/ttyUSB0"/>
+      <param name="serial_baudrate"     type="int"    value="115200"/>
+      <param name="frame_id"            type="string" value="rplidar_frame"/>
+      <param name="inverted"            type="bool"   value="false"/>
+      <param name="angle_compensate"    type="bool"   value="true"/>
     </node>
+
+
 </launch>

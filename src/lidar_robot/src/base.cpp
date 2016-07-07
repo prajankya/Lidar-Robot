@@ -58,7 +58,10 @@ void odomReceived(const std_msgs::String &msg){
   }
 
   int l = round(string_to_double(in[0]));
-  int ang = round((fmod((string_to_double(in[1])), 24)) * 360 / 24);
+  int an = round(string_to_double(in[1]));
+  //ROS_INFO_STREAM("received : " << an << "  : " << l << " ");
+
+  int ang = round((fmod(an, 60)) * 360 / 60);
   double heading = string_to_double(in[2]);
 
   double len = l * 0.0011709;
@@ -183,7 +186,7 @@ int main(int argc, char ** argv){
 
   ros::Subscriber brake_sub = nh.subscribe("base_brake", 1000, &brakeReceived);
   ros::Subscriber base_sub = nh.subscribe("/cmd_vel", 20, &twistReceived);
-  ros::Subscriber odom_sub = nh.subscribe("odom_feedback", 20, &odomReceived);
+  ros::Subscriber odom_sub = nh.subscribe("feedback", 20, &odomReceived);
 
   ros::Publisher base_pub = nh.advertise<std_msgs::String>("Base_command", 50);
   ros::Publisher odom_pub = nh.advertise<nav_msgs::Odometry>("odom", 50);
