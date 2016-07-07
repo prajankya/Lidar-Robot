@@ -57,8 +57,8 @@ void odomReceived(const std_msgs::String &msg){
     in[i++] = token;
   }
 
-  int ang = round((fmod(((string_to_double(in[0])) / 10471.9755), 24)) * 360 / 24);
-  int l = round(string_to_double(in[1]) / 117.09);
+  int ang = round((fmod((string_to_double(in[0])), 24)) * 360 / 24);
+  int l = round(string_to_double(in[1]));
   double len = l * 0.0011709;
   //ROS_INFO_STREAM("received : " << ang << " deg  : " << len << " m");
   double dAng = 0,dLen = 0;
@@ -207,11 +207,7 @@ int main(int argc, char ** argv){
       brake = 1;
     }
     brake = 0;
-    /*	std_msgs::String base=dir+","+mag+","+brake+"\n";
-       char numstr[21]; // enough to hold all numbers up to 64-bits
-       sprintf(numstr, "%d", age);
-       result = name + numstr;*/
-//		std::string result = std::to_string (dir) + "," + std::to_string (mag) + "," + std::to_string (brake) + "\n";
+
     std::stringstream ss;
     ss << dir << "," << mag << "," << brake << "\n";
     std_msgs::String base;
