@@ -285,7 +285,7 @@
     <!-- ======================================================= Circuit Plate ====================================================================== -->
     <link name="circuit_plate">
         <visual>
-            <origin xyz="0 0 0.093" rpy="${pi/2} 0 ${pi/4}"/>
+            <origin xyz="0 0 0.093" rpy="${pi/2} 0 ${-5*pi/4}"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/circuit_plate.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -324,7 +324,7 @@
     <!-- ======================================================= lidar Base ====================================================================== -->
     <link name="lidar_base">
         <visual>
-            <origin xyz="0.0 -0.01 0.1134" rpy="${pi/2} 0 ${-pi/2}"/>
+            <origin xyz="0.01 0 0.1134" rpy="${pi/2} 0 0"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/lidar_base.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -336,14 +336,15 @@
         <child link="lidar_base"/>
     </joint>
 
-    <xacro:stud myname="s9" x="0.0321" y="0.021" z="0.098" parent="circuit_plate"/>
-    <xacro:stud myname="s10" x="0.0321" y="-0.041" z="0.098" parent="circuit_plate"/>
-    <xacro:stud myname="s11" x="-0.0321" y="-0.041" z="0.098" parent="circuit_plate"/>
-    <xacro:stud myname="s12" x="-0.0321" y="0.021" z="0.098" parent="circuit_plate"/>
+    <xacro:stud myname="s9" x="-0.021" y="0.0321" z="0.098" parent="lidar_base"/>
+    <xacro:stud myname="s10" x="0.041" y="0.0321" z="0.098" parent="lidar_base"/>
+    <xacro:stud myname="s11" x="0.041" y="-0.0321" z="0.098" parent="lidar_base"/>
+    <xacro:stud myname="s12" x="-0.021" y="-0.0321" z="0.098" parent="lidar_base"/>
+
     <!-- ======================================================= RPlidar ====================================================================== -->
     <link name="lidar_bottom">
         <visual>
-            <origin xyz="0.0 0 0.161" rpy="${pi/2} 0 ${-pi/2}"/>
+            <origin xyz="0.0 0 0.161" rpy="${pi/2} 0 0"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/lidar_bottom.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -356,7 +357,7 @@
     </joint>
     <link name="lidar_up">
         <visual>
-            <origin xyz="0.0 0 0.158" rpy="${pi/2} 0 ${-pi/2}"/>
+            <origin xyz="0.0 0 0.158" rpy="${pi/2} 0 0"/>
             <geometry>
                 <mesh filename="package://lidar_robot/models/lidar_up.stl" scale="0.001 0.001 0.001"/>
             </geometry>
@@ -416,4 +417,44 @@
             </plugin>
         </sensor>
     </gazebo>
+    <link name="x">
+        <visual>
+            <origin xyz="1.0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius="0.1"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+    </link>
+    <joint name="base_link_x" type="fixed">
+        <parent link="base_link"/>
+        <child link="x"/>
+    </joint>
+    <link name="y">
+        <visual>
+            <origin xyz="0 1 0" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius="0.1"/>
+            </geometry>
+            <material name="bronze"/>
+        </visual>
+    </link>
+    <joint name="base_link_y" type="fixed">
+        <parent link="base_link"/>
+        <child link="y"/>
+    </joint>
+    <link name="imu">
+        <visual>
+            <origin xyz="0.16 0.05 0.02" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.05 0.03 0.004"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+    </link>
+    <joint name="base_link_imu" type="fixed">
+        <parent link="base_link"/>
+        <child link="imu"/>
+    </joint>
 </robot>
+
