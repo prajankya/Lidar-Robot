@@ -2,7 +2,7 @@
 
   <arg name="scan_topic" default="/lidar_robot/scan" />
 
-  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping">
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" respawn="true">
     <rosparam>
       odom_frame: odom
       base_frame: base_link
@@ -11,13 +11,13 @@
       map_update_interval: 0.5 # Publish new map
 
       maxUrange: 5.5 # Should be just less than sensor range
-      maxRange: 5.6 # Should be just greater than sensor range
+      maxRange: 5.5 # Should be just greater than sensor range
 #      particles: 100 # Increased from 80
 
       # Update frequencies
-      linearUpdate: 0.2
-      angularUpdate: 0.25
-      temporalUpdate: 5
+#      linearUpdate: 0.2
+#      angularUpdate: 0.25
+#      temporalUpdate: 5
 #      resampleThreshold: 0.5
 
       # Initial Map Size
@@ -29,19 +29,19 @@
 
       # All default
       sigma: 0.025
-      kernelSize: 1
-      lstep: 0.05
-      astep: 0.05
-      iterations: 5
-      lsigma: 0.075
-      ogain: 3.0
-      lskip: 0
-      llsamplerange: 0.01
-      llsamplestep: 0.01
-      lasamplerange: 0.005
-      lasamplestep: 0.005
+ #     kernelSize: 1
+ #     lstep: 0.05
+ #     astep: 0.05
+ #     iterations: 5
+ #     lsigma: 0.075
+ #     ogain: 3.0
+ #     lskip: 0
+ #     llsamplerange: 0.01
+ #     llsamplestep: 0.01
+ #     lasamplerange: 0.005
+ #     lasamplestep: 0.005
 
-      minimumScore: 50
+#      minimumScore: 50
     </rosparam>
     <remap from="scan" to="$(arg scan_topic)"/>
   </node>

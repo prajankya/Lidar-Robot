@@ -7,7 +7,7 @@
     <arg name="base_local_planner" default="dwa_local_planner/DWAPlannerROS"/>
     <!--<arg name="base_local_planner" default="base_local_planner/TrajectoryPlannerROS"/>-->
 
-    <node pkg="move_base" type="move_base" name="move_base" respawn="false" output="screen">
+    <node pkg="move_base" type="move_base" name="move_base" respawn="true" output="screen">
         <param name="base_global_planner" value="$(arg base_global_planner)"/>
         <param name="base_local_planner" value="$(arg base_local_planner)"/>
         <rosparam file="$(find lidar_robot)/config/planner.yaml" command="load"/>

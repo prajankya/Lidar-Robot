@@ -84,7 +84,7 @@ void odomReceived(const std_msgs::String &msg){
 
   //ROS_INFO_STREAM("X:" << odom_x << " m \tY:" << odom_y << " m\tTheta:" << odom_theta);
 
-  geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(0);//imu_yaw
+  geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(heading);//imu_yaw
 
   odom_trans.transform.translation.x = odom_x;
   odom_trans.transform.translation.y = odom_y;
@@ -189,7 +189,7 @@ int main(int argc, char ** argv){
   ros::Subscriber odom_sub = nh.subscribe("feedback", 20, &odomReceived);
 
   ros::Publisher base_pub = nh.advertise<std_msgs::String>("Base_command", 50);
-  ros::Publisher odom_pub = nh.advertise<nav_msgs::Odometry>("odom", 50);
+  ros::Publisher odom_pub = nh.advertise<nav_msgs::Odometry>("/odom", 50);
   tf::TransformBroadcaster odom_broadcaster;
 
   odom_trans.header.frame_id = "odom";
@@ -221,9 +221,9 @@ int main(int argc, char ** argv){
     base_pub.publish(base);
 
     odom_trans.header.stamp = ros::Time::now();
-    odom_broadcaster.sendTransform(odom_trans);
-    //odom.header.stamp = ros::Time::now();
-    //odom_pub.publish(odom);
+//    odom_broadcaster.sendTransform(odom_trans);
+    odom.header.stamp = ros::Time::now();
+    odom_pub.publish(odom);
 
     ros::spinOnce();
     rate.sleep();

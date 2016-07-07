@@ -2,18 +2,6 @@
 <launch>
     <arg name="port" default="/dev/ttyACM0"/>
 
-    <!-- State Publishers -->
-    <include file="$(find lidar_robot)/launch/state_publishers.launch"/>
-
-    <!-- Web server Connectors -->
-    <include file="$(find lidar_robot)/launch/web_connectors.launch"/>
-
-    <!-- Gmapping -->
-    <include file="$(find lidar_robot)/launch/gmapping.launch"/>
-
-    <!-- Frontier Exploration Server -->
-    <include file="$(find lidar_robot)/launch/exploration.launch"/>
-
     <!-- Controller -->
     <node pkg="lidar_robot" type="controller" name="controller" ns="lidar_robot"/>
 
@@ -31,6 +19,18 @@
       <param name="inverted"            type="bool"   value="false"/>
       <param name="angle_compensate"    type="bool"   value="true"/>
     </node>
+
+    <!-- State Publishers -->
+    <include file="$(find lidar_robot)/launch/state_publishers.launch"/>
+
+    <!-- Web server Connectors -->
+    <include file="$(find lidar_robot)/launch/web_connectors.launch"/>
+
+    <!-- Gmapping -->
+    <include file="$(find lidar_robot)/launch/gmapping.launch"/>
+
+    <!-- Frontier Exploration Server -->
+    <include file="$(find lidar_robot)/launch/exploration.launch"/>
 
 
 </launch>
