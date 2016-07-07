@@ -51,14 +51,16 @@ void odomReceived(const std_msgs::String &msg){
   std::istringstream ss(input);
   std::string token;
   int i = 0;
-  std::string in[2];
+  std::string in[3];
 
   while(std::getline(ss, token, ',')) {
     in[i++] = token;
   }
 
-  int ang = round((fmod((string_to_double(in[0])), 24)) * 360 / 24);
-  int l = round(string_to_double(in[1]));
+  int l = round(string_to_double(in[0]));
+  int ang = round((fmod((string_to_double(in[1])), 24)) * 360 / 24);
+  double heading = string_to_double(in[2]);
+
   double len = l * 0.0011709;
   //ROS_INFO_STREAM("received : " << ang << " deg  : " << len << " m");
   double dAng = 0,dLen = 0;

@@ -19,7 +19,7 @@ std_msgs::String feedback_msg;
 ros::Publisher feedback_pub("feedback", &feedback_msg);
 
 Encoder theta(18, 22);
-Encoder r(19, 23);
+Encoder radius(19, 23);
 #endif
 
 #ifdef USE_DESIGN
@@ -122,9 +122,11 @@ void loop() {
     heading -= 2 * PI;
   }
 
-  char x[10];
+  char head[10];
   dtostrf(heading, 6, 4, head);
-  String s1 = String(r.read()) + "," + String(t.read()) + "," + String(head);
+
+  String s1 = String(radius.read()) + "," + String(theta.read()) + "," + String(head);
+
   char bb[50];
   s1.toCharArray(bb, 50);
   feedback_msg.data = bb;
