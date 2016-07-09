@@ -132,7 +132,7 @@ void setup() {// ----------------------------------------- setup
 
 void loop() {
 #ifdef USE_FEEDBACK
-  int  heading = -round(getHeading() - ini_heading);
+  int  heading = round(getHeading() - ini_heading);
 //  double heading = getHeading() - ini_heading;
 //  char head[10];
 //  dtostrf(heading, 6, 4, head);
