@@ -29,4 +29,5 @@
     <depend>move_base</depend>
     <depend>gmapping</depend>
     <depend>hector_slam</depend>
+    <depend>hector_localization</depend>
 </package>

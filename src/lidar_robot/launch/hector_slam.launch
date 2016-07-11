@@ -1,21 +1,19 @@
 <?xml version="1.0"?>
 <launch>
 
-
-<!--
-    <arg name="base_frame" value="base_link"/>
-    <arg name="odom_frame" value="base_link"/>
--->
+ <node pkg="hector_trajectory_server" type="hector_trajectory_server" name="hector_trajectory_server" output="screen">
+    <param name="target_frame_name" type="string" value="/map" />
+    <param name="source_frame_name" type="string" value="/base_link" />
+    <param name="trajectory_update_rate" type="double" value="4" />
+    <param name="trajectory_publish_rate" type="double" value="0.25" />
+  </node>
     <include file="$(find hector_mapping)/launch/mapping_default.launch">
-<!--      <arg name="pub_map_scanmatch_transform" value="false"/>-->
       <arg name="base_frame" value="base_link"/>
       <arg name="odom_frame" value="base_link"/>
       <arg name="pub_map_odom_transform" value="true"/>
       <arg name="scan_topic" value="/lidar_robot/scan"/>
       <arg name="map_size" value="2048"/>
     </include>
-
-<!-- <node pkg="tf" type="static_transform_publisher" name="map_nav_broadcaster" args="0 0 0 0 0 0 nav base_link 100" /> -->
 
     <!--
     <include file="$(find hector_geotiff)/launch/geotiff_mapper.launch">
