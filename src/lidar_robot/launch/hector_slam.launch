@@ -1,2 +1,18 @@
 <?xml version="1.0"?>
-<launch></launch>
+<launch>
+    <arg name="tf_map_scanmatch_transform_frame_name" default="scanmatcher_frame"/>
+    <arg name="base_frame" default="base_link"/>
+    <arg name="odom_frame" default="nav"/>
+    <arg name="pub_map_odom_transform" default="true"/>
+    <arg name="scan_topic" default="/lidar_robot/scan"/>
+    <arg name="map_size" default="2048"/>
+
+    <param name="/use_sim_time" value="true"/>
+    <include file="$(find hector_mapping)/launch/mapping_default.launch"/>
+    <!--
+    <include file="$(find hector_geotiff)/launch/geotiff_mapper.launch">
+        <arg name="trajectory_source_frame_name" value="scanmatcher_frame"/>
+        <arg name="map_file_path" value="$(arg geotiff_map_file_path)"/>
+    </include>
+    -->
+</launch>

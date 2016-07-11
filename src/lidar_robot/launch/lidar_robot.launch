@@ -5,6 +5,8 @@
 
     <include file="$(find lidar_robot)/launch/core.launch"/>
 
+    <include file="$(find lidar_robot)/launch/hector_slam.launch"/>
+
     <!-- ============================================================= Gazebo ======================================================================== -->
     <!-- <include file="$(find lidar_robot)/launch/gazebo.launch"/> -->
 
