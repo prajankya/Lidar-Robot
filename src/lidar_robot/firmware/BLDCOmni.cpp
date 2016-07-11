@@ -92,7 +92,7 @@ void BLDCOmni::setDir(byte dir) {
       m3.off();
       m4.off();
       break;
-    /*    case '+':
+        case '+':
           m1.cw();
           m2.cw();
           m3.cw();
@@ -104,7 +104,7 @@ void BLDCOmni::setDir(byte dir) {
           m3.acw();
           m4.acw();
           break;
-  */    default:
+      default:
       setDir(5);
       break;
   }

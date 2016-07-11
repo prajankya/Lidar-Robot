@@ -103,7 +103,7 @@ void twistReceived(const geometry_msgs::Twist &msg){
   if(abs(myRot) > tol && myRot < tol) {
     dir = '+';
   }
-  mag = (3*floor(sqrt((myX * myX) + (myY * myY) + (myRot * myRot))))+3;
+  mag = (2*floor(sqrt((myX * myX) + (myY * myY) + (myRot))));
 
   last_updated = ros::Time::now();
 }

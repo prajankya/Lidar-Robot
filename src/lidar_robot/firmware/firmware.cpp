@@ -38,7 +38,7 @@ void messageCb(const std_msgs::String &_cmd) {
   mag_ = String(strtok_r(p, ",", &p)).toInt();
   brake_ = String(strtok_r(p, ",", &p)).toInt();
 
-  mag_ = constrain(mag_, 0, 30);
+  mag_ = constrain(mag_, 0, 15);
 }
 
 ros::Subscriber<std_msgs::String> base_sub("base_command", messageCb);
@@ -76,15 +76,6 @@ void setup() {// ----------------------------------------- setup
 }
 
 void loop() {
-#ifdef USE_DEBUG
-  String s = "dir = " + String(dir_) + "  mag=" + String(mag_) + " brake= " + String(brake_);
-  char bb3[50];
-  s.toCharArray(bb3, 50);
-  str_msg.data = bb3;
-  pub3.publish(&str_msg);
-#endif
-
-  nh.spinOnce();
 
 #ifdef USE_BASE
   if (brake_ && !brake) {
@@ -97,9 +88,18 @@ void loop() {
     brake = false;
   }
 
-//  base.setDir(dir_);
-//  base.setMag(mag_);
+  base.setDir(dir_);
+  base.setMag(mag_);
 #endif
 
+#ifdef USE_DEBUG
+  String s = "dir = " + String(dir_) + "  mag=" + String(mag_) + " brake= " + String(brake_);
+  char bb3[50];
+  s.toCharArray(bb3, 50);
+  str_msg.data = bb3;
+  pub3.publish(&str_msg);
+#endif
+
+  nh.spinOnce();
   delay(10);
 }

@@ -29,7 +29,7 @@ void MyMotor::off() {
 }
 
 void MyMotor::setMag(int _mag) {
-  analogWrite(speedPin, constrain(round(correctionFactor * _mag), 0, 255));
+  analogWrite(speedPin, constrain(round(correctionFactor * _mag), 0, 15));
 }
 
 void MyMotor::brakeOn() {
