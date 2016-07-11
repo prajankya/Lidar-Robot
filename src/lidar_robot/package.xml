@@ -28,4 +28,6 @@
     <depend>rosbridge_server</depend>
     <depend>move_base</depend>
     <depend>gmapping</depend>
+    <depend>hector_slam</depend>
+    <depend>hector_navigation</depend>
 </package>

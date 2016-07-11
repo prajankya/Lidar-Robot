@@ -5,11 +5,10 @@
 
     <include file="$(find lidar_robot)/launch/core.launch"/>
 
-    <!-- Move Base -->
-    <include file="$(find lidar_robot)/launch/move_base.launch"/>
+    <include file="$(find lidar_robot)/launch/hector_slam.launch"/>
 
     <!-- ============================================================= Gazebo ======================================================================== -->
-    <!--<include file="$(find lidar_robot)/launch/gazebo.launch"/>-->
+    <!-- <include file="$(find lidar_robot)/launch/gazebo.launch"/> -->
 
     <!-- ============================================================= RViz ========================================================================== -->
     <!-- <include file="$(find lidar_robot)/launch/rviz.launch"/> -->
