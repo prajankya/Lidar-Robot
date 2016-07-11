@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Gmapping -->
+    <include file="$(find lidar_robot)/launch/gmapping.launch"/>
+
+    <!-- Frontier Exploration Server -->
+    <include file="$(find lidar_robot)/launch/exploration.launch"/>
+
+    <!-- Move Base -->
+    <include file="$(find lidar_robot)/launch/move_base.launch"/>
+
+</launch>
