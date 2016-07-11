@@ -1,4 +1,3 @@
-//#define USE_FEEDBACK
 //#define USE_DESIGN
 #define USE_BASE
 #define USE_DEBUG
@@ -8,47 +7,6 @@
 #include <ros/time.h>
 #include <std_msgs/String.h>
 #include "BLDCOmni.h"
-
-#ifdef USE_FEEDBACK
-#include <Adafruit_Sensor.h>
-#include <Adafruit_HMC5883_U.h>
-#include <Encoder.h>
-
-Adafruit_HMC5883_Unified mag_sensor = Adafruit_HMC5883_Unified(12345);
-std_msgs::String feedback_msg;
-ros::Publisher feedback_pub("feedback", &feedback_msg);
-
-Encoder theta(18, 22);
-Encoder radius(19, 23);
-double ini_heading = 0;
-
-double getHeading(){
-  sensors_event_t event;
-  mag_sensor.getEvent(&event);
-
-  // Hold the module so that Z is pointing 'up' and you can measure the heading with x&y
-  // Calculate heading when the magnetometer is level, then correct for signs of axis.
-  float heading = atan2(event.magnetic.y, event.magnetic.x);
-
-  // Once you have your heading, you must then add your 'Declination Angle', which is the 'Error' of the magnetic field in your location.
-  // Find yours here: http://www.magnetic-declination.com/
-  // Mine is: -0° 55' W, which is 0 Degrees, or (which we need) 0 radians
-  // If you cannot find your Declination, comment out these two lines, your compass will be slightly off.
-  /*float declinationAngle = 0;
-     heading += declinationAngle;*/
-
-  // Correct for when signs are reversed.
-  if(heading < 0) {
-    heading += 2 * PI;
-  }
-
-  // Check for wrap due to addition of declination.
-  if(heading > 2 * PI) {
-    heading -= 2 * PI;
-  }
-  return (heading*180/PI);
-}
-#endif
 
 #ifdef USE_DESIGN
 #include <rosserial_arduino/Test.h>
@@ -97,21 +55,6 @@ void setup() {// ----------------------------------------- setup
   nh.advertise(pub3);
 #endif
 
-#ifdef USE_FEEDBACK
-  if(!mag_sensor.begin()) {
-    while(1) {
-      Serial.println("Ooops, no IMU detected ... Check your wiring!");
-    }
-  }
-  double tot=0;
-  for(int i =0;i<10;i++){
-    tot+=getHeading();
-  }
-  ini_heading = round(tot/10);
-
-  nh.advertise(feedback_pub);
-#endif
-
 #ifdef USE_DESIGN
   design.init(7, 8, 9, 10, 11, 12);//L1, L2, L3, L4, L5, L6
   nh.advertiseService(server);
@@ -131,20 +74,6 @@ void setup() {// ----------------------------------------- setup
 }
 
 void loop() {
-#ifdef USE_FEEDBACK
-  int  heading = round(getHeading() - ini_heading);
-//  double heading = getHeading() - ini_heading;
-//  char head[10];
-//  dtostrf(heading, 6, 4, head);
-
-  String s1 = String(radius.read()) + "," + String(theta.read()) + "," + String(heading);
-
-  char bb[50];
-  s1.toCharArray(bb, 50);
-  feedback_msg.data = bb;
-  feedback_pub.publish(&feedback_msg);
-#endif
-
 #ifdef USE_DEBUG
   String s = "dir = " + String(dir_) + "  mag=" + String(mag_) + " brake= " + String(brake_);
   char bb3[50];
