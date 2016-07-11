@@ -39,7 +39,7 @@ void messageCb(const std_msgs::String &_cmd) {
   brake_ = String(strtok_r(p, ",", &p)).toInt();
 }
 
-ros::Subscriber<std_msgs::String> base_sub("Base_command", messageCb);
+ros::Subscriber<std_msgs::String> base_sub("base_command", messageCb);
 #endif
 
 ros::NodeHandle nh;
