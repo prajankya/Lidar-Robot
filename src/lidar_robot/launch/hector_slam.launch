@@ -15,11 +15,10 @@
       <arg name="map_size" value="2048"/>
     </include>
 
-<node pkg="hector_exploration_node" type="exploration_planner_node" name="hector_exploration_node" output="screen">
+ <!-- Move Base -->
+    <include file="$(find lidar_robot)/launch/move_base.launch"/>
 
-    <rosparam file="$(find lidar_robot)/config/hector_costmap.yaml" command="load" />
 
-  </node>
     <!--
     <include file="$(find hector_geotiff)/launch/geotiff_mapper.launch">
         <arg name="trajectory_source_frame_name" value="scanmatcher_frame"/>
