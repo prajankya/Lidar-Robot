@@ -37,6 +37,8 @@ void messageCb(const std_msgs::String &_cmd) {
   dir_ = String(strtok_r(p, ",", &p)).toInt();
   mag_ = String(strtok_r(p, ",", &p)).toInt();
   brake_ = String(strtok_r(p, ",", &p)).toInt();
+
+  mag_ = constrain(mag_, 0, 30);
 }
 
 ros::Subscriber<std_msgs::String> base_sub("base_command", messageCb);
@@ -95,8 +97,8 @@ void loop() {
     brake = false;
   }
 
-  base.setDir(dir_);
-  base.setMag(mag_);
+//  base.setDir(dir_);
+//  base.setMag(mag_);
 #endif
 
   delay(10);
