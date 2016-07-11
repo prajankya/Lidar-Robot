@@ -1,36 +1,39 @@
+//#define USE_FEEDBACK
+
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-#include <tf/transform_broadcaster.h>
 #include <geometry_msgs/PointStamped.h>
-#include <tf/transform_listener.h>
-#include <tf/transform_datatypes.h>
-#include <geometry_msgs/TransformStamped.h>
 #include <std_msgs/String.h>
 #include <std_msgs/MultiArrayLayout.h>
 #include <std_msgs/MultiArrayDimension.h>
-#include <nav_msgs/Odometry.h>
 
 #include <ros/console.h>
 #include <std_msgs/Bool.h>
 
+#ifdef USE_FEEDBACK
+#include <nav_msgs/Odometry.h>
+#include <tf/transform_broadcaster.h>
+#include <tf/transform_listener.h>
+#include <tf/transform_datatypes.h>
+#include <geometry_msgs/TransformStamped.h>
+
 tf::Quaternion quat;
 tf::Vector3 vect;
+
+geometry_msgs::TransformStamped odom_trans;
+nav_msgs::Odometry odom;
+
+#endif
+
 int brake = 0, dir = 5, mag = 0;
 ros::Time st;
 
 double x = 0, y = 0, z = 0;
 double ar = 0, ap = 0, ay = 0;
-double odom_x = 0;
-double odom_y = 0;
-double odom_theta = 0;
-double priv_len = 0;
-double priv_ang = 0;
 
-geometry_msgs::TransformStamped odom_trans;
-nav_msgs::Odometry odom;
 
 double absolute(double a){
   return std::abs(a);
@@ -48,6 +51,13 @@ double string_to_double( const std::string& s ){
     return 0;
   return x;
 }
+
+#ifdef USE_FEEDBACK
+double odom_x = 0;
+double odom_y = 0;
+double odom_theta = 0;
+double priv_len = 0;
+double priv_ang = 0;
 
 std::string odom_input = "";
 
@@ -105,19 +115,8 @@ void calcOdom(const tf::TransformListener& listener){
     odom.pose.pose.position.y = odom_y;
     odom.pose.pose.position.z = 0.0;
     odom.pose.pose.orientation = odom_quat;
-/*
-    tf::Quaternion q(odom_quat.quaternion.x, odom_quat.quaternion.y, odom_quat.quaternion.z, odom_quat.quaternion.w);
-
-    tf::Matrix3x3 m(q);
-    double roll, pitch, yaw;
-    m.getRPY(roll, pitch, yaw);
-    std::cout << "Roll: " << roll << ", Pitch: " << pitch << ", Yaw: " << yaw << std::endl;
-*/
-/*  //set the velocity
-   odom.twist.twist.linear.x = vx;
-   odom.twist.twist.linear.y = vy;
-   odom.twist.twist.angular.z = vth;*/
 }
+#endif
 
 void twistReceived(const geometry_msgs::Twist &msg){
   double myX = 0, myY = 0, myRot = 0;
@@ -202,9 +201,12 @@ int main(int argc, char ** argv){
 
   ros::Subscriber brake_sub = nh.subscribe("base_brake", 1000, &brakeReceived);
   ros::Subscriber base_sub = nh.subscribe("/cmd_vel", 20, &twistReceived);
-  ros::Subscriber odom_sub = nh.subscribe("feedback", 20, &odomReceived);
 
   ros::Publisher base_pub = nh.advertise<std_msgs::String>("Base_command", 50);
+
+#ifdef USE_FEEDBACK
+  ros::Subscriber odom_sub = nh.subscribe("feedback", 20, &odomReceived);
+
   ros::Publisher odom_pub = nh.advertise<nav_msgs::Odometry>("/odom", 50);
   tf::TransformBroadcaster odom_broadcaster;
 
@@ -214,6 +216,7 @@ int main(int argc, char ** argv){
   odom.child_frame_id = "base_link";
 
   tf::TransformListener listener(ros::Duration(10));
+#endif
 
   ros::spinOnce();
 
@@ -238,13 +241,14 @@ int main(int argc, char ** argv){
 
     base_pub.publish(base);
 
+#ifdef USE_FEEDBACK
     calcOdom(listener);
 
     odom_trans.header.stamp = ros::Time::now();
-    odom_broadcaster.sendTransform(odom_trans);
+//    odom_broadcaster.sendTransform(odom_trans);
     odom.header.stamp = ros::Time::now();
     odom_pub.publish(odom);
-
+#endif
     ros::spinOnce();
     rate.sleep();
   }
