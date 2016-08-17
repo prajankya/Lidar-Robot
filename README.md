@@ -23,7 +23,7 @@ Department of Automation and Robotics.
 B. V. Bhoomaraddi College of Engineering and Technology, Hubli  
 
 ##Robot Geometrical Info
->
+```
 Mesh Bounding Box Size 0.726000 0.153518 0.728274
 Mesh Bounding Box Diag 1.039725
 Mesh Volume is 0.007492
@@ -40,9 +40,10 @@ Principal axes are :
 | 0.033026 -0.000001 0.999454 |
 axis momenta are :
 | 0.000231 0.000439 0.000230 |
+```
 
 ##Wheel Geometrical Info
->
+```
 Mesh Bounding Box Size 0.149237 0.038020 0.148513
 Mesh Bounding Box Diag 0.213947
 Mesh Volume is 0.000238
@@ -59,6 +60,7 @@ Principal axes are :
 | -0.503839 0.000181 0.863798 |
 axis momenta are :
 | 0.000000 0.000001 0.000000 |
+```
 
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badge/)
 
